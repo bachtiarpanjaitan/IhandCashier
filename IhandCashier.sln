@@ -28,5 +28,11 @@ Global
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.scope = text/x-csharp
+		description = Aplikasi kasir sederhana yang dapat digunakan untuk usaha micro.
 	EndGlobalSection
 EndGlobal
