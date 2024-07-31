@@ -1,0 +1,75 @@
+﻿[
+    {
+        "label": "Saya",
+        "child": [
+            {
+                "label": "Profil",
+                "class": "PageProfile"
+            },
+            {
+                "label": "Pengaturan",
+                "class": "PageSetting"
+            }
+        ]
+    },
+    {
+        "label": "Master",
+        "child": [
+            {
+                "label": "Data Barang",
+                "class": "PageDataBarang"
+            },
+            {
+                "label": "Data Kasir",
+                "class": "PageDataKasir"
+            },
+            {
+                "label": "Data Pemasok",
+                "class": "PageDataPemasok"
+            },
+            {
+                "label": "Data Pelanggan",
+                "class": "PageDataPelanggan"
+            }
+        ]
+    },
+    {
+        "label": "Transaksi",
+        "child": [
+            {
+                "label": "Penerimaan Barang",
+                "class": "PagePenerimaanBarang"
+            },
+            {
+                "label": "Penjualan Barang",
+                "class": "PagePenjualanBarang"
+            },
+            {
+                "label": "Stok",
+                "child": [
+                    {
+                        "label": "Stok Barang",
+                        "class": "PageStokBarang"
+                    },
+                    {
+                        "label": "Penyesuaian Barang",
+                        "class": "PagePenyesuaianBarang"
+                    }
+                ]
+            },
+            {
+                "label": "Retur",
+                "child": [
+                    {
+                        "label": "Retur Beli",
+                        "class": "PageReturBeli"
+                    },
+                    {
+                        "label": "Retur Jual",
+                        "class": "PageReturJual"
+                    }
+                ]
+            }
+        ]
+    }
+]

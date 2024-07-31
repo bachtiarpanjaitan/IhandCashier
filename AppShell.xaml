@@ -4,14 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:IhandCashier"
-    Shell.FlyoutBehavior="Disabled">
-    <!--<ShellContent Title="Home">
-        <NavigationPage>
-            <x:Arguments>
-                <local:PageHome />
-            </x:Arguments>
-        </NavigationPage>
-    </ShellContent>-->
-     <Shell.MenuBarItems Order="Primary"/>
+    Shell.FlyoutBehavior="Flyout">
+    <Shell.MenuBarItems Order="Primary"/>
 </Shell>
 

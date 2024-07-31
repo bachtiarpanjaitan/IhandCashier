@@ -60,6 +60,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Layouts\" />
@@ -68,9 +69,17 @@
 	  <Folder Include="Bepe\Constants\" />
 	  <Folder Include="Bepe\ViewModels\" />
 	  <Folder Include="Bepe\Helpers\" />
+	  <Folder Include="Resources\Datas\" />
+	  <Folder Include="Bepe\Types\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Bepe\ViewModels\" />
 	  <None Remove="Bepe\Helpers\" />
+	  <None Remove="Resources\Datas\" />
+	  <None Remove="Resources\Datas\menu.json" />
+	  <None Remove="Bepe\Types\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Datas\menu.json" />
 	</ItemGroup>
 </Project>
