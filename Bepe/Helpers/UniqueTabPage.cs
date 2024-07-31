@@ -15,15 +15,13 @@ namespace IhandCashier.Layouts
 
         public void AddTab(Enum index, Page page)
         {
-            if (_tabs.ContainsKey(index))
-            {
-                CurrentPage = _tabs[index];
-            } else
+            if (!_tabs.ContainsKey(index))
             {
                 _tabs.Add(index, page);
                 Children.Add(page);
             }
-            
+            CurrentPage = _tabs[index];
+
         }
     }
 }
