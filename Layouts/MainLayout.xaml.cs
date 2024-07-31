@@ -1,23 +1,25 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+﻿using IhandCashier.Bepe.Constants;
+using IhandCashier.Pages;
 
 namespace IhandCashier.Layouts;
 
-public partial class MainLayout : ContentPage
+public partial class MainLayout : UniqueTabPage
 {
-	public MainLayout()
+
+    public MainLayout()
 	{
 		InitializeComponent();
-        setupMenu();
-        
+        SetupMenu();
+        SetupTab();
+
     }
 
-	private void setupMenu()
+	private void SetupMenu()
 	{
         //SAYA
         var mbMe = new MenuBarItem { Text = "Saya" };
-        var meProfile = new MenuFlyoutItem { Text = "Profil" };
-        var meSetting = new MenuFlyoutItem { Text = "Pengaturan" };
+        var meProfile = new MenuFlyoutItem { Text = "Profil", CommandParameter = Menu.MenuItemType.Profile };
+        var meSetting = new MenuFlyoutItem { Text = "Pengaturan", CommandParameter = Menu.MenuItemType.Setting };
         var meExit = new MenuFlyoutItem { Text = "Keluar" };
         mbMe.Add(meProfile);
         mbMe.Add(meSetting);
@@ -74,6 +76,30 @@ public partial class MainLayout : ContentPage
         this.MenuBarItems.Add(mbMaster);
         this.MenuBarItems.Add(mbTransaksi);
         this.MenuBarItems.Add(mbReport);
+
+        meProfile.Clicked += OnMenuItemClicked;
+        meSetting.Clicked += OnMenuItemClicked;
+       
+    }
+
+    private void OnMenuItemClicked(object sender, EventArgs e)
+    {
+        if (sender is MenuFlyoutItem menuBarItem)
+        {
+            if (menuBarItem.CommandParameter is Menu.MenuItemType menuItemType)
+            {
+                var data = menuBarItem?.CommandParameter as Enum;
+                var menus = Menu.ListMenu()[data];
+                object instance = Activator.CreateInstance(menus);
+                AddTab(data, (Page)instance);
+
+            }
+        }
+    }
+
+    private void SetupTab()
+    {
+        AddTab(Menu.MenuItemType.Home,new PageHome());
     }
 
 }

@@ -62,11 +62,15 @@
 	  <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove="Layouts\" />
-	  <None Remove="Pages\" />
-	</ItemGroup>
-	<ItemGroup>
 	  <Folder Include="Layouts\" />
 	  <Folder Include="Pages\" />
+	  <Folder Include="Bepe\" />
+	  <Folder Include="Bepe\Constants\" />
+	  <Folder Include="Bepe\ViewModels\" />
+	  <Folder Include="Bepe\Helpers\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Bepe\ViewModels\" />
+	  <None Remove="Bepe\Helpers\" />
 	</ItemGroup>
 </Project>

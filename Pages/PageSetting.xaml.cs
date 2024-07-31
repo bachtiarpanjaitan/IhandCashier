@@ -1,8 +1,8 @@
 ﻿namespace IhandCashier.Pages;
 
-public partial class Home : ContentPage
+public partial class PageSetting : ContentPage
 {
-	public Home()
+	public PageSetting()
 	{
 		InitializeComponent();
 	}

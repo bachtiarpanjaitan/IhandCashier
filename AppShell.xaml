@@ -5,11 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:IhandCashier"
     Shell.FlyoutBehavior="Disabled">
-
-    <!--<ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:Ma}"
-        Route="MainLayout" />-->
-
+    <!--<ShellContent Title="Home">
+        <NavigationPage>
+            <x:Arguments>
+                <local:PageHome />
+            </x:Arguments>
+        </NavigationPage>
+    </ShellContent>-->
+     <Shell.MenuBarItems Order="Primary"/>
 </Shell>
 
