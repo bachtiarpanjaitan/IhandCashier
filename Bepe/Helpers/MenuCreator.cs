@@ -1,11 +1,9 @@
-﻿using System;
+﻿
 using System.Reflection;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Layouts;
-using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
-using static CoreFoundation.DispatchSource;
 
 namespace IhandCashier.Bepe.Helpers
 {
@@ -25,10 +23,25 @@ namespace IhandCashier.Bepe.Helpers
 		public async Task<List<MenuBarItem>>  CreateMenuAsync()
 		{
 			menuItems = await LoadMenuItemsAsync(path);
-
+            
             foreach (var item in menuItems)
             {
-                menuBarItems.Add(CreateMenuItem(item));
+                var menuBar = new MenuBarItem { Text = item.Label };
+                if (item.Child != null && item.Child.Count > 0)
+                {
+                    foreach(var i in item.Child)
+                    {
+                        if (i.Child != null && i.Child.Count > 0)
+                        {
+                            menuBar.Add(CreateMenuFlyoutSubItem(i));
+                        } else
+                        {
+                            menuBar.Add(CreateMenuFlyoutItem(i));
+                        }
+                    }
+                }
+                else menuBar.Add(CreateMenuFlyoutItem(item));
+                menuBarItems.Add(menuBar);
             }
 
             return menuBarItems;
@@ -44,65 +57,41 @@ namespace IhandCashier.Bepe.Helpers
             return JsonConvert.DeserializeObject<List<MenuDataType>>(json);
         }
 
-        private MenuFlyout CreateMenuFlyout(MenuDataType menuItem)
+
+        private MenuFlyoutSubItem CreateMenuFlyoutSubItem(MenuDataType menuItem)
         {
-            var flyout = new MenuFlyout();
-
-            // Menambahkan item ke MenuFlyout
-            if (menuItem.Child != null && menuItem.Child.Count > 0)
-            {
-                foreach (var childItem in menuItem.Child)
-                {
-                    flyout.Add(CreateMenuFlyoutItem(childItem));
-                }
-            }
-
-            return flyout;
-        }
-
-        private MenuFlyoutItem CreateMenuFlyoutItem(MenuDataType menuItem)
-        {
-            var flyoutItem = new MenuFlyoutItem
+            MenuFlyoutSubItem flyoutItem = new()
             {
                 Text = menuItem.Label,
                 CommandParameter = menuItem.Class
             };
 
+
             // Jika ada anak, tambahkan sebagai submenu
-            if (menuItem.Child != null && menuItem.Child.Count > 0)
-            {
-                var submenu = CreateMenuFlyout(menuItem);
-                flyoutItem.Command = new Command(() =>
-                {
-                    // Implementasikan perintah atau logika saat item diklik jika diperlukan
-                    
-                });
-            }
-
-            flyoutItem.Clicked += OnMenuItemClicked;
-            return flyoutItem;
-        }
-
-        private MenuBarItem CreateMenuItem(MenuDataType menuItem)
-        {
-            var barItem = new MenuBarItem
-            {
-                Text = menuItem.Label
-            };
-
-            // Menambahkan child items ke MenuBarItem jika ada
             if (menuItem.Child != null && menuItem.Child.Count > 0)
             {
                 foreach (var childItem in menuItem.Child)
                 {
-                    barItem.Add(CreateMenuFlyoutItem(childItem));
+                    flyoutItem.Add(CreateMenuFlyoutItem(childItem));
                 }
+                flyoutItem.Clicked += OnMenuItemClicked;
 
             }
+            return flyoutItem;
 
-            return barItem;
         }
 
+        private MenuFlyoutItem CreateMenuFlyoutItem(MenuDataType menuItem)
+        {
+            MenuFlyoutItem flyoutItem = new()
+            {
+                Text = menuItem.Label,
+                CommandParameter = menuItem.Class
+            };
+
+            flyoutItem.Clicked += OnMenuItemClicked;
+            return flyoutItem;
+        }
 
         private void OnMenuItemClicked(object sender, EventArgs e)
         {

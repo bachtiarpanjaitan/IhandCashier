@@ -1,9 +1,4 @@
 ﻿using IhandCashier.Bepe.Constants;
-using IhandCashier.Pages;
-using Microsoft.Maui.Controls;
-using System.Collections.Generic;
-using System.Linq;
-using static CoreFoundation.DispatchSource;
 
 namespace IhandCashier.Layouts
 {

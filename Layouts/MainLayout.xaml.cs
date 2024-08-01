@@ -25,7 +25,7 @@ public partial class MainLayout : UniqueTabPage
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"MENU ERROR: {ex.Message} {ex.Source}");
+            Console.WriteLine($"LOAD MENU ERROR: {ex.Message} {ex.Source}");
         }
     }
 

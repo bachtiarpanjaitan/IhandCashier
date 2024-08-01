@@ -9,9 +9,5 @@ namespace IhandCashier.Bepe.Constants
 
     }
 
-	
-
-	
-
 }
 

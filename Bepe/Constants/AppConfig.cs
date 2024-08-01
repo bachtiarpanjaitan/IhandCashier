@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 namespace IhandCashier.Bepe.Constants
 {
 	public static class AppConfig
