@@ -34,7 +34,7 @@ namespace IhandCashier.Bepe.Helpers
             Grid.SetRow(sideView, 0);
             grid.Children.Add(sideView);
 
-            var splitter = new BoxView { Color = Colors.Gray, WidthRequest = 2 };
+            var splitter = new BoxView { Color = (Color)Application.Current.Resources["IcBorderColor"], WidthRequest = 2 };
             Grid.SetColumn(splitter, 1);
             Grid.SetRow(splitter, 0);
             grid.Children.Add(splitter);
@@ -47,7 +47,7 @@ namespace IhandCashier.Bepe.Helpers
             {
                 Content = grid,
                 BackgroundColor = Colors.Transparent,
-                BorderColor = Colors.DarkGray,
+                BorderColor = (Color)Application.Current.Resources["IcBorderColor"],
                 CornerRadius = 5,
                 Padding = 0,
                 Margin = 5,
