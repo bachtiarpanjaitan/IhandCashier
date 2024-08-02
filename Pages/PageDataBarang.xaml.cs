@@ -10,8 +10,8 @@ public partial class PageDataBarang : PageController
 	{
 		InitializeComponent();
 
-		Menus.Add("barang", new MenuItemPage { Label = "DATA BARANG", Page = new GridDataBarang() });
-		Menus.Add("satuan", new MenuItemPage { Label = "DATA SATUAN BARANG", Page = new GridDataSatuanBarang() });
+        SideMenus.Add("barang", new MenuItemPage { Label = "DATA BARANG", Page = new GridDataBarang() });
+        SideMenus.Add("satuan", new MenuItemPage { Label = "DATA SATUAN BARANG", Page = new GridDataSatuanBarang() });
 
         DefineLayoutTwoColumn();
 	}

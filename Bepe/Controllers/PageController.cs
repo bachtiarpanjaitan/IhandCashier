@@ -10,7 +10,7 @@ namespace IhandCashier.Bepe.Controllers
 	public class PageController : ContentPage,IPageInterface
 	{
         private VerticalStackLayout contentView = new();
-        public Dictionary<string, MenuItemPage> Menus = new();
+        public Dictionary<string, MenuItemPage> SideMenus = new();
 
         public PageController()
 		{
@@ -20,7 +20,7 @@ namespace IhandCashier.Bepe.Controllers
         public void DefineLayoutTwoColumn()
         {
             SideMenu sm = new();
-            sm.SetMenuItems(Menus);
+            sm.SetMenuItems(SideMenus);
             VerticalStackLayout sideMenu = sm.CreateSideMenu();
 
             sm.ItemTapped += OnClickSideMenuItemAsync;

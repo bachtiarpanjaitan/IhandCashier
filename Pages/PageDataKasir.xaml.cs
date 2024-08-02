@@ -10,7 +10,7 @@ public partial class PageDataKasir : PageController
 	{
 		InitializeComponent();
 
-        Menus.Add("grid", new MenuItemPage { Label = "DATA KASIR", Page = new GridDataKasir() });
+        SideMenus.Add("grid", new MenuItemPage { Label = "DATA KASIR", Page = new GridDataKasir() });
         DefineLayoutTwoColumn();
 	}
 }
