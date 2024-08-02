@@ -16,7 +16,8 @@ namespace IhandCashier.Bepe.Helpers
             RowDefinitions =
             {
                 new RowDefinition { Height = GridLength.Star }
-            }
+            },
+            
         };
 
         private VerticalStackLayout sideView;
@@ -41,6 +42,7 @@ namespace IhandCashier.Bepe.Helpers
 
             Grid.SetColumn(contentView, 2);
             Grid.SetRow(contentView, 0);
+            
             grid.Children.Add(contentView);
 
             var frame = new Frame

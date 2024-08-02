@@ -44,6 +44,9 @@
 	  <WarningLevel>4</WarningLevel>
 	</PropertyGroup>
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\document.png" />
+	</ItemGroup>
+	<ItemGroup>
 		<!-- App Icon -->
 		<!-- <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#FF9C1A" /> -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\logo.svg" Color="#FFC928" />
@@ -76,6 +79,9 @@
 	  <Folder Include="Resources\Datas\" />
 	  <Folder Include="Bepe\Types\" />
 	  <Folder Include="Bepe\Components\" />
+	  <Folder Include="Pages\Views\" />
+	  <Folder Include="Bepe\Interfaces\" />
+	  <Folder Include="Bepe\Controllers\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Bepe\ViewModels\" />
@@ -84,8 +90,14 @@
 	  <None Remove="Resources\Datas\menu.json" />
 	  <None Remove="Bepe\Types\" />
 	  <None Remove="Bepe\Components\" />
+	  <None Remove="Pages\Views\" />
+	  <None Remove="Bepe\Interfaces\" />
+	  <None Remove="Bepe\Controllers\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Include="Resources\Datas\menu.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ImageAsset Include="Resources\Images\document.png" />
 	</ItemGroup>
 </Project>

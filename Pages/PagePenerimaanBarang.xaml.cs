@@ -1,9 +1,14 @@
+using IhandCashier.Bepe.Controllers;
+using IhandCashier.Bepe.Types;
+
 namespace IhandCashier.Pages;
 
-public partial class PagePenerimaanBarang : ContentPage
+public partial class PagePenerimaanBarang : PageController
 {
-	public PagePenerimaanBarang()
+    public PagePenerimaanBarang()
 	{
 		InitializeComponent();
-	}
+
+        DefineLayoutTwoColumn();
+    }
 }

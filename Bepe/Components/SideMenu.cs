@@ -1,14 +1,17 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using IhandCashier.Bepe.Constants;
+using IhandCashier.Bepe.Helpers;
+using IhandCashier.Bepe.Types;
 
 namespace IhandCashier.Bepe.Components
 {
 	public class SideMenu
 	{
-        private ContentPage page;
-		public SideMenu(ContentPage page)
+        public event EventHandler<EventHandlerPageArgs> ItemTapped;
+        private Dictionary<String, MenuItemPage> menuItems;
+        public SideMenu()
 		{
-            this.page = page;
+            
 		}
 
         public VerticalStackLayout CreateSideMenu()
@@ -19,41 +22,48 @@ namespace IhandCashier.Bepe.Components
                 Padding = new Thickness(5,5,5,10)
             };
 
-            menuLayout.Add(ItemMenu("MENU 1"));
-            menuLayout.Add(ItemMenu("MENU 2"));
-            menuLayout.Add(ItemMenu("MENU 3"));
-
+            if(menuItems != null)
+            {
+                foreach (var mi in menuItems)
+                {
+                    menuLayout.Add(ItemMenu(mi.Value.Label, mi.Value.Page));
+                }
+            }
             return menuLayout;
         }
 
-        private Button ItemMenu(string text)
+        private Button ItemMenu(string text, Page page)
         {
             var button = new Button
             {
                 Text = text,
-                BorderWidth = 1, // Optional: Border width
+                BorderWidth = 1,
                 CornerRadius = 5,
                 Margin = 5
             };
 
-            button.Clicked += OnItemTapped;
+            button.Clicked += (s, e) => OnCLickItem(s, e, page);
 
             return button;
         }
 
-        private async void OnItemTapped(object sender, EventArgs e)
+        private async void OnCLickItem(object sender, EventArgs e, Page page)
         {
-            var frame = sender as Button;
-            if (frame != null)
+            var btn = sender as Button;
+            if (btn != null)
             {
                 // Animasi: skala frame saat diklik
-                await frame.ScaleTo(1.1, 25, Easing.CubicIn);
-                await frame.ScaleTo(1, 25, Easing.CubicOut);
-
-                // Menampilkan alert
-                await page.DisplayAlert("Item Tapped", "A frame was tapped!", "OK");
+                await btn.ScaleTo(1.05, 25, Easing.CubicIn);
+                await btn.ScaleTo(1, 25, Easing.CubicOut);
+                ItemTapped?.Invoke(this, new EventHandlerPageArgs(sender, e, page));
             }
         }
+
+        public void SetMenuItems(Dictionary<String, MenuItemPage> items)
+        {
+            this.menuItems = items;
+        }
+
     }
 }
 

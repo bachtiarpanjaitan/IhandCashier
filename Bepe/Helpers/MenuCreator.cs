@@ -101,8 +101,11 @@ namespace IhandCashier.Bepe.Helpers
 
                 var data = menuBarItem?.CommandParameter as String;
                 Type type = Type.GetType(AppConfig.PAGES_NAMESPACE+"."+data);
-                object instance = Activator.CreateInstance(type);
-                context.AddTab(data, (Page)instance);
+                if(type != null)
+                {
+                    object instance = Activator.CreateInstance(type);
+                    context.AddTab(data, (Page)instance);
+                }
             }
         }
     }

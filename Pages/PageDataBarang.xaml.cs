@@ -1,28 +1,18 @@
-using System.Collections.ObjectModel;
-using IhandCashier.Bepe.Constants;
-using IhandCashier.Bepe.Components;
+﻿using IhandCashier.Bepe.Controllers;
 using IhandCashier.Bepe.Types;
-using IhandCashier.Bepe.Helpers;
+using IhandCashier.Pages.Views;
 
 namespace IhandCashier.Pages;
 
-public partial class PageDataBarang : ContentPage
+public partial class PageDataBarang : PageController
 {
-    public ObservableCollection<SideMenuItem> Items { get; set; }
-    public SideMenuItem SelectedItem { get; set; }
-    public PageDataBarang()
+	public PageDataBarang()
 	{
 		InitializeComponent();
 
-        defineLayout();
+		Menus.Add("barang", new MenuItemPage { Label = "DATA BARANG", Page = new GridDataBarang() });
+		Menus.Add("satuan", new MenuItemPage { Label = "DATA SATUAN BARANG", Page = new GridDataSatuanBarang() });
+
+        DefineLayoutTwoColumn();
 	}
-
-    private void defineLayout()
-    {
-        VerticalStackLayout sideMenu = new SideMenu(this).CreateSideMenu();
-        VerticalStackLayout contentView = new();
-        Frame frame = new ContentLayoutTwoColumn(sideMenu,contentView).GenerateFrame();
-
-        Content = frame;
-    }
 }
