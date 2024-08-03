@@ -1,6 +1,6 @@
 ﻿namespace IhandCashier.Pages;
 
-public partial class PageSetting : ContentPage
+public partial class PageSetting : ContentView
 {
 	public PageSetting()
 	{

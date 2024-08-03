@@ -1,9 +1,12 @@
-﻿namespace IhandCashier.Pages;
+﻿using System.Collections.ObjectModel;
+using Syncfusion.Maui.DataGrid;
 
-public partial class PageHome : ContentPage
+namespace IhandCashier.Pages;
+
+public partial class PageHome : ContentView
 {
 	public PageHome()
 	{
 		InitializeComponent();
-	}
+    }
 }

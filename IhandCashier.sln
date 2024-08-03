@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IhandCashier", "IhandCashier.csproj", "{4F2570B0-6B36-4040-8272-C9E0FBC401C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basapadi", "..\BasapadiDataGrid\Basapadi.csproj", "{723E9B6A-CA9D-4B61-9538-6084C6FD025D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{723E9B6A-CA9D-4B61-9538-6084C6FD025D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{723E9B6A-CA9D-4B61-9538-6084C6FD025D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{723E9B6A-CA9D-4B61-9538-6084C6FD025D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{723E9B6A-CA9D-4B61-9538-6084C6FD025D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

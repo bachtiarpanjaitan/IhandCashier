@@ -8,6 +8,7 @@ public partial class MainLayout : ContentPage
 {
     private System.Timers.Timer _timer;
     private readonly CultureInfo _cultureInfo = new CultureInfo("id-ID");
+
     public MainLayout()
 	{
 		InitializeComponent();
@@ -32,6 +33,7 @@ public partial class MainLayout : ContentPage
         }
     }
 
+    [Obsolete]
     private void SetupClock()
     {
         _timer = new System.Timers.Timer(1000);
@@ -40,6 +42,7 @@ public partial class MainLayout : ContentPage
         _timer.Enabled = true;
     }
 
+    [Obsolete]
     private void OnTimerElapsed(object sender, EventArgs e)
     {
         Device.BeginInvokeOnMainThread(() =>

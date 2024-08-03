@@ -1,6 +1,6 @@
 ﻿namespace IhandCashier.Pages.Views;
 
-public partial class GridDataSatuanBarang : ContentPage
+public partial class GridDataSatuanBarang : ContentView
 {
 	public GridDataSatuanBarang()
 	{

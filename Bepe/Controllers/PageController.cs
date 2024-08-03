@@ -7,11 +7,11 @@ using IhandCashier.Bepe.Types;
 
 namespace IhandCashier.Bepe.Controllers
 {
-	public class PageController : ContentPage,IPageInterface
+	public class PageController : ContentView,IPageInterface
 	{
-        private VerticalStackLayout contentView = new();
+        private ContentView contentView = new();
         public Dictionary<string, MenuItemPage> SideMenus = new();
-
+        private ContentLayoutTwoColumn layout = new ContentLayoutTwoColumn();
         public PageController()
 		{
 
@@ -21,21 +21,25 @@ namespace IhandCashier.Bepe.Controllers
         {
             SideMenu sm = new();
             sm.SetMenuItems(SideMenus);
-            VerticalStackLayout sideMenu = sm.CreateSideMenu();
-
             sm.ItemTapped += OnClickSideMenuItemAsync;
-            Frame frame = new ContentLayoutTwoColumn(sideMenu, contentView).GenerateFrame();
-
-            Content = frame;
+            VerticalStackLayout sideMenu = sm.CreateSideMenu();
+            
+            layout.SetSideMenu(sideMenu);
+            Content = layout.GenerateFrame();
         }
 
         public void OnClickSideMenuItemAsync(object obj, EventHandlerPageArgs e)
         {
             var clickedSender = e.Sender;
             var originalEventArgs = e.OriginalEventArgs;
-            var page = e.Page;
-            contentView.Clear();
-            contentView.Children.Add(page);
+            Type type = Type.GetType(e.Page);
+            if(type != null)
+            {
+                ContentView instance = (ContentView)Activator.CreateInstance(type);
+                layout.SetContent(instance);
+                //Content = layout.GenerateFrame();
+            }
+           
         }
     }
 }

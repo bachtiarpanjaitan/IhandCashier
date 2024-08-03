@@ -32,7 +32,7 @@ namespace IhandCashier.Bepe.Components
             return menuLayout;
         }
 
-        private Button ItemMenu(string text, Page page)
+        private Button ItemMenu(string text, string page)
         {
             var button = new Button
             {
@@ -47,13 +47,13 @@ namespace IhandCashier.Bepe.Components
             return button;
         }
 
-        private async void OnCLickItem(object sender, EventArgs e, Page page)
+        private async void OnCLickItem(object sender, EventArgs e, string page)
         {
             var btn = sender as Button;
             if (btn != null)
             {
                 // Animasi: skala frame saat diklik
-                await btn.ScaleTo(1.05, 25, Easing.CubicIn);
+                await btn.ScaleTo(0.9, 25, Easing.CubicIn);
                 await btn.ScaleTo(1, 25, Easing.CubicOut);
                 ItemTapped?.Invoke(this, new EventHandlerPageArgs(sender, e, page));
             }

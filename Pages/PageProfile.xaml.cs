@@ -1,9 +1,13 @@
-﻿namespace IhandCashier.Pages;
+﻿using System.Collections.ObjectModel;
+using Syncfusion.Maui.DataGrid;
+using static IhandCashier.Pages.Views.GridDataBarang;
 
-public partial class PageProfile : ContentPage
+namespace IhandCashier.Pages;
+
+public partial class PageProfile : ContentView
 {
 	public PageProfile()
 	{
 		InitializeComponent();
-	}
+    }
 }

@@ -104,7 +104,7 @@ namespace IhandCashier.Bepe.Helpers
                 if(type != null)
                 {
                     object instance = Activator.CreateInstance(type);
-                    context.AddTab(data, (Page)instance);
+                    context.AddTab(data, (ContentView)instance, menuBarItem.Text);
                 }
             }
         }

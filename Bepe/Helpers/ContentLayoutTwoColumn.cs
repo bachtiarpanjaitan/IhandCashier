@@ -1,50 +1,54 @@
 ﻿using System;
-using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
+using System.Linq;
 
 namespace IhandCashier.Bepe.Helpers
 {
 	public class ContentLayoutTwoColumn
 	{
-        Grid grid = new Grid
-        {
-            ColumnDefinitions = {
+
+        public Grid grid { get; private set; }
+        public ContentLayoutTwoColumn()
+		{
+            grid = new Grid
+            {
+                ColumnDefinitions = {
                 new ColumnDefinition { Width = new GridLength(AppConfig.SIDE_MENU_WIDTH) },
                 new ColumnDefinition { Width = 5 },
                 new ColumnDefinition { Width = GridLength.Star }
             },
-            RowDefinitions =
+                RowDefinitions =
             {
                 new RowDefinition { Height = GridLength.Star }
             },
+
+            };
+        }
+
+        public void SetSideMenu(VerticalStackLayout sm)
+        {
+            grid.Add(sm, 0, 0);
+        }
+
+        public void SetContent(ContentView c)
+        {
+            var oc = grid.Children.FirstOrDefault(v => grid.GetRow(v) == 0 && grid.GetColumn(v) == 2);
+           
+            if (oc != null)
+            {
+                grid.Children.Remove(oc);
+                grid.Add(c, 2, 0);
+            } else
+            {
+                grid.Add(c, 2, 0);
+            }
+        }
+
+        public ContentView GenerateFrame()
+		{
             
-        };
-
-        private VerticalStackLayout sideView;
-        private VerticalStackLayout contentView;
-
-
-        public ContentLayoutTwoColumn(VerticalStackLayout sideView, VerticalStackLayout contentView)
-		{
-            this.sideView = sideView;
-            this.contentView = contentView;
-		}
-        public Frame GenerateFrame()
-		{
-            Grid.SetColumn(sideView, 0);
-            Grid.SetRow(sideView, 0);
-            grid.Children.Add(sideView);
-
             var splitter = new BoxView { Color = (Color)Application.Current.Resources["IcBorderColor"], WidthRequest = 2 };
-            Grid.SetColumn(splitter, 1);
-            Grid.SetRow(splitter, 0);
-            grid.Children.Add(splitter);
-
-            Grid.SetColumn(contentView, 2);
-            Grid.SetRow(contentView, 0);
-            
-            grid.Children.Add(contentView);
-
+            grid.Add(splitter,1,0);
             var frame = new Frame
             {
                 Content = grid,

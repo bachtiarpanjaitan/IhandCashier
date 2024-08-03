@@ -4,9 +4,11 @@ namespace IhandCashier;
 
 public partial class App : Application
 {
-	public App()
+    [Obsolete]
+    public App()
 	{
-		InitializeComponent();
+        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQxNTM1MUAzMjM2MmUzMDJlMzBRTUc0OFIxOUVCNFgvcHk1aDFqY2V6dGtqSzJPYmRhTitpejY3ZEsySERBPQ==");
+        InitializeComponent();
 
 		MainPage = new MainLayout();
 

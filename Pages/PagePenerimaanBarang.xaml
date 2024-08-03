@@ -3,8 +3,7 @@
              xmlns:local="clr-namespace:IhandCashier.Bepe.Controllers"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="IhandCashier.Pages.PagePenerimaanBarang"
-             Title="Penerimaan Barang">
+             x:Class="IhandCashier.Pages.PagePenerimaanBarang">
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"

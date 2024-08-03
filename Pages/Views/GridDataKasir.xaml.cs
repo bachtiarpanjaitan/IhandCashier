@@ -1,9 +1,11 @@
-﻿namespace IhandCashier.Pages.Views;
+﻿using Syncfusion.Maui.DataGrid;
 
-public partial class GridDataKasir : ContentPage
+namespace IhandCashier.Pages.Views;
+
+public partial class GridDataKasir : ContentView
 {
 	public GridDataKasir()
 	{
 		InitializeComponent();
-	}
+    }
 }
