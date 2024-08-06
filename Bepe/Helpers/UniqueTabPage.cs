@@ -1,4 +1,4 @@
-﻿using IhandCashier.Bepe.Constants;
+﻿using IhandCashier.Bepe.Configs;
 
 namespace IhandCashier.Layouts
 {

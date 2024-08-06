@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using IhandCashier.Bepe.Constants;
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Types;
 

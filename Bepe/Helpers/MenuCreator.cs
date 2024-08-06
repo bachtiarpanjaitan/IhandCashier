@@ -1,6 +1,6 @@
 ﻿
 using System.Reflection;
-using IhandCashier.Bepe.Constants;
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Layouts;
 using Newtonsoft.Json;

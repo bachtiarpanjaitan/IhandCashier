@@ -1,5 +1,5 @@
 ﻿using System;
-using IhandCashier.Bepe.Constants;
+using IhandCashier.Bepe.Configs;
 using System.Linq;
 
 namespace IhandCashier.Bepe.Helpers

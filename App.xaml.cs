@@ -1,16 +1,18 @@
 ﻿using IhandCashier.Layouts;
+using IhandCashier.Bepe.Database;
 
 namespace IhandCashier;
 
 public partial class App : Application
 {
-    [Obsolete]
     public App()
 	{
-        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQxNTM1MUAzMjM2MmUzMDJlMzBRTUc0OFIxOUVCNFgvcHk1aDFqY2V6dGtqSzJPYmRhTitpejY3ZEsySERBPQ==");
+        //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(Basapadi.Config.SyncfusionKey("BEPE"));
         InitializeComponent();
 
-		MainPage = new MainLayout();
+        TableBuilder.Build();
+
+        MainPage = new MainLayout();
 
     }
 }
