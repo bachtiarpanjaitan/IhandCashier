@@ -1,10 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using Syncfusion.Maui.DataGrid;
-using static IhandCashier.Pages.Views.GridDataBarang;
+﻿
+using IhandCashier.Bepe.Controllers;
 
 namespace IhandCashier.Pages;
 
-public partial class PageProfile : ContentView
+public partial class PageProfile : PageController
 {
 	public PageProfile()
 	{

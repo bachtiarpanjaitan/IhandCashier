@@ -1,6 +1,8 @@
-﻿namespace IhandCashier.Pages;
+﻿using IhandCashier.Bepe.Controllers;
 
-public partial class PageSetting : ContentView
+namespace IhandCashier.Pages;
+
+public partial class PageSetting : PageController
 {
 	public PageSetting()
 	{

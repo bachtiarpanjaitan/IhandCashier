@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns:local="clr-namespace:IhandCashier.Layouts" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns:local="clr-namespace:IhandCashier.Bepe.Helpers"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Shell.FlyoutBehavior="Flyout"
              x:Class="IhandCashier.Layouts.MainLayout">
-    <Grid>
-        <!-- Define two rows: one for content and one for the footer -->
+        
+        <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
-        
-        <local:UniqueTabPage Grid.Row="0" x:Name="MainTabbedPage" AbsoluteLayout.LayoutBounds="0,0,0,0" AbsoluteLayout.LayoutFlags="All"/>
-
+        <Grid Grid.Row="0">
+            <local:UniqueTabPage Grid.Row="0" x:Name="MainTabbedPage" AbsoluteLayout.LayoutBounds="0,0,0,0" AbsoluteLayout.LayoutFlags="All"/>
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -22,7 +24,6 @@
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
 
-            <!-- Elemen Jam -->
             <Frame
                    Padding="10,10,0,10"
                    Margin="5,0,5,5"
@@ -31,7 +32,6 @@
                 <Label x:Name="LJamAplikasi" Text="0000-00-00 00:00:00" VerticalOptions="Center"/>
             </Frame>
 
-            <!-- Elemen Kasir -->
             <Frame
                    x:Name="lUser"
                    Margin="0,0,0,5"
@@ -41,7 +41,6 @@
                 <Label Text="Unknown" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Frame>
 
-            <!-- Elemen Copy -->
             <Frame
                    Padding="10"
                    Margin="5,0,5,5"
@@ -51,9 +50,8 @@
             </Frame>
         </Grid>
     </Grid>
-</ContentPage>
 
-            
+</ContentPage>
 
 
 

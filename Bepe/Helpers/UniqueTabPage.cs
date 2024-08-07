@@ -1,14 +1,14 @@
 ﻿using System.Reflection;
 using IhandCashier.Bepe.Configs;
 
-namespace IhandCashier.Layouts
+namespace IhandCashier.Bepe.Helpers
 {
 	public class UniqueTabPage : TabbedPage
     {
-        private Dictionary<String,Page> _tabs;
+        private Dictionary<string,ContentPage> _tabs;
         public UniqueTabPage()
 		{
-            _tabs = new Dictionary<String, Page>();
+            _tabs = new Dictionary<string, ContentPage>();
 
             try
             {
@@ -33,11 +33,14 @@ namespace IhandCashier.Layouts
                 _tabs.Add(newPage.AutomationId, newPage);
                 Children.Add(newPage);
             }
-            CurrentPage = _tabs[index];
+
+            var tab = _tabs[index];
+
+            CurrentPage = tab;
 
         }
 
-        private Page createTab(string index, ContentView v, string title)
+        private ContentPage createTab(string index, ContentView v, string title)
         {
             ContentPage contentPage = new ContentPage
             {

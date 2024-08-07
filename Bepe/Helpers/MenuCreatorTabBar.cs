@@ -2,21 +2,25 @@
 using System.Reflection;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Types;
+using IhandCashier.Layouts;
+using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
 
 namespace IhandCashier.Bepe.Helpers
 {
-	public class MenuCreator
+	public class MenuCreatorTabBar
     {
 		List<MenuDataType> menuItems = new List<MenuDataType>();
 		List<MenuBarItem> menuBarItems = new List<MenuBarItem>();
 		private string path;
-        private UniqueTabPage context;
+        private Shell context;
+        private UniqueTabBar tabBar;
 
-		public MenuCreator(string path, UniqueTabPage context)
+        public MenuCreatorTabBar(string path, Shell context, UniqueTabBar tabBar)
 		{
 			this.path = path;
             this.context = context;
+            this.tabBar = tabBar;
 		}
 
 		public async Task<List<MenuBarItem>>  CreateMenuAsync()
@@ -110,8 +114,11 @@ namespace IhandCashier.Bepe.Helpers
                 Type type = Type.GetType(AppConfig.PAGES_NAMESPACE+"."+data);
                 if(type != null)
                 {
-                    object instance = Activator.CreateInstance(type);
-                    context.AddTab(data, (ContentView)instance, menuBarItem.Text);
+                    //object instance = Activator.CreateInstance(type);
+                    //ShellContent tab = new ShellContent();
+                    //tab.Title = menuBarItem.Text;
+                    //tab.ContentTemplate = new DataTemplate(type);
+                    tabBar.AddTab(data,type,menuBarItem.Text);
                 }
             }
         }

@@ -21,10 +21,10 @@ public partial class MainLayout : ContentPage
     {
         try
         {
-            List<MenuBarItem> menuCreator = await new MenuCreator(AppConfig.PATH_FILE_MENU, this.MainTabbedPage).CreateMenuAsync();
+            List<MenuBarItem> menuCreator = await new MenuCreator(AppConfig.PATH_FILE_MENU, MainTabbedPage).CreateMenuAsync();
             foreach (var item in menuCreator)
             {
-                this.MenuBarItems.Add(item);
+                MenuBarItems.Add(item);
             }
         }
         catch (Exception ex)
