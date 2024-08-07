@@ -50,11 +50,19 @@ namespace IhandCashier.Bepe.Helpers
 
         private async Task<List<MenuDataType>> LoadMenuItemsAsync(string path)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream(path);
-            using var reader = new StreamReader(stream);
-            var json = await reader.ReadToEndAsync();
-            return JsonConvert.DeserializeObject<List<MenuDataType>>(json);
+            try
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                using var stream = assembly.GetManifestResourceStream(path);
+                using var reader = new StreamReader(stream);
+                var json = await reader.ReadToEndAsync();
+                return JsonConvert.DeserializeObject<List<MenuDataType>>(json);
+            } catch (TargetInvocationException e)
+            {
+                Console.WriteLine("Cannot Create Table because " + e.InnerException.Message);
+                Console.WriteLine("Stack Trace :  " + e.InnerException.StackTrace);
+                return null;
+            }
         }
 
 

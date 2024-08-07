@@ -81,6 +81,7 @@
 	  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="26.2.7" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
 	  <PackageReference Include="Basapadi" Version="0.0.1-alpha" />
+	  <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Layouts\" />
@@ -96,6 +97,7 @@
 	  <Folder Include="Bepe\Interfaces\" />
 	  <Folder Include="Bepe\Controllers\" />
 	  <Folder Include="Bepe\Repositories\" />
+	  <Folder Include="Bepe\Migrations\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Bepe\ViewModels\" />
@@ -108,6 +110,7 @@
 	  <None Remove="Bepe\Interfaces\" />
 	  <None Remove="Bepe\Controllers\" />
 	  <None Remove="Bepe\Repositories\" />
+	  <None Remove="Bepe\Migrations\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Include="Resources\Datas\menu.json" />

@@ -26,6 +26,7 @@ namespace IhandCashier.Bepe.Entities
         [Column(TypeName = "decimal(10, 2)")]
         public decimal konversi { get; set; }
 
+        [SQLite.Ignore]
         [ForeignKey("basic_unit_id")]
         public BasicUnit BasicUnit { get; set; }
     }

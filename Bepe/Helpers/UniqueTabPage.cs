@@ -1,4 +1,5 @@
-﻿using IhandCashier.Bepe.Configs;
+﻿using System.Reflection;
+using IhandCashier.Bepe.Configs;
 
 namespace IhandCashier.Layouts
 {
@@ -9,11 +10,19 @@ namespace IhandCashier.Layouts
 		{
             _tabs = new Dictionary<String, Page>();
 
-            Type type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + AppConfig.DEFAULT_TABPAGE);
-            object instance = Activator.CreateInstance(type);
+            try
+            {
+                Type type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + AppConfig.DEFAULT_TABPAGE);
+                object instance = Activator.CreateInstance(type);
 
-            //DEFAULT TAB
-            AddTab(AppConfig.DEFAULT_TABPAGE, (ContentView)instance, "Beranda");
+                //DEFAULT TAB
+                AddTab(AppConfig.DEFAULT_TABPAGE, (ContentView)instance, "Beranda");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Cannot Create tabbedpage because " + e.Message);
+                Console.WriteLine("Stack Trace :  " + e.StackTrace);
+            }
         }
 
         public void AddTab(String index, ContentView page, string title)

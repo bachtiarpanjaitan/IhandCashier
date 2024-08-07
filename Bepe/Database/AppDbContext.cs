@@ -13,19 +13,8 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
     {
-        optionsBuilder.UseSqlite($"Data Source={DatabaseConfig.DatabasePath()}");
+        string cs = DatabaseConfig.DatabasePath();
+        optionsBuilder.UseSqlite($"Data Source={cs}");
     }   
             
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        var entityTypes = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => typeof(IEntity).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
-
-        foreach (var entityType in entityTypes)
-        {
-            // Menambahkan konfigurasi untuk setiap tipe entitas
-            modelBuilder.Entity(entityType);
-        }
-
-    }   
 }

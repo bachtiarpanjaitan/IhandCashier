@@ -1,41 +1,52 @@
-﻿using System;
-using System.Reflection;
-using System.Xml.Linq;
+﻿using System.Reflection;
 using IhandCashier.Bepe.Configs;
-using Microsoft.Maui.Storage;
 
 namespace IhandCashier.Bepe.Database
 {
 	public static class TableBuilder
 	{
-        //private static Builder _database = new Builder(DatabaseConfig.DatabasePath());
+        private static SQLiteBuilder db = new SQLiteBuilder(DatabaseConfig.DatabasePath());
 
         public static bool Build()
         {
             if (AppConfig.ALWAYS_BUILD_TABLES)
             {
 
+                try
+                {
+                    var assembly = Assembly.GetExecutingAssembly();
+                    string targetNamespace = "IhandCashier.Bepe.Migrations";
+                    var types = assembly.GetTypes()
+                                        .Where(t => t.IsClass && t.Namespace == targetNamespace)
+                                        .ToList();
 
-                //var assembly = Assembly.GetExecutingAssembly();
-                //string targetNamespace = "IhandCashier.Bepe.Entities";
-                //var types = assembly.GetTypes()
-                //                    .Where(t => t.IsClass && t.Namespace == targetNamespace)
-                //                    .ToList();
+                    foreach (var t in types)
+                    {
+                        if (t != null && t.IsAbstract && t.IsSealed)
+                        {
+                            FieldInfo[] fieldInfos = t.GetFields(BindingFlags.Static | BindingFlags.Public);
+                            foreach (var fieldInfo in fieldInfos)
+                            {
+                                string fn = fieldInfo.Name;
+                                object fv = fieldInfo.GetValue(null);
 
+                                if (fn == "Table")
+                                {
+                                    db.CreateTableAsync(Type.GetType(fv.ToString()));
+                                }
+                            }
 
+                        }
+                    }
+                }
+                catch (TargetInvocationException e)
+                {
+                    Console.WriteLine("Cannot Create Table because " + e.InnerException.Message);
+                    Console.WriteLine("Stack Trace :  " + e.InnerException.StackTrace);
+                }
 
-                //foreach (var t in types)
-                //{
-                //    _database.CreateTableAsync(t);
-                //}
-
-                //Dictionary<int, Type> types = Migration.Entities();
-                //foreach (var t in types)
-                //{
-                //    _database.CreateTableAsync(t.Value);
-                //}
             }
-            
+
             return true;
         }
 	}

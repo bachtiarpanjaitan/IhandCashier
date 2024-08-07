@@ -1,0 +1,2 @@
+﻿#### Local ConnectionString = "/Users/bachtiarpanjaitan/Documents/IhandCashier/ihandcashier.db3"
+#### dbcontect scaffold = dotnet ef dbcontext scaffold "Data Source=/Users/bachtiarpanjaitan/Documents/IhandCashier/ihandcashier.db3" Microsoft.EntityFrameworkCore.Sqlite --output-dir Bepe/Entities --context-dir Bepe/Migrations --context AppDbContext

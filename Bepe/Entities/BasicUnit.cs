@@ -16,6 +16,7 @@ namespace IhandCashier.Bepe.Entities
         public string Nama { get; set; }
 
         // Navigation property
+        [SQLite.Ignore]
         public ICollection<Unit> Units { get; set; }
     }
 }

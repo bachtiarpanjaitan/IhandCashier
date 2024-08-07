@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Helpers;
@@ -35,9 +36,15 @@ namespace IhandCashier.Bepe.Controllers
             Type type = Type.GetType(e.Page);
             if(type != null)
             {
-                ContentView instance = (ContentView)Activator.CreateInstance(type);
-                layout.SetContent(instance);
-                //Content = layout.GenerateFrame();
+               try {
+                    ContentView instance = (ContentView)Activator.CreateInstance(type);
+                    layout.SetContent(instance);
+                }
+                catch (TargetInvocationException ex)
+                {
+                    Console.WriteLine("Cannot create instance " + ex.InnerException.Message);
+                    Console.WriteLine("Stack Trace :  " + ex.InnerException.StackTrace);
+                }
             }
            
         }
