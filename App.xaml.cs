@@ -1,6 +1,6 @@
 ﻿using IhandCashier.Layouts;
 using IhandCashier.Bepe.Database;
-using IhandCashier.Bepe.Configs;
+using Syncfusion.Licensing;
 
 namespace IhandCashier;
 
@@ -8,7 +8,7 @@ public partial class App : Application
 {
     public App()
 	{
-        //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("");
+        SyncfusionLicenseProvider.RegisterLicense("MzQxNTM1MUAzMjM2MmUzMDJlMzBRTUc0OFIxOUVCNFgvcHk1aDFqY2V6dGtqSzJPYmRhTitpejY3ZEsySERBPQ==");
 
         InitializeComponent();
         TableBuilder.Build();

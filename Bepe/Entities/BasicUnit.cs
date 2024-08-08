@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using SQLite;
 using IhandCashier.Bepe.Interfaces;
 
 namespace IhandCashier.Bepe.Entities
@@ -8,15 +8,14 @@ namespace IhandCashier.Bepe.Entities
     public class BasicUnit : IEntity
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [PrimaryKey, AutoIncrement]
         public int id { get; set; }
 
         [Required]
-        [MaxLength(100)]
         public string Nama { get; set; }
 
         // Navigation property
-        [SQLite.Ignore]
+        [Ignore]
         public ICollection<Unit> Units { get; set; }
     }
 }

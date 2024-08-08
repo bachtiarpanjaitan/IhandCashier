@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Reflection;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Types;
@@ -106,12 +107,18 @@ namespace IhandCashier.Bepe.Helpers
             if (sender is MenuFlyoutItem menuBarItem)
             {
 
-                var data = menuBarItem?.CommandParameter as String;
-                Type type = Type.GetType(AppConfig.PAGES_NAMESPACE+"."+data);
-                if(type != null)
+                try
                 {
-                    object instance = Activator.CreateInstance(type);
-                    context.AddTab(data, (ContentView)instance, menuBarItem.Text);
+                    var data = menuBarItem?.CommandParameter as String;
+                    Type type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + data);
+                    if (type != null)
+                    {
+                        object instance = Activator.CreateInstance(type);
+                        context.AddTab(data, (ContentView)instance, menuBarItem.Text);
+                    }
+                } catch (Exception ex)
+                {
+                    Console.WriteLine($"Error Click : {ex.Message}");
                 }
             }
         }

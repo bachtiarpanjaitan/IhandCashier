@@ -27,16 +27,22 @@ namespace IhandCashier.Bepe.Helpers
 
         public void AddTab(String index, ContentView page, string title)
         {
-            if (!_tabs.ContainsKey(index))
+           try
             {
-                var newPage = createTab(index, page, title);
-                _tabs.Add(newPage.AutomationId, newPage);
-                Children.Add(newPage);
+                if (!_tabs.ContainsKey(index))
+                {
+                    var newPage = createTab(index, page, title);
+                    _tabs.Add(newPage.AutomationId, newPage);
+                    Children.Add(newPage);
+                }
+
+                var tab = _tabs[index];
+
+                CurrentPage = tab;
+            } catch(Exception ex)
+            {
+                DisplayAlert("Menu Error", ex.Message, "Ya");
             }
-
-            var tab = _tabs[index];
-
-            CurrentPage = tab;
 
         }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using IhandCashier.Bepe.Interfaces;
+using SQLite;
 
 namespace IhandCashier.Bepe.Entities
 {
@@ -9,25 +9,21 @@ namespace IhandCashier.Bepe.Entities
     public class Unit : IEntity
 	{
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [PrimaryKey, AutoIncrement]
         public int id { get; set; }
 
         public int? basic_unit_id { get; set; }
 
         [Required]
-        [MaxLength(50)]
         public string kode_satuan { get; set; }
 
         [Required]
-        [MaxLength(100)]
         public string nama { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(10, 2)")]
         public decimal konversi { get; set; }
 
-        [SQLite.Ignore]
-        [ForeignKey("basic_unit_id")]
+        [Ignore]
         public BasicUnit BasicUnit { get; set; }
     }
 }
