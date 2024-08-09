@@ -10,9 +10,9 @@ namespace IhandCashier.Bepe.Controllers
 {
 	public class PageController : ContentView,IPageInterface
 	{
-        private ContentView contentView = new();
+        private ContentView _contentView = new();
         public Dictionary<string, MenuItemPage> SideMenus = new();
-        private ContentLayoutTwoColumn layout = new ContentLayoutTwoColumn();
+        private ContentLayoutTwoColumn _layout = new();
         public PageController()
 		{
 
@@ -25,26 +25,24 @@ namespace IhandCashier.Bepe.Controllers
             sm.ItemTapped += OnClickSideMenuItemAsync;
             VerticalStackLayout sideMenu = sm.CreateSideMenu();
             
-            layout.SetSideMenu(sideMenu);
-            Content = layout.GenerateFrame();
+            _layout.SetSideMenu(sideMenu);
+            Content = _layout.GenerateFrame();
         }
 
         public void OnClickSideMenuItemAsync(object obj, EventHandlerPageArgs e)
         {
-            var clickedSender = e.Sender;
-            var originalEventArgs = e.OriginalEventArgs;
             Type type = Type.GetType(e.Page);
             if(type != null)
             {
                try {
-                    ContentView instance = (ContentView)Activator.CreateInstance(type);
-                    layout.SetContent(instance);
-                }
-                catch (TargetInvocationException ex)
-                {
-                    Console.WriteLine("Cannot create instance " + ex.InnerException.Message);
-                    Console.WriteLine("Stack Trace :  " + ex.InnerException.StackTrace);
-                }
+                    _contentView = (ContentView)Activator.CreateInstance(type);
+                    _layout.SetContent(_contentView);
+                    //Content = layout.GenerateFrame();
+               }
+               catch (TargetInvocationException ex)
+               {
+                   Console.WriteLine("Cannot create instance " + ex.InnerException?.Message);
+               }
             }
            
         }

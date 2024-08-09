@@ -1,13 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <local:PageController
             xmlns:local="clr-namespace:IhandCashier.Bepe.Controllers"
-            xmlns:local_1="clr-namespace:IhandCashier.Bepe.Repositories"
+            xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:buttons="http://schemas.syncfusion.com/maui"
-             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local2="clr-namespace:IhandCashier.Bepe.Repositories"
              x:Class="IhandCashier.Pages.PageProfile">
-       <VerticalStackLayout>
-            <syncfusion:SfDataGrid x:Name="MydataGrid"/>
-        </VerticalStackLayout>
 </local:PageController>

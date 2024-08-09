@@ -2,17 +2,14 @@
 <ContentPage xmlns:local="clr-namespace:IhandCashier.Bepe.Helpers"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Shell.FlyoutBehavior="Flyout"
              x:Class="IhandCashier.Layouts.MainLayout">
-        
-        <Grid>
-
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <local:UniqueTabPage Grid.Row="0" x:Name="MainTabbedPage" AbsoluteLayout.LayoutBounds="0,0,0,0" AbsoluteLayout.LayoutFlags="All"/>
+            <local:MainContent x:Name="Container" AbsoluteLayout.LayoutBounds="0,0,0,0" AbsoluteLayout.LayoutFlags="All"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -21,7 +18,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
             <Frame
@@ -33,7 +30,7 @@
             </Frame>
 
             <Frame
-                   x:Name="lUser"
+                   x:Name="LUser"
                    Margin="0,0,0,5"
                    Padding="10"
                    Grid.Row="0"

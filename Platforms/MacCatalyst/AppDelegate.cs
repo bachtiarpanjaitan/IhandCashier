@@ -1,5 +1,4 @@
 ﻿using Foundation;
-
 namespace IhandCashier;
 
 [Register("AppDelegate")]

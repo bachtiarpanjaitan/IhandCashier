@@ -12,9 +12,9 @@ namespace IhandCashier.Bepe.Helpers
 		List<MenuDataType> menuItems = new List<MenuDataType>();
 		List<MenuBarItem> menuBarItems = new List<MenuBarItem>();
 		private string path;
-        private UniqueTabPage context;
+        private MainContent context;
 
-		public MenuCreator(string path, UniqueTabPage context)
+		public MenuCreator(string path, MainContent context)
 		{
 			this.path = path;
             this.context = context;
@@ -114,7 +114,7 @@ namespace IhandCashier.Bepe.Helpers
                     if (type != null)
                     {
                         object instance = Activator.CreateInstance(type);
-                        context.AddTab(data, (ContentView)instance, menuBarItem.Text);
+                        context.ChangeContent((ContentView)instance);
                     }
                 } catch (Exception ex)
                 {

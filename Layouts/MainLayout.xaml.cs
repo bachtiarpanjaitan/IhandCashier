@@ -1,35 +1,34 @@
-﻿using IhandCashier.Bepe.Configs;
+﻿using System.Globalization;
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
-using System.Globalization;
 
 namespace IhandCashier.Layouts;
 
 public partial class MainLayout : ContentPage
 {
     private System.Timers.Timer _timer;
-    private readonly CultureInfo _cultureInfo = new CultureInfo("id-ID");
-
+    private readonly CultureInfo _cultureInfo = new("id-ID");
+    
     public MainLayout()
 	{
 		InitializeComponent();
         _ = LoadMenu();
         SetupClock();
-
     }
 
     private async Task LoadMenu()
     {
-        try
+        if (DeviceInfo.Platform == DevicePlatform.MacCatalyst ||DeviceInfo.Platform == DevicePlatform.WinUI)
         {
-            List<MenuBarItem> menuCreator = await new MenuCreator(AppConfig.PATH_FILE_MENU, MainTabbedPage).CreateMenuAsync();
-            foreach (var item in menuCreator)
+            if (Application.Current != null)
             {
-                MenuBarItems.Add(item);
+                MenuBarItems.Clear();
+                var menuCreator = await new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync();
+                foreach (var item in menuCreator)
+                {
+                    MenuBarItems.Add(item);
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"LOAD MENU ERROR: {ex.Message} {ex.Source}");
         }
     }
 

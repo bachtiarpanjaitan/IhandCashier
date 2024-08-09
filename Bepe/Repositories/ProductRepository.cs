@@ -22,8 +22,8 @@ namespace IhandCashier.Bepe.Repositories
 
         public void GetProducts()
         {
-            Product = new ObservableCollection<Product>((IEnumerable<Product>)_db.Product.ToList());
-            //Product.Add(new Product(1, "Maria Anders", "Germany", "ALFKI"));
+            //Product = new ObservableCollection<Product>_db.Product.ToList());
+            Product.Add(new Product(1, "Maria Anders", "Germany", "ALFKI"));
         }
     }
 }
