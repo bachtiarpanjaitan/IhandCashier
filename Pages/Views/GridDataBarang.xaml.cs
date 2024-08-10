@@ -13,13 +13,12 @@ namespace IhandCashier.Pages.Views
             SfDataGrid dataGrid = new()
             {
                 ColumnWidthMode = ColumnWidthMode.Fill,
-                RowHeight = 35,
                 Margin = new Thickness(5),
                 Padding = new Thickness(5),
             };
             var pagination = new Pagination<Product>(0, 20);
             pagination.SetDataGrid(dataGrid);
-        
+            var viewPagination = pagination.Build();
             var grid = new Grid
             {
                 ColumnDefinitions = {
@@ -32,7 +31,7 @@ namespace IhandCashier.Pages.Views
                 },
             };
             grid.Add(dataGrid,0,0);
-            grid.Add(pagination.Build(),0,1);
+            grid.Add(viewPagination,0,1);
         
             Content = grid;
         }

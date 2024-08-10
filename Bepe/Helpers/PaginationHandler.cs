@@ -16,11 +16,20 @@ namespace IhandCashier.Bepe.Helpers
         
         public async Task<List<T>> GetDataAsync<T>() where T : class
         {
-            var items = await _baseRepository.GetEntities<T>()
-                .Skip(Index * Size)
-                .Take(Size)
-                .ToListAsync();
-            return items;
+            try
+            {
+                var items = await _baseRepository.GetEntities<T>()
+                    .Skip(Index * Size)
+                    .Take(Size)
+                    .ToListAsync();
+                return items;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error AppDbContext:29 : {e.Message}");
+            }
+
+            throw new InvalidOperationException();
         }
         
         public int GetTotalDataAsync<T>() where T : class

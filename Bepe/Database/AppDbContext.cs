@@ -5,6 +5,9 @@ using IhandCashier.Bepe.Entities;
 public class AppDbContext : DbContext
 {
     public DbSet<Product> Product { get; set; }
+    public DbSet<BasicUnit> BasicUnit { get; set; }
+    public DbSet<Unit> Unit { get; set; }
+    public DbSet<User> User { get; set; }
 
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -20,8 +23,10 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Product>()
-        .ToTable("products");
+        modelBuilder.Entity<Product>().ToTable("products");
+        modelBuilder.Entity<User>().ToTable("users");
+        modelBuilder.Entity<Unit>().ToTable("units");
+        modelBuilder.Entity<BasicUnit>().ToTable("basic_units");
 
         base.OnModelCreating(modelBuilder);
     }

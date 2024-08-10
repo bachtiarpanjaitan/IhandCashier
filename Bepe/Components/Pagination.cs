@@ -13,7 +13,10 @@ namespace IhandCashier.Bepe.Components
         private Button prevButton = new Button { Text = "Sebelumnya" };
         private Button nextButton = new Button { Text = "Selanjutnya" };
         private Button pageLabel;
+        private Button totalLabel;
+
         private int Total;
+        private int PageCount = 0;
         private Task<List<T>> _PagedData;
         private SfDataGrid _dataGrid;
         public Task<List<T>> PagedData
@@ -31,7 +34,6 @@ namespace IhandCashier.Bepe.Components
         {
             PageIndex = index;
             PageSize = size;
-            _ = UpdatePagedData();
         }
 
         public void SetDataGrid(SfDataGrid grid)
@@ -44,6 +46,7 @@ namespace IhandCashier.Bepe.Components
             pageLabel = new Button { Text = $"{PageIndex + 1 }", Margin = new Thickness(10,0,10,0)};
             prevButton.Clicked += OnPrevButtonClicked;
             nextButton.Clicked += OnNextButtonClicked;
+            totalLabel = new Button { Text = $"{(PageIndex + 1)}/{PageCount}", Margin = new Thickness(10, 0, 10, 0) };
             
             StackLayout _Layout = new StackLayout
             {
@@ -53,6 +56,7 @@ namespace IhandCashier.Bepe.Components
             _Layout.Children.Add(prevButton);
             _Layout.Children.Add(pageLabel);
             _Layout.Children.Add(nextButton);
+            _Layout.Children.Add(totalLabel);
             _Layout.Margin = new Thickness(0, 0,0,10);
 
             return _Layout;
@@ -85,12 +89,15 @@ namespace IhandCashier.Bepe.Components
             var ph = new PaginationHandler(PageIndex, PageSize);
             PagedData = Task.FromResult(await ph.GetDataAsync<T>());
             Total = ph.GetTotalDataAsync<T>();
+            double result = (double)Total / PageSize;
+            PageCount = (int)Math.Ceiling(result);
             _dataGrid.ItemsSource = PagedData.Result;
         }
         
         private void UpdatePageLabel()
         {
             pageLabel.Text = $"{PageIndex + 1}";
+            totalLabel.Text = $"{PageIndex + 1}/{PageCount}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
