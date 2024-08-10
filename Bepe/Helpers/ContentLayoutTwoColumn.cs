@@ -40,23 +40,23 @@ namespace IhandCashier.Bepe.Helpers
             ContentPlaceholder.Children.Add(c);
         }
 
-        public Grid GenerateFrame()
+        public Frame GenerateFrame()
 		{
             
             var splitter = new BoxView { Color = (Color) Application.Current.Resources["IcBorderColor"], WidthRequest = 2 };
             grid.Add(splitter,1,0);
-            //var frame = new Frame
-            //{
-            //    Content = grid,
-            //    BackgroundColor = Colors.Transparent,
-            //    BorderColor = (Color)Application.Current.Resources["IcBorderColor"],
-            //    CornerRadius = 5,
-            //    Padding = 0,
-            //    Margin = 5,
-            //    HasShadow = false
-            //};
+            var frame = new Frame
+            {
+                Content = grid,
+                BackgroundColor = Colors.Transparent,
+                BorderColor = (Color)Application.Current.Resources["IcBorderColor"],
+                CornerRadius = 5,
+                Padding = 0,
+                Margin = 5,
+                HasShadow = false
+            };
 
-            return grid;
+            return frame;
         }
 	}
 }

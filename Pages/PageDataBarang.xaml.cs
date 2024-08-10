@@ -12,7 +12,7 @@ public partial class PageDataBarang : PageController
 
         SideMenus.Add("barang", new MenuItemPage { Label = "DATA BARANG", Page =  typeof(GridDataBarang).FullName });
         SideMenus.Add("satuan", new MenuItemPage { Label = "DATA SATUAN BARANG", Page = typeof(GridDataSatuanBarang).FullName });
-
+        
         DefineLayoutTwoColumn();
 	}
 }

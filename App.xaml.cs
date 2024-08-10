@@ -9,7 +9,7 @@ public partial class App : Application
     public App()
 	{
         InitializeComponent();
-        SyncfusionLicenseProvider.RegisterLicense("MzQxNTM1MUAzMjM2MmUzMDJlMzBRTUc0OFIxOUVCNFgvcHk1aDFqY2V6dGtqSzJPYmRhTitpejY3ZEsySERBPQ==");
+        SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NHaF5cXmVCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXdeeXVcQmdZVkB+WUM=");
         TableBuilder.Build();
         MainPage = new MainLayout();
 

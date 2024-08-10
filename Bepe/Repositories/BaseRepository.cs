@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Repositories
 {
-	public static class BaseRepository
+	public class BaseRepository
 	{
-		public static AppDbContext Context()
-		{
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlite(DatabaseConfig.DatabasePath());
+		public AppDbContext DB;
 
-            return new AppDbContext(optionsBuilder.Options);
-        }
+		public BaseRepository()
+		{
+			var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+			optionsBuilder.UseSqlite(DatabaseConfig.DatabasePath());
+			DB =  new AppDbContext(optionsBuilder.Options);
+		}
 	}
 }
 

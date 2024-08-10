@@ -30,6 +30,11 @@
 		<Description>Aplikasi kasir yang dibangun khusus untuk usaha mikro dan menengah</Description>
 		<BuildWithMSBuildOnMono>true</BuildWithMSBuildOnMono>
 		<LangVersion>latestmajor</LangVersion>
+		<Company>HMP Basapadi</Company>
+		<Product>Ihand Cashier</Product>
+		<AssemblyVersion>0.0.1</AssemblyVersion>
+		<FileVersion>1</FileVersion>
+		<NeutralLanguage>en-ID</NeutralLanguage>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
@@ -42,6 +47,10 @@
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 	  <WarningLevel>4</WarningLevel>
 	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <MtouchLink>SdkOnly</MtouchLink>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+	  <MtouchLink>SdkOnly</MtouchLink>
 	</PropertyGroup>
 	<ItemGroup>
 	  <MauiImage Remove="Resources\Images\document.png" />
@@ -75,7 +84,7 @@
 <!--	  <PackageReference Include="Microsoft.Maui.Controls.Core" Version="7.0.101" />-->
 <!--	  <PackageReference Include="Microsoft.Maui.Core" Version="7.0.101" />-->
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="26.2.8" />
+	  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="23.1.44" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
 	  <PackageReference Include="Basapadi" Version="0.0.1-alpha" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />

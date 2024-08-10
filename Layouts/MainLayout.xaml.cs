@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
+using IhandCashier.Pages;
 
 namespace IhandCashier.Layouts;
 
@@ -14,6 +15,8 @@ public partial class MainLayout : ContentPage
 		InitializeComponent();
         _ = LoadMenu();
         SetupClock();
+
+        Container.Content = new PageHome();
     }
 
     private async Task LoadMenu()

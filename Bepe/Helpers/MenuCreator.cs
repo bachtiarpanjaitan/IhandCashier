@@ -110,12 +110,10 @@ namespace IhandCashier.Bepe.Helpers
                 try
                 {
                     var data = menuBarItem?.CommandParameter as String;
-                    Type type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + data);
-                    if (type != null)
-                    {
-                        object instance = Activator.CreateInstance(type);
-                        context.ChangeContent((ContentView)instance);
-                    }
+                    var type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + data);
+                    if (type == null) return;
+                    var instance = Activator.CreateInstance(type);
+                    context.ChangeContent((ContentView)instance);
                 } catch (Exception ex)
                 {
                     Console.WriteLine($"Error Click : {ex.Message}");

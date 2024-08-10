@@ -50,13 +50,11 @@ namespace IhandCashier.Bepe.Components
         private async void OnCLickItem(object sender, EventArgs e, string page)
         {
             var btn = sender as Button;
-            if (btn != null)
-            {
-                // Animasi: skala frame saat diklik
-                await btn.ScaleTo(0.9, 25, Easing.CubicIn);
-                await btn.ScaleTo(1, 25, Easing.CubicOut);
-                ItemTapped?.Invoke(this, new EventHandlerPageArgs(sender, e, page));
-            }
+            if (btn == null) return;
+            // Animasi: skala frame saat diklik
+            await btn.ScaleTo(1, 5, Easing.CubicIn);
+            await btn.ScaleTo(1, 5, Easing.CubicOut);
+            ItemTapped?.Invoke(this, new EventHandlerPageArgs(sender, e, page));
         }
 
         public void SetMenuItems(Dictionary<String, MenuItemPage> items)
