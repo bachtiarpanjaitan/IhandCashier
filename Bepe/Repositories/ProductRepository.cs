@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Entities;
-using IhandCashier.Bepe.Models;
 
 namespace IhandCashier.Bepe.Repositories
 {

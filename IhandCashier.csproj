@@ -96,14 +96,11 @@
 	  <Folder Include="Bepe\" />
 	  <Folder Include="Bepe\Constants\" />
 	  <Folder Include="Bepe\ViewModels\" />
-	  <Folder Include="Bepe\Helpers\" />
 	  <Folder Include="Resources\Datas\" />
 	  <Folder Include="Bepe\Types\" />
-	  <Folder Include="Bepe\Components\" />
 	  <Folder Include="Pages\Views\" />
 	  <Folder Include="Bepe\Interfaces\" />
 	  <Folder Include="Bepe\Controllers\" />
-	  <Folder Include="Bepe\Repositories\" />
 	  <Folder Include="Bepe\Migrations\" />
 	  <Folder Include="Bepe\Models\" />
 	</ItemGroup>
