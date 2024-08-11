@@ -94,10 +94,8 @@
 	  <Folder Include="Layouts\" />
 	  <Folder Include="Pages\" />
 	  <Folder Include="Bepe\" />
-	  <Folder Include="Bepe\Constants\" />
 	  <Folder Include="Bepe\ViewModels\" />
 	  <Folder Include="Resources\Datas\" />
-	  <Folder Include="Bepe\Types\" />
 	  <Folder Include="Pages\Views\" />
 	  <Folder Include="Bepe\Interfaces\" />
 	  <Folder Include="Bepe\Controllers\" />
@@ -128,5 +126,10 @@
 	  <MauiPlatformSpecificFolder Remove="Platforms\Android\" />
 	  <MauiPlatformSpecificFolder Remove="Platforms\iOS\" />
 	  <MauiPlatformSpecificFolder Remove="Platforms\Tizen\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="Syncfusion.Maui.DataGrid">
+	    <HintPath>..\..\..\..\..\.nuget\packages\syncfusion.maui.datagrid\23.2.7\lib\net7.0-maccatalyst16.1\Syncfusion.Maui.DataGrid.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 </Project>

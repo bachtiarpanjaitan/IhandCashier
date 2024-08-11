@@ -1,6 +1,8 @@
 ﻿
 using IhandCashier.Bepe.Components;
+using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Entities;
+using IhandCashier.Bepe.Types;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views
@@ -10,32 +12,15 @@ namespace IhandCashier.Pages.Views
         public GridDataBarang()
         {
             InitializeComponent();
-            SfDataGrid dataGrid = new()
-            {
-                ColumnWidthMode = ColumnWidthMode.Fill,
-                Margin = new Thickness(5),
-                Padding = new Thickness(5),
-            };
-            var pagination = new Pagination<Product>(0, 20);
-            pagination.SetDataGrid(dataGrid);
-            var viewPagination = pagination.Build();
-            var grid = new Grid
-            {
-                ColumnDefinitions = {
-                    new ColumnDefinition { Width = GridLength.Star }
-                },
-                RowDefinitions =
-                {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = 40 }
-                },
-            };
-            grid.Add(dataGrid,0,0);
-            grid.Add(viewPagination,0,1);
-        
-            Content = grid;
-        }
+            var grid = new IcDataGrid<Product>([
+                new ColumnType { Type = ColumnTypes.Text, MappingName = "id", HeaderText = "ID", Format = "N0"},
+                new ColumnType { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
+                new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
+                new ColumnType { Type = ColumnTypes.Text, MappingName = "gambar", HeaderText = "GAMBAR"}
 
+            ]);
+            Content = grid.GetView();
+        }
     }
 }
 

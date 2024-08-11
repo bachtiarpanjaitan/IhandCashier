@@ -6,7 +6,7 @@ using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Bepe.Components
 {
-    public class Pagination<T> : INotifyPropertyChanged where T : class
+    public sealed class Pagination<T> : INotifyPropertyChanged where T : class
     {
         private int PageIndex = 0;
         private int PageSize = 0;
@@ -30,23 +30,19 @@ namespace IhandCashier.Bepe.Components
         }
         
         
-        public Pagination(int index, int size)
+        public Pagination(int index, int size, SfDataGrid grid)
         {
             PageIndex = index;
             PageSize = size;
-        }
-
-        public void SetDataGrid(SfDataGrid grid)
-        {
             _dataGrid = grid;
         }
 
         private StackLayout CreateLayout()
         {
-            pageLabel = new Button { Text = $"{PageIndex + 1 }", Margin = new Thickness(10,0,10,0)};
+            pageLabel = new Button { Text = $"{PageIndex + 1}/{PageCount}", Margin = new Thickness(10,0,10,0)};
             prevButton.Clicked += OnPrevButtonClicked;
             nextButton.Clicked += OnNextButtonClicked;
-            totalLabel = new Button { Text = $"{(PageIndex + 1)}/{PageCount}", Margin = new Thickness(10, 0, 10, 0) };
+            totalLabel = new Button { Text = $"{Total}", Margin = new Thickness(10, 0, 10, 0) };
             
             StackLayout _Layout = new StackLayout
             {
@@ -57,7 +53,7 @@ namespace IhandCashier.Bepe.Components
             _Layout.Children.Add(pageLabel);
             _Layout.Children.Add(nextButton);
             _Layout.Children.Add(totalLabel);
-            _Layout.Margin = new Thickness(0, 0,0,10);
+            _Layout.Margin = new Thickness(0, 5,0,5);
 
             return _Layout;
         }
@@ -73,7 +69,6 @@ namespace IhandCashier.Bepe.Components
             if (PageIndex <= 0) return;
             PageIndex--;
             _ = UpdatePagedData();
-            UpdatePageLabel();
         }
 
         private void OnNextButtonClicked(object sender, EventArgs e)
@@ -81,7 +76,6 @@ namespace IhandCashier.Bepe.Components
             if ((PageIndex + 1) * PageSize >= Total) return;
             PageIndex++;
             _ = UpdatePagedData();
-            UpdatePageLabel();
         }
         
         private async Task UpdatePagedData()
@@ -92,17 +86,18 @@ namespace IhandCashier.Bepe.Components
             double result = (double)Total / PageSize;
             PageCount = (int)Math.Ceiling(result);
             _dataGrid.ItemsSource = PagedData.Result;
+            UpdatePageLabel();
         }
         
         private void UpdatePageLabel()
         {
-            pageLabel.Text = $"{PageIndex + 1}";
-            totalLabel.Text = $"{PageIndex + 1}/{PageCount}";
+            pageLabel.Text = $"{PageIndex + 1}/{PageCount}";
+            totalLabel.Text = $"{Total}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
