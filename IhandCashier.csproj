@@ -86,7 +86,6 @@
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="23.1.44" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
-	  <PackageReference Include="Basapadi" Version="0.0.1-alpha" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.20" />
 	</ItemGroup>
@@ -128,6 +127,9 @@
 	  <MauiPlatformSpecificFolder Remove="Platforms\Tizen\" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Reference Include="Basapadi">
+	    <HintPath>Basapadi\Basapadi.dll</HintPath>
+	  </Reference>
 	  <Reference Include="Syncfusion.Maui.DataGrid">
 	    <HintPath>..\..\..\..\..\.nuget\packages\syncfusion.maui.datagrid\23.2.7\lib\net7.0-maccatalyst16.1\Syncfusion.Maui.DataGrid.dll</HintPath>
 	  </Reference>

@@ -9,7 +9,9 @@ public partial class App : Application
     public App()
 	{
         InitializeComponent();
-        SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NHaF5cXmVCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXdeeXVcQmdZVkB+WUM=");
+        var basapadi = new Basapadi.Config();
+        var key = basapadi.SyncfusionKey("BEPE_23");
+        SyncfusionLicenseProvider.RegisterLicense(key);
         TableBuilder.Build();
         MainPage = new MainLayout();
 
