@@ -1,4 +1,5 @@
 ﻿using IhandCashier.Bepe.Configs;
+using IhandCashier.Bepe.Providers;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Maui.Core.Hosting;
 
@@ -23,14 +24,12 @@ public static class MauiProgram
             options.UseSqlite($"Data Source={cs}");
         });
 
+        #region Initialize Component Provider
+        DatagridProvider.Initialize();
+        #endregion
+       
+
         var app = builder.Build();
-        using (var scope = app.Services.CreateScope())
-        {
-            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            dbContext.Database.Migrate(); // Terapkan migrasi
-                                          // Atau, jika menggunakan seed data:
-                                          // SeedData.Initialize(dbContext);
-        }
         return app;
 	}
 }

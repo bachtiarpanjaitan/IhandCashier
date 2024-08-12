@@ -1,11 +1,11 @@
 using System.ComponentModel;
+using IhandCashier.Bepe.Providers;
 
 namespace IhandCashier.Bepe.Components;
 
-public class FilterOne<T>  where T : class
+public static class FilterOne<T>  where T : class
 {
-    private readonly string _moduleName;
-    private readonly Entry _search = new()
+    private readonly static Entry Search = new()
     {
         HorizontalOptions = LayoutOptions.End,
         VerticalOptions = LayoutOptions.Center,
@@ -15,7 +15,7 @@ public class FilterOne<T>  where T : class
         FontAttributes = FontAttributes.Bold,
         MinimumWidthRequest = 50
     };
-    private readonly Button _searchBtn = new()
+    private readonly static Button SearchBtn = new()
     {
         HorizontalOptions = LayoutOptions.End,
         VerticalOptions = LayoutOptions.Center,
@@ -23,7 +23,7 @@ public class FilterOne<T>  where T : class
         WidthRequest = 100,
         Margin = new Thickness(10, 0)
     };
-    private readonly Label _moduleLabel = new()
+    private readonly static Label ModuleLabel = new()
     {
         Text = "",
         HorizontalOptions = LayoutOptions.Start,
@@ -33,7 +33,7 @@ public class FilterOne<T>  where T : class
         FontSize = 20
         
     };
-    private readonly Grid _grid = new()
+    private readonly static Grid Grid = new()
     {
         ColumnDefinitions =
         {
@@ -43,34 +43,15 @@ public class FilterOne<T>  where T : class
         }
     };
     
-    private readonly Frame _frame = new()
-    {
-        CornerRadius = 5,
-        BackgroundColor = Colors.Transparent,
-        Margin = new Thickness(5,0),
-    };
-    
-    public event PropertyChangedEventHandler PropertyChanged;
-    
+    public static event PropertyChangedEventHandler PropertyChanged;
 
-    public FilterOne(string moduleName)
-    {
-        _moduleName = moduleName;
-        _grid.Add(_moduleLabel,0);
-        _grid.Add(_search,1);
-        _grid.Add(_searchBtn,2);
-    }
 
-    private Frame CreateLayout()
+    public static void Initialize(string moduleName)
     {
-        _moduleLabel.Text = _moduleName;
-        _frame.Content = _grid;
-        return _frame;
+        ModuleLabel.Text = moduleName;
+        Grid.Add(ModuleLabel,0);
+        Grid.Add(Search,1);
+        Grid.Add(SearchBtn,2);
+        DatagridProvider.HeaderFrame.Content = Grid;
     }
-    
-    public Frame Build()
-    {
-        return CreateLayout();
-    }
-    
 }

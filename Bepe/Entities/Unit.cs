@@ -11,7 +11,7 @@ namespace IhandCashier.Bepe.Entities
         [Key]
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
-
+        
         public int? basic_unit_id { get; set; }
 
         [Required]
@@ -24,7 +24,7 @@ namespace IhandCashier.Bepe.Entities
         public decimal konversi { get; set; }
 
         [Ignore]
-        public BasicUnit BasicUnit { get; set; }
+        public BasicUnit basic_unit_ { get; set; }
     }
 }
 

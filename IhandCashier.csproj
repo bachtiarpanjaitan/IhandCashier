@@ -26,7 +26,7 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<Description>Aplikasi kasir yang dibangun khusus untuk usaha mikro dan menengah</Description>
 		<BuildWithMSBuildOnMono>true</BuildWithMSBuildOnMono>
-		<LangVersion>latestmajor</LangVersion>
+		<LangVersion>12</LangVersion>
 		<Company>HMP Basapadi</Company>
 		<Product>Ihand Cashier</Product>
 		<AssemblyVersion>0.0.1</AssemblyVersion>
@@ -90,7 +90,6 @@
 	<ItemGroup>
 	  <Folder Include="Layouts\" />
 	  <Folder Include="Pages\" />
-	  <Folder Include="Bepe\" />
 	  <Folder Include="Bepe\ViewModels\" />
 	  <Folder Include="Resources\Datas\" />
 	  <Folder Include="Pages\Views\" />
