@@ -20,8 +20,16 @@ public static class FilterOne<T>  where T : class
         HorizontalOptions = LayoutOptions.End,
         VerticalOptions = LayoutOptions.Center,
         Text = "Cari",
-        WidthRequest = 100,
+        WidthRequest = 80,
         Margin = new Thickness(10, 0)
+    };
+    private readonly static Button AddBtn = new()
+    {
+        HorizontalOptions = LayoutOptions.End,
+        VerticalOptions = LayoutOptions.Center,
+        Text = "Tambah",
+        WidthRequest = 100,
+        Margin = new Thickness(5, 0)
     };
     private readonly static Label ModuleLabel = new()
     {
@@ -39,7 +47,8 @@ public static class FilterOne<T>  where T : class
         {
             new ColumnDefinition { Width = GridLength.Auto }, // Kolom untuk label modul
             new ColumnDefinition { Width = GridLength.Star }, // Kolom untuk komponen kanan pertama
-            new ColumnDefinition { Width = GridLength.Auto } // Kolom untuk komponen kanan kedua
+            new ColumnDefinition { Width = GridLength.Auto },
+            new ColumnDefinition { Width = GridLength.Auto }
         }
     };
     
@@ -52,6 +61,7 @@ public static class FilterOne<T>  where T : class
         Grid.Add(ModuleLabel,0);
         Grid.Add(Search,1);
         Grid.Add(SearchBtn,2);
+        Grid.Add(AddBtn,3);
         DatagridProvider.HeaderFrame.Content = Grid;
     }
 }

@@ -12,11 +12,11 @@ namespace IhandCashier.Bepe.Entities
         public int id { get; set; }
 
         [Required]
-        public string Nama { get; set; }
+        public string nama { get; set; }
 
         // Navigation property
         [Ignore]
-        public ICollection<Unit> Units { get; set; }
+        public ICollection<Unit> units { get; set; }
     }
 }
 

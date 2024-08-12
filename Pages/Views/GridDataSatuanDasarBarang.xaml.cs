@@ -1,4 +1,3 @@
-﻿
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Entities;
@@ -7,19 +6,16 @@ using IhandCashier.Bepe.Types;
 
 namespace IhandCashier.Pages.Views
 {
-    public partial class GridDataBarang : ContentView
+    public partial class GridDataSatuanDasarBarang : ContentView
     {
-        private const string ModuleName = "Data Barang";
-        public GridDataBarang()
+        private const string ModuleName = "Data Satuan Dasar Barang";
+        public GridDataSatuanDasarBarang()
         {
             InitializeComponent();
-            new Pagination<Product>();
+            new Pagination<BasicUnit>();
             List<ColumnType> columns = [
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "id", Width = 100, HeaderText = "ID", Format = "N0" },
-                new ColumnType { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
-                new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
-                new ColumnType { Type = ColumnTypes.Text, MappingName = "gambar", HeaderText = "GAMBAR"}
-
+                new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA SATUAN"},
             ];
             
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);

@@ -7,7 +7,7 @@ namespace IhandCashier.Pages.Views;
 
 public partial class GridDataSatuanBarang : ContentView
 {
-	private String ModuleName = "Data Satuan Barang";
+	private const string ModuleName = "Data Satuan Barang";
 	public GridDataSatuanBarang()
 	{
 		InitializeComponent();
