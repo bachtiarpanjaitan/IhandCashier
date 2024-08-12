@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using IhandCashier.Bepe.Configs;
+﻿using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Types;
 
@@ -37,7 +36,6 @@ namespace IhandCashier.Bepe.Components
             var button = new Button
             {
                 Text = text,
-                BorderWidth = 1,
                 CornerRadius = 5,
                 Margin = 5
             };

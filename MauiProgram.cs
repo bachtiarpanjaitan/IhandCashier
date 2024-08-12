@@ -21,7 +21,6 @@ public static class MauiProgram
 		{
             string cs = DatabaseConfig.DatabasePath();
             options.UseSqlite($"Data Source={cs}");
-
         });
 
         var app = builder.Build();

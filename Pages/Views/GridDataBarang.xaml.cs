@@ -18,7 +18,7 @@ namespace IhandCashier.Pages.Views
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "gambar", HeaderText = "GAMBAR"}
 
-            ]);
+            ], "Data Barang");
             Content = grid.GetView();
         }
     }

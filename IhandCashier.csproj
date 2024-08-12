@@ -3,10 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0-maccatalyst</TargetFramework>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
-		<!--<RuntimeIdentifiers>maccatalyst-arm64</RuntimeIdentifiers>-->
-		<!--<RuntimeIdentifiers>maccatalyst-x64</RuntimeIdentifiers>-->
+		<RuntimeIdentifiers>maccatalyst-x64</RuntimeIdentifiers>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>IhandCashier</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -35,6 +32,7 @@
 		<AssemblyVersion>0.0.1</AssemblyVersion>
 		<FileVersion>1</FileVersion>
 		<NeutralLanguage>en-ID</NeutralLanguage>
+		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
@@ -87,7 +85,7 @@
 	  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="23.1.44" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.20" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.20" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Layouts\" />
