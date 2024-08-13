@@ -3,7 +3,7 @@ using IhandCashier.Bepe.Providers;
 
 namespace IhandCashier.Bepe.Components;
 
-public static class FilterOne<T>  where T : class
+public static class FilterOne
 {
     private readonly static Entry Search = new()
     {

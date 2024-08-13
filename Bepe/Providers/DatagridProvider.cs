@@ -1,18 +1,14 @@
-using IhandCashier.Bepe.Constants;
-using IhandCashier.Bepe.Helpers;
-using IhandCashier.Bepe.Types;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Bepe.Providers
 {
     public static class DatagridProvider
     {
-        public readonly static Button PrevButton = new() {Margin = new Thickness(10, 0),WidthRequest = 150,VerticalOptions = LayoutOptions.Center, Text = "Sebelumnya" };
-        public readonly static Button NextButton = new() {Margin = new Thickness(10, 0),WidthRequest = 150,VerticalOptions = LayoutOptions.Center, Text = "Selanjutnya" };
-        public readonly static Label PageLabel = new() {VerticalOptions = LayoutOptions.Center,VerticalTextAlignment = TextAlignment.Center, Text = "", Margin = new Thickness(10,0)};
-        public readonly static Label TotalLabel = new() {VerticalOptions = LayoutOptions.Center,VerticalTextAlignment = TextAlignment.Center, Text = "", Margin = new Thickness(10, 0)};
-        public readonly static PaginationHandler PaginationHandler = new();
-        private readonly static Grid ContainerPagination = new()
+        public static readonly Button PrevButton = new() {Margin = new Thickness(10, 0),WidthRequest = 150,VerticalOptions = LayoutOptions.Center, Text = "Sebelumnya" };
+        public static readonly Button NextButton = new() {Margin = new Thickness(10, 0),WidthRequest = 150,VerticalOptions = LayoutOptions.Center, Text = "Selanjutnya" };
+        public static readonly Label PageLabel = new() {VerticalOptions = LayoutOptions.Center,VerticalTextAlignment = TextAlignment.Center, Text = "", Margin = new Thickness(10,0)};
+        public static readonly Label TotalLabel = new() {VerticalOptions = LayoutOptions.Center,VerticalTextAlignment = TextAlignment.Center, Text = "", Margin = new Thickness(10, 0)};
+        private static readonly Grid ContainerPagination = new()
         {
             ColumnDefinitions =
             {
@@ -52,12 +48,12 @@ namespace IhandCashier.Bepe.Providers
         };
         public static SfDataGrid DataGrid { get; } = new SfDataGrid
         {
-            ColumnWidthMode = ColumnWidthMode.Fill,
             Margin = new Thickness(5),
             Padding = new Thickness(5),
             AutoGenerateColumnsMode = AutoGenerateColumnsMode.None,
             HeaderGridLinesVisibility = GridLinesVisibility.Both,
-            GridLinesVisibility = GridLinesVisibility.Both
+            GridLinesVisibility = GridLinesVisibility.Both,
+            ColumnWidthMode = ColumnWidthMode.None
         };
         
 
@@ -73,6 +69,12 @@ namespace IhandCashier.Bepe.Providers
             LayoutDatagrid.Add(DataGrid,0,1);
             LayoutDatagrid.Add(FooterFrame,0,2);
 
+        }
+        
+        public static void AddClickHandlers(EventHandler previousHandler, EventHandler nextHandler)
+        {
+            PrevButton.Clicked += previousHandler;
+            NextButton.Clicked += nextHandler;
         }
         
 

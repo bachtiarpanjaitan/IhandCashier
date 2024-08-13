@@ -2,8 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0-maccatalyst</TargetFramework>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
-		<RuntimeIdentifiers>maccatalyst-x64</RuntimeIdentifiers>
+		<TargetFramework Condition="$([MSBuild]::IsOSPlatform('windows'))">net7.0-windows10.0.19041.0</TargetFramework>
+		<RuntimeIdentifiers Condition="$([MSBuild]::IsOSPlatform('maccatalyst'))">maccatalyst-x64</RuntimeIdentifiers>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>IhandCashier</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -35,17 +35,16 @@
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
-	  <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|AnyCPU'">
+	  <CreatePackage>true</CreatePackage>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	  <WarningLevel>4</WarningLevel>
-	  <PlatformTarget>AnyCPU</PlatformTarget>
-	  <MtouchLink>SdkOnly</MtouchLink>
+	  	<WarningLevel>4</WarningLevel>
+	  	<PlatformTarget>AnyCPU</PlatformTarget>
+	  	<MtouchLink>SdkOnly</MtouchLink>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 	  <MtouchLink>SdkOnly</MtouchLink>
@@ -77,17 +76,15 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	    <PrivateAssets>all</PrivateAssets>
 	  </PackageReference>
-<!--	  <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />-->
-<!--	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="7.0.101" />-->
-<!--	  <PackageReference Include="Microsoft.Maui.Controls.Core" Version="7.0.101" />-->
-<!--	  <PackageReference Include="Microsoft.Maui.Core" Version="7.0.101" />-->
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="23.1.44" />
+	  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="24.1.47" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.20" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Folder Include="Bepe\Helpers\Factories\" />
+	  <Folder Include="Bepe\Repositories\" />
 	  <Folder Include="Layouts\" />
 	  <Folder Include="Pages\" />
 	  <Folder Include="Bepe\ViewModels\" />
@@ -125,9 +122,6 @@
 	<ItemGroup>
 	  <Reference Include="Basapadi">
 	    <HintPath>Basapadi\Basapadi.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Syncfusion.Maui.DataGrid">
-	    <HintPath>..\..\..\..\..\.nuget\packages\syncfusion.maui.datagrid\23.2.7\lib\net7.0-maccatalyst16.1\Syncfusion.Maui.DataGrid.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 </Project>

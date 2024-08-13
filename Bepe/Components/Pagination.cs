@@ -1,74 +1,66 @@
-
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using IhandCashier.Bepe.Configs;
+using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Providers;
+using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Components
 {
-    public class Pagination<T> : INotifyPropertyChanged where T : class
+    public class Pagination<T> where T : class
     {
         private int _pageIndex = 0;
         private readonly int _pageSize = 0;
         private int _total = 0;
         private int _pageCount = 0;
-        private Task<List<T>> _pagedData;
-        public Task<List<T>> PagedData
-        {
-            get => _pagedData;
-            private set
-            {
-                _pagedData = value;
-                OnPropertyChanged(nameof(PagedData));
-                UpdatePageLabel();
-            }
-        }
-        
+        private IQueryable<T> _query;
         public Pagination()
         {
+            _query = new BaseRepository().Query<T>();
+            _pageIndex = 0;
             _pageSize = AppConfig.DATA_ROW_PER_PAGE;
             _ = UpdatePagedData();
-            UpdatePageLabel();
-            DatagridProvider.PrevButton.Clicked += OnPrevButtonClicked;
-            DatagridProvider.NextButton.Clicked += OnNextButtonClicked;
             DatagridProvider.DataGrid.Columns.Clear();
+            DatagridProvider.AddClickHandlers(OnPrevButtonClicked, OnNextButtonClicked);
+
         }
         
         private void OnPrevButtonClicked(object sender, EventArgs e)
         {
-            if (_pageIndex <= 0) return;
-            _pageIndex--;
-            _ = UpdatePagedData();
+            if (_pageIndex > 0)
+            {
+                _pageIndex--;
+                _ = UpdatePagedData();
+            }
+           
         }
 
         private void OnNextButtonClicked(object sender, EventArgs e)
         {
-            if ((_pageIndex + 1) * _pageSize >= _total) return;
-            _pageIndex++;
-            _ = UpdatePagedData();
+            if ((_pageIndex +1) < _pageCount)
+            {
+                _pageIndex++;
+                _ = UpdatePagedData();
+            }
+           
         }
         
-        public async Task UpdatePagedData()
+        public async Task<List<T>> UpdatePagedData()
         {
-            PagedData = Task.FromResult(await DatagridProvider.PaginationHandler.Limit(_pageIndex).Take(_pageSize).GetAsync<T>());
-            _total = DatagridProvider.PaginationHandler.GetTotalAsync<T>();
-                
-            var result = (double)_total / _pageSize;
-            _pageCount = (int)Math.Ceiling(result);
-            DatagridProvider.DataGrid.ItemsSource = PagedData.Result;
+            _total = await _query.CountAsync();
+            if (_total >= 0)
+            {
+                var result = (double)_total / _pageSize;
+                _pageCount = (int)Math.Ceiling(result);
+                DatagridProvider.DataGrid.ItemsSource = await _query.Skip(_pageIndex * _pageSize).Take(_pageSize).ToListAsync();
+                UpdatePageLabel();
+            }
+
+            throw new InvalidOperationException();
         }
         
         private void UpdatePageLabel()
         {
             DatagridProvider.PageLabel.Text = $"{_pageIndex + 1}/{_pageCount}";
             DatagridProvider.TotalLabel.Text = $"Total {_total} data";
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
     }

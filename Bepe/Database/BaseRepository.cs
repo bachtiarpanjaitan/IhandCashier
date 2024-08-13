@@ -14,7 +14,7 @@ namespace IhandCashier.Bepe.Database
 			Db =  new AppDbContext(optionsBuilder.Options);
 		}
 
-		public IQueryable<T> GetData<T>() where T : class
+		public IQueryable<T> Query<T>() where T : class
 		{
 			return Db.Set<T>();
 		}

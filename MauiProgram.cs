@@ -1,4 +1,6 @@
-﻿using IhandCashier.Bepe.Configs;
+﻿using IhandCashier.Bepe.Components;
+using IhandCashier.Bepe.Configs;
+using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Providers;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Maui.Core.Hosting;

@@ -4,6 +4,5 @@
             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:local2="clr-namespace:IhandCashier.Bepe.Repositories"
              x:Class="IhandCashier.Pages.PageProfile">
 </local:PageController>
