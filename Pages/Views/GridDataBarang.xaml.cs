@@ -19,6 +19,7 @@ namespace IhandCashier.Pages.Views
         {
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
+            
             DatagridProvider.Reset();
             List<ColumnType> columns = [
                 new ColumnType { Type = ColumnTypes.Numeric,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
@@ -27,7 +28,7 @@ namespace IhandCashier.Pages.Views
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "gambar", HeaderText = "GAMBAR"}
             ];
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-            _ = new Pagination<Product>(_service);
+            _ = new Pagination<Product>(_service, typeof(FilterOne));
             Content = DatagridProvider.LayoutDatagrid;
             
             

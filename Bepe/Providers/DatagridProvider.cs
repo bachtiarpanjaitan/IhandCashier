@@ -74,7 +74,7 @@ namespace IhandCashier.Bepe.Providers
 
         }
         
-        public static void AddClickHandlers(EventHandler previousHandler, EventHandler nextHandler)
+        public static void AddPaginationClickHandlers(EventHandler previousHandler, EventHandler nextHandler)
         {
             if (_PrevClickedHandlerRef != null) PrevButton.Clicked -= _PrevClickedHandlerRef;
             

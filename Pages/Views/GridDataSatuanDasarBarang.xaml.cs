@@ -26,7 +26,7 @@ namespace IhandCashier.Pages.Views
             
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
             
-            _ = new Pagination<BasicUnit>(_service);
+            _ = new Pagination<BasicUnit>(_service, typeof(FilterOne));
             Content = DatagridProvider.LayoutDatagrid;
         }
         

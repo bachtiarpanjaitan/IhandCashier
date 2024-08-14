@@ -29,9 +29,16 @@ public class UnitService : IDataService<Unit>
         return _context.Units.Count();
     }
 
-    public async Task<List<Unit>> GetPagingData(int pageIndex, int pageSize)
+    public async Task<List<Unit>> GetPagingData(int pageIndex, int pageSize,string searchQuery)
     {
-        return await _context.Units.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+        IQueryable<Unit> query = _context.Units;
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%") || 
+                                        EF.Functions.Like(item.kode_satuan, $"%{searchQuery}%")
+            );
+        }
+        return await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task AddAsync(Unit product)

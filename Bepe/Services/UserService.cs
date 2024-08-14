@@ -29,9 +29,17 @@ public class UserService : IDataService<User>
         return _context.Users.Count();
     }
 
-    public async Task<List<User>> GetPagingData(int pageIndex, int pageSize)
+    public async Task<List<User>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
-        return await _context.Users.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+        IQueryable<User> query = _context.Users;
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%") || 
+                                        EF.Functions.Like(item.email, $"%{searchQuery}%")||
+                                        EF.Functions.Like(item.username, $"%{searchQuery}%")
+            );
+        }
+        return await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task AddAsync(User product)

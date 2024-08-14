@@ -5,5 +5,5 @@ namespace IhandCashier.Bepe.Interfaces;
 public interface IDataService<T>
 {
     int TotalData();
-    Task<List<T>> GetPagingData(int pageIndex, int pageSize);
+    Task<List<T>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null);
 }

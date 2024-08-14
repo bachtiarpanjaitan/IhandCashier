@@ -30,9 +30,16 @@ public class ProductService : IDataService<Product>
         return _context.Products.Count();
     }
 
-    public async Task<List<Product>> GetPagingData(int pageIndex, int pageSize)
+    public async Task<List<Product>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
-        return await _context.Products.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+        IQueryable<Product> query = _context.Products;
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%") || 
+                                                EF.Functions.Like(item.kode, $"%{searchQuery}%")
+                                                );
+        }
+        return await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task AddAsync(Product product)
