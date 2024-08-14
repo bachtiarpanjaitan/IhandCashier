@@ -89,7 +89,6 @@
 	  <Folder Include="Pages\" />
 	  <Folder Include="Bepe\ViewModels\" />
 	  <Folder Include="Resources\Datas\" />
-	  <Folder Include="Bepe\Interfaces\" />
 	  <Folder Include="Bepe\Controllers\" />
 	  <Folder Include="Bepe\Migrations\" />
 	  <Folder Include="Bepe\Models\" />

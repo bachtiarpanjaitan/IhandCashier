@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Bepe.Providers
@@ -20,14 +21,14 @@ namespace IhandCashier.Bepe.Providers
             HorizontalOptions = LayoutOptions.Center
         };
 
-        public readonly static Frame HeaderFrame = new()
+        public static readonly Frame HeaderFrame = new()
         {
             CornerRadius = 5,
             BackgroundColor = Colors.Transparent,
             Margin = new Thickness(5,0),
         };
         
-        public readonly static Grid LayoutDatagrid = new()
+        public static readonly Grid LayoutDatagrid = new()
         {
             ColumnDefinitions = { new ColumnDefinition { Width = GridLength.Star }},
             Padding = new Thickness(5),
@@ -40,7 +41,7 @@ namespace IhandCashier.Bepe.Providers
             }
         };
 
-        private readonly static Frame FooterFrame =  new()
+        private static readonly Frame FooterFrame =  new()
         {
             CornerRadius = 5,
             BackgroundColor = Colors.Transparent,
@@ -75,6 +76,12 @@ namespace IhandCashier.Bepe.Providers
         {
             PrevButton.Clicked += previousHandler;
             NextButton.Clicked += nextHandler;
+        }
+
+        public static void Reset()
+        {
+           DataGrid.Columns.Clear();
+           DataGrid.ItemsSource = null;
         }
         
 

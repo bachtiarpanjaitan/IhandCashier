@@ -4,10 +4,10 @@ using IhandCashier.Bepe.Entities;
 
 public class AppDbContext : DbContext
 {
-    public DbSet<Product> Product { get; set; }
-    public DbSet<BasicUnit> BasicUnit { get; set; }
-    public DbSet<Unit> Unit { get; set; }
-    public DbSet<User> User { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<BasicUnit> BasicUnits { get; set; }
+    public DbSet<Unit> Units { get; set; }
+    public DbSet<User> Users { get; set; }
 
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
