@@ -11,7 +11,7 @@ public class AppDbContext : DbContext
     public DbSet<Unit> Units { get; set; }
     public DbSet<User> Users { get; set; }
 
-
+    public AppDbContext(){}
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
 
@@ -19,8 +19,7 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
     {
-        string cs = DatabaseConfig.DatabasePath();
-        optionsBuilder.UseSqlite($"Data Source={cs}");
+        if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite($"Data Source={DatabaseConfig.DatabasePath()}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

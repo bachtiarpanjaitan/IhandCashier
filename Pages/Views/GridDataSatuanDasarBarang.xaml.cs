@@ -1,5 +1,6 @@
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
+using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Providers;
 using IhandCashier.Bepe.Services;

@@ -1,4 +1,4 @@
-namespace IhandCashier;
+namespace IhandCashier.Bepe.Database;
 
 public static class ServiceLocator
 {

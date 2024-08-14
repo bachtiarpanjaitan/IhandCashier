@@ -9,13 +9,13 @@ namespace IhandCashier.Bepe.Configs
         {
             if (AppConfig.SAVE_DB_IN_APPDATA)
             {
-                var dir = Path.Combine(FileSystem.AppDataDirectory, "IhandCashier");
+                var dir = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH);
                 Directory.CreateDirectory(dir);
                 return Path.Combine(dir, DatabaseFilename);
             } else
             {
                 string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string path = Path.Combine(docPath, "IhandCashier");
+                string path = Path.Combine(docPath, AppConfig.DEFAULT_PATH);
                 try
                 {
                     if (!Directory.Exists(path))

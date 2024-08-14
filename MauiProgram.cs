@@ -1,8 +1,5 @@
-﻿using IhandCashier.Bepe.Configs;
-using IhandCashier.Bepe.Database;
+﻿using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Providers;
-using IhandCashier.Bepe.Services;
-using Microsoft.EntityFrameworkCore;
 using Syncfusion.Maui.Core.Hosting;
 
 namespace IhandCashier;
@@ -20,22 +17,12 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-        builder.Services.AddDbContext<AppDbContext>(options =>
-		{
-            string cs = DatabaseConfig.DatabasePath();
-            options.UseSqlite($"Data Source={cs}");
-        });
-        
-        builder.Services.AddScoped<ProductService>();
-        builder.Services.AddScoped<UserService>();
-        builder.Services.AddScoped<UnitService>();
-        builder.Services.AddScoped<BasicUnitService>();
-        
+        builder.Services.AddAppServices();
+
         #region Initialize Component Provider
         DatagridProvider.Initialize();
         #endregion
-       
-
+        
         var app = builder.Build();
         ServiceLocator.ServiceProvider = app.Services;
         return app;
