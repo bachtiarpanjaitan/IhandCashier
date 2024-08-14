@@ -5,6 +5,8 @@ namespace IhandCashier.Bepe.Providers
 {
     public static class DatagridProvider
     {
+        private static EventHandler _PrevClickedHandlerRef;
+        private static EventHandler _NextClickedHandlerRef;
         public static readonly Button PrevButton = new() {Margin = new Thickness(10, 0),WidthRequest = 150,VerticalOptions = LayoutOptions.Center, Text = "Sebelumnya" };
         public static readonly Button NextButton = new() {Margin = new Thickness(10, 0),WidthRequest = 150,VerticalOptions = LayoutOptions.Center, Text = "Selanjutnya" };
         public static readonly Label PageLabel = new() {VerticalOptions = LayoutOptions.Center,VerticalTextAlignment = TextAlignment.Center, Text = "", Margin = new Thickness(10,0)};
@@ -47,7 +49,7 @@ namespace IhandCashier.Bepe.Providers
             BackgroundColor = Colors.Transparent,
             Margin = new Thickness(5, 0),
         };
-        public static SfDataGrid DataGrid { get; } = new SfDataGrid
+        public static SfDataGrid DataGrid { get; set; } = new SfDataGrid
         {
             Margin = new Thickness(5),
             Padding = new Thickness(5),
@@ -74,8 +76,15 @@ namespace IhandCashier.Bepe.Providers
         
         public static void AddClickHandlers(EventHandler previousHandler, EventHandler nextHandler)
         {
-            PrevButton.Clicked += previousHandler;
-            NextButton.Clicked += nextHandler;
+            if (_PrevClickedHandlerRef != null) PrevButton.Clicked -= _PrevClickedHandlerRef;
+            
+            if (_NextClickedHandlerRef != null) NextButton.Clicked -= _NextClickedHandlerRef;
+            
+            _PrevClickedHandlerRef = previousHandler;
+            _NextClickedHandlerRef = nextHandler;
+            
+            PrevButton.Clicked += _PrevClickedHandlerRef;
+            NextButton.Clicked += _NextClickedHandlerRef;
         }
 
         public static void Reset()

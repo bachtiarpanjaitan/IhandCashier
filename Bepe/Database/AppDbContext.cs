@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using IhandCashier.Bepe.Configs;
+﻿using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace IhandCashier.Bepe.Database;
 
 public class AppDbContext : DbContext
 {
