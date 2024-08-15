@@ -13,6 +13,16 @@ public partial class App : Application
         SyncfusionLicenseProvider.RegisterLicense(basapadi.SyncfusionKey("BEPE_23"));
         TableBuilder.Build();
         MainPage = new AppShell();
+        #if WINDOWS
+                Microsoft.UI.Xaml.Window window = (Microsoft.UI.Xaml.Window)Window;
+                var displayInformation = Windows.Graphics.Display.DisplayInformation.GetForCurrentView();
+                var screenWidth = displayInformation.ScreenWidthInRawPixels;
+                var screenHeight = displayInformation.ScreenHeightInRawPixels;
+
+                window.Width = screenWidth;
+                window.Height = screenHeight;
+                window.CenterOnScreen();
+        #endif
 
     }
 }

@@ -16,7 +16,7 @@ public partial class MainLayout : ContentPage
 		InitializeComponent();
         _ = LoadMenu();
         SetupClock();
-        // setDataGridTheme();
+        // Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
         Container.Content = new PageHome();
     }
 
