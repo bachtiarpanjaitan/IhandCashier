@@ -1,3 +1,4 @@
+using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Services;
 
 namespace IhandCashier.Bepe.Database;
@@ -13,5 +14,11 @@ public static class ServiceExtension
         services.AddScoped<UserService>();
         services.AddScoped<UnitService>();
         services.AddScoped<BasicUnitService>();
+        services.AddScoped<CustomerService>();
+        services.AddScoped<ProductPriceService>();
+        services.AddScoped<ProductReceiptDetailService>();
+        services.AddScoped<ProductReceiptService>();
+        services.AddScoped<ProductStockService>();
+        services.AddScoped<SupplierService>();
     }
 }

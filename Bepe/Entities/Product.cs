@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using IhandCashier.Bepe.Interfaces;
-using SQLite;
 
 namespace IhandCashier.Bepe.Entities
 {
@@ -9,7 +9,7 @@ namespace IhandCashier.Bepe.Entities
     public class Product : IEntity
     {
         [Key]
-        [PrimaryKey, AutoIncrement]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         [Required]
@@ -21,4 +21,3 @@ namespace IhandCashier.Bepe.Entities
         public string gambar { get; set; }
     }
 }
-

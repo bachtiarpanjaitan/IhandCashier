@@ -20,16 +20,8 @@
                 "class": "PageDataBarang"
             },
             {
-                "label": "Data Kasir",
-                "class": "PageDataKasir"
-            },
-            {
-                "label": "Data Pemasok",
-                "class": "PageDataPemasok"
-            },
-            {
-                "label": "Data Pelanggan",
-                "class": "PageDataPelanggan"
+                "label": "Data Pengguna",
+                "class": "PageDataPengguna"
             }
         ]
     },

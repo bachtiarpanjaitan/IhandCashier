@@ -26,7 +26,6 @@ CREATE TABLE barang (
 -- Tabel harga_barang
 CREATE TABLE harga_barang (
     harga_barang_id INT PRIMARY KEY AUTO_INCREMENT,
-    kode_transaksi VARCHAR(50) NOT NULL,
     barang_id INT NOT NULL,
     harga DECIMAL(15, 2) NOT NULL,
     tanggal_berlaku DATE NOT NULL,
