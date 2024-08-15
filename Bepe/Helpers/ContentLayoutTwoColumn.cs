@@ -52,7 +52,7 @@ namespace IhandCashier.Bepe.Helpers
                 BorderColor = (Color)Application.Current.Resources["IcBorderColor"],
                 CornerRadius = 5,
                 Padding = 0,
-                Margin = 5,
+                Margin = new Thickness(0,0,0,5),
                 HasShadow = false
             };
 

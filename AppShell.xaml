@@ -3,9 +3,10 @@
     x:Class="IhandCashier.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Shell.FlyoutBehavior="Disabled"
-    Shell.NavBarIsVisible="False">
-    <Shell.MenuBarItems></Shell.MenuBarItems>
+    xmlns:layouts="clr-namespace:IhandCashier.Layouts"
+    Shell.FlyoutBehavior="Disabled" FlyoutIsPresented="False">
+    
+    <ShellContent ContentTemplate="{DataTemplate layouts:MainLayout}" Route="MainLayout" />
 
 </Shell>
 

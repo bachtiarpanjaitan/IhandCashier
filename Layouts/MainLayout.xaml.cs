@@ -16,7 +16,7 @@ public partial class MainLayout : ContentPage
 		InitializeComponent();
         _ = LoadMenu();
         SetupClock();
-        // setDataGridTheme();
+        Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
         Container.Content = new PageHome();
     }
 
@@ -62,21 +62,6 @@ public partial class MainLayout : ContentPage
         base.OnDisappearing();
         _timer?.Stop();
         _timer?.Dispose();
-    }
-    
-    private void setDataGridTheme()
-    {
-        if (Application.Current != null)
-        {
-            var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-            var theme = mergedDictionaries?.OfType<SyncfusionThemeResourceDictionary>().FirstOrDefault();
-            var currentTheme = Application.Current.RequestedTheme;
-            if (theme != null)
-            {
-                if (currentTheme == AppTheme.Dark) theme.SfVisualTheme = SfVisuals.DarkDefault;
-                else theme.SfVisualTheme = SfVisuals.LightDefault;
-            }
-        }
     }
 
 }
