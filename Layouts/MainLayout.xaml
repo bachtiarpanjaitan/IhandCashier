@@ -23,25 +23,25 @@
             </Grid.RowDefinitions>
 
             <Frame
-                   Padding="10,10,0,10"
+                   Padding="10,0,0,0"
                    Grid.Row="0"
                    Grid.Column="0">
-                <Label x:Name="LJamAplikasi"  FontSize="Small" Text="0000-00-00 00:00:00" VerticalOptions="Center"/>
+                <Label x:Name="LJamAplikasi"  FontSize="10" Text="0000-00-00 00:00:00" VerticalOptions="Center"/>
             </Frame>
 
             <Frame
                    x:Name="LUser"
-                   Padding="10"
+                   Padding="10,0"
                    Grid.Row="0"
                    Grid.Column="1">
-                <Label Text="Unknown"  FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Unknown"  FontSize="10" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Frame>
 
             <Frame
-                   Padding="10"
+                   Padding="10,0"
                    Grid.Row="0"
                    Grid.Column="2">
-                <Label Text="© 2024 HMP Basapadi" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label Text="© 2024 HMP Basapadi" FontSize="10" HorizontalOptions="Center" VerticalOptions="Center" />
             </Frame>
         </Grid>
     </Grid>

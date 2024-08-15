@@ -16,7 +16,7 @@ public partial class MainLayout : ContentPage
 		InitializeComponent();
         _ = LoadMenu();
         SetupClock();
-        // Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
+        Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
         Container.Content = new PageHome();
     }
 
