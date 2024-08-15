@@ -32,7 +32,8 @@ public static class FilterOne
         VerticalOptions = LayoutOptions.Center,
         MinimumWidthRequest = 150,
         FontAttributes = FontAttributes.Bold,
-        FontSize = 20
+        FontSize = 20,
+        Margin = new Thickness(20,0,0,0)
         
     };
     private static readonly Grid Grid = new()

@@ -27,6 +27,7 @@ namespace IhandCashier.Bepe.Providers
         {
             CornerRadius = 5,
             BackgroundColor = Colors.Transparent,
+            Padding = new Thickness(0,5),
             Margin = new Thickness(5,0),
         };
         
@@ -34,7 +35,6 @@ namespace IhandCashier.Bepe.Providers
         {
             ColumnDefinitions = { new ColumnDefinition { Width = GridLength.Star }},
             Padding = new Thickness(5),
-            Margin = new Thickness(5),
             RowDefinitions =
             {
                 new RowDefinition { Height = 50 },
@@ -47,7 +47,8 @@ namespace IhandCashier.Bepe.Providers
         {
             CornerRadius = 5,
             BackgroundColor = Colors.Transparent,
-            Margin = new Thickness(5, 0),
+            Padding = new Thickness(0, 5),
+            Margin = new Thickness(5,0),
         };
         public static SfDataGrid DataGrid { get; set; } = new SfDataGrid
         {

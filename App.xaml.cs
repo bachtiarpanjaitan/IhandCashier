@@ -12,7 +12,7 @@ public partial class App : Application
         var basapadi = new Basapadi.Config();
         SyncfusionLicenseProvider.RegisterLicense(basapadi.SyncfusionKey("BEPE_23"));
         TableBuilder.Build();
-        MainPage = new MainLayout();
+        MainPage = new AppShell();
 
     }
 }
