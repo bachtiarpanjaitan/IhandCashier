@@ -1,8 +1,8 @@
 ﻿###### Local Database
 Local ConnectionString = "`{Document Path}/IhandCashier/ihandcashier.db3`"
 ## Catatan Kebutuhan Development
-- Jangan gunakan .net8 karena belum support MenuBarItems di MacOS
-- Gunakan Syncfusion MAUI v23.1.44/v23.2.5
+- Sudah bisa menggunakan .net8
+- Gunakan Syncfusion MAUI v26
 - Pastikan [Basapadi NuGet](https://www.nuget.org/packages/Basapadi/0.0.1-alpha) Package selalu versi yang terbaru.
 ## Panduan Instalasi dan Development
   - Mengatur penyimpanan database
