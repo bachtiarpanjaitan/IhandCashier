@@ -17,6 +17,6 @@ namespace IhandCashier.Bepe.Entities
         public string nama { get; set; }
 
         // Navigation property
-        public ICollection<Unit> units { get; set; }
+        public ICollection<Unit> Units { get; set; }
     }
 }

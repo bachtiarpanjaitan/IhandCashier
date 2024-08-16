@@ -12,7 +12,7 @@ namespace IhandCashier.Bepe.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
-        public int? basic_unit_id { get; set; }
+        public int basic_unit_id { get; set; }
 
         [Required]
         [StringLength(50)]  // Adjust length as needed
@@ -25,7 +25,7 @@ namespace IhandCashier.Bepe.Entities
         [Required]
         public decimal konversi { get; set; }
 
-        // Navigation property
+        [ForeignKey("basic_unit_id")]
         public BasicUnit BasicUnit { get; set; }
     }
 }

@@ -9,6 +9,12 @@ CREATE TABLE users (
    is_active INTEGER NOT NULL DEFAULT 1
 );
 
+-- Basic Unit --
+CREATE TABLE basic_units (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     nama TEXT NOT NULL
+);
+
 -- Unit --
 CREATE TABLE units (
    id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,12 +25,6 @@ CREATE TABLE units (
 
     -- Foreign key constraint
    FOREIGN KEY (basic_unit_id) REFERENCES basic_units(id)
-);
-
--- Basic Unit --
-CREATE TABLE basic_units (
-     id INTEGER PRIMARY KEY AUTOINCREMENT,
-     nama TEXT NOT NULL
 );
 
 -- User --

@@ -91,7 +91,6 @@
 	  <Folder Include="Pages\" />
 	  <Folder Include="Bepe\ViewModels\" />
 	  <Folder Include="Bepe\Controllers\" />
-	  <Folder Include="Bepe\Models\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Bepe\ViewModels\" />

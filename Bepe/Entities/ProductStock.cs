@@ -23,7 +23,10 @@ namespace IhandCashier.Bepe.Entities
         public decimal jumlah { get; set; }
 
         // Navigation properties
+        [ForeignKey("product_id")]
         public Product Product { get; set; }
+        
+        [ForeignKey("unit_id")]
         public Unit Unit { get; set; }
     }
 }

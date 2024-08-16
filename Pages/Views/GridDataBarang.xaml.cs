@@ -19,7 +19,6 @@ namespace IhandCashier.Pages.Views
         {
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
-            
             DatagridProvider.Reset();
             List<ColumnType> columns = [
                 new ColumnType { Type = ColumnTypes.Numeric,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },

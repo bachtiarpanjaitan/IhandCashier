@@ -86,11 +86,12 @@ public class AppDbContext : DbContext
 
         // Unit Configuration
         modelBuilder.Entity<Unit>()
-            .HasIndex(u => u.kode_satuan)
+            .HasIndex(u => new { u.kode_satuan, u.basic_unit_id })
             .IsUnique();
-
         modelBuilder.Entity<Unit>()
-            .HasIndex(u => u.basic_unit_id);
+            .HasOne(u => u.BasicUnit)
+            .WithMany(b => b.Units)
+            .HasForeignKey(u => u.basic_unit_id);
 
         // User Configuration
         modelBuilder.Entity<User>()

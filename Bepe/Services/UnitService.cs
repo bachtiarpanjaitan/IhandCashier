@@ -13,16 +13,6 @@ public class UnitService : IDataService<Unit>
     {
         _context = context;
     }
-
-    public async Task<List<Unit>> GetAsync()
-    {
-        return await _context.Units.ToListAsync();
-    }
-    
-    public IQueryable<Unit> Query()
-    {
-        return _context.Units.AsQueryable();
-    }
     
     public int TotalData()
     {
@@ -38,7 +28,11 @@ public class UnitService : IDataService<Unit>
                                         EF.Functions.Like(item.kode_satuan, $"%{searchQuery}%")
             );
         }
-        return await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+        return await query.WithNavigation()
+            .Include(b => b.BasicUnit)
+            .Skip(pageIndex * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 
     public async Task AddAsync(Unit product)

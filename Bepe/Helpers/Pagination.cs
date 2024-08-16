@@ -49,11 +49,19 @@ namespace IhandCashier.Bepe.Helpers
             _total = _dataService.TotalData();
             if (_total >= 0)
             {
-                var result = (double)_total / _pageSize;
-                _pageCount = (int) Math.Ceiling(result);
-                DatagridProvider.PageLabel.Text = $"{_pageIndex + 1}/{_pageCount}";
-                DatagridProvider.TotalLabel.Text = $"Total {_total} data";
-                DatagridProvider.DataGrid.ItemsSource = await _dataService.GetPagingData(_pageIndex, _pageSize, _search).ConfigureAwait(true);
+                try
+                {
+                    var result = (double)_total / _pageSize;
+                    _pageCount = (int)Math.Ceiling(result);
+                    DatagridProvider.PageLabel.Text = $"{_pageIndex + 1}/{_pageCount}";
+                    DatagridProvider.TotalLabel.Text = $"Total {_total} data";
+                    var data = await _dataService.GetPagingData(_pageIndex, _pageSize, _search).ConfigureAwait(true);
+                    DatagridProvider.DataGrid.ItemsSource = data;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error Pagination::UpdatePagedData() : ", e.Message);
+                }
             }
         }
 

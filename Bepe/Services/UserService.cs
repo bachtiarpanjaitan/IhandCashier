@@ -1,11 +1,12 @@
 using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Dtos;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Services;
 
-public class UserService : IDataService<User>
+public class UserService : IDataService<UserDto>
 {
     private readonly AppDbContext _context;
 
@@ -29,7 +30,7 @@ public class UserService : IDataService<User>
         return _context.Users.Count();
     }
 
-    public async Task<List<User>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
+    public async Task<List<UserDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
         IQueryable<User> query = _context.Users;
         if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -39,7 +40,21 @@ public class UserService : IDataService<User>
                                         EF.Functions.Like(item.username, $"%{searchQuery}%")
             );
         }
-        return await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+        return await query
+            .Skip(pageIndex * pageSize)
+            .Take(pageSize)
+            .Select(u => new UserDto()
+            {
+                id = u.id,
+                nama = u.nama,
+                username = u.username,
+                password = u.password,
+                email = u.email,
+                avatar = u.avatar,
+                is_active = u.is_active,
+                status = u.is_active ? "Aktif" : "Tidak Aktif"
+            })
+            .ToListAsync();
     }
 
     public async Task AddAsync(User product)

@@ -29,6 +29,7 @@ namespace IhandCashier.Bepe.Entities
         public string keterangan { get; set; }
 
         // Navigation property
+        [ForeignKey("supplier_id")]
         public Supplier Supplier { get; set; }
     }
 }

@@ -28,8 +28,13 @@ namespace IhandCashier.Bepe.Entities
         public decimal harga_satuan { get; set; }
 
         // Navigation properties
+        [ForeignKey("product_receipt_id")]
         public ProductReceipt ProductReceipt { get; set; }
+        
+        [ForeignKey("product_id")]
         public Product Product { get; set; }
+        
+        [ForeignKey("unit_id")]
         public Unit Unit { get; set; }
     }
 }
