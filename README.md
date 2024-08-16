@@ -1,18 +1,16 @@
-﻿###### Local Database
-Local ConnectionString = "`{Document Path}/IhandCashier/ihandcashier.db3`"
+﻿## Local Database
+> Local ConnectionString = "`{Document Path}/IhandCashier/ihandcashier.db3`"
 ## Catatan Kebutuhan Development
-- Jangan gunakan .net8 karena belum support MenuBarItems di MacOS
-- Gunakan Syncfusion MAUI v23.1.44/v23.2.5
-- Pastikan [Basapadi NuGet](https://www.nuget.org/packages/Basapadi/0.0.1-alpha) Package selalu versi yang terbaru.
+- Net Framework 8.0
+- Entity Framework v8.0.8
+- Syncfusion v26.2.9
+- MAUI Framework v8.0.71
+- Workload berdasarkan platform development <code>dotnet workload install</code>
 ## Panduan Instalasi dan Development
   - Mengatur penyimpanan database
     1. Set **SAVE_DB_IN_APPDATA** = true apabila anda ingin menyimpan database di folder appdata aplikasi dan set False jika ingin menyimpan database di folder **Documents** komputer anda
-    2. Set **ALWAYS_BUILD_TABLES** = true apabila anda ingin mengatur migrasi secara otomatis apabila aplikasi dijalankan.
-  - Membuat Migrasi Data *(tidak ada panduan di internet karena bikinan sendiri)*
-    1. Tambah Entity baru di folder **Entities**
-    2. Tambah Migrasi baru folder **Migrations** dengan format penamaan {urutan_eksekusi}_{nama_tabel}.cs.
-    3. Pastikan urutan eksekusi sesuai requirement Entity karena table yang direlasikan harus di eksekusi terlebih dahulu.
-    4. Tambah DbSet baru di **AppDbContext** seperti contoh berikut <code> public DbSet<`User`> User { get; set; }</code> dimana *Produk* adalah Type Entity.
-    5. Tambah ModelBuilder di method **ModelCreating** di *AppDbContext.cs* seperti contoh berikut : <code>modelBuilder.Entity<`User`>().ToTable("users");</code>
-    6. Pastikan **ALWAYS_BUILD_TABLES** = true
-    7. Jalankan aplikasi untuk migrasi
+    2. Migrasi dilakukan secara manual, dengan mengeksekusi schema database ada di *Resources/Datas/schema.sql.
+    3. Update selalu schema ini apabila ada perubahan pada schema database dan jangan lupa untuk memodifikasi entity
+    4. Eksekusi data dummy biar gak capek bikin data contoh
+
+> Ikuti style code yang sudah dibuat biar gak nyampah, karena sudah ada contoh dibuat berdasarkan case yang dibutuhkan
