@@ -55,8 +55,7 @@ namespace IhandCashier.Bepe.Helpers
                     _pageCount = (int)Math.Ceiling(result);
                     DatagridProvider.PageLabel.Text = $"{_pageIndex + 1}/{_pageCount}";
                     DatagridProvider.TotalLabel.Text = $"Total {_total} data";
-                    var data = await _dataService.GetPagingData(_pageIndex, _pageSize, _search).ConfigureAwait(true);
-                    DatagridProvider.DataGrid.ItemsSource = data;
+                    DatagridProvider.DataGrid.ItemsSource = await _dataService.GetPagingData(_pageIndex, _pageSize, _search).ConfigureAwait(true);
                 }
                 catch (Exception e)
                 {

@@ -14,6 +14,7 @@ public partial class MainLayout : ContentPage
     public MainLayout()
 	{
 		InitializeComponent();
+        Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
         _ = LoadMenu();
         SetupClock();
         Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);

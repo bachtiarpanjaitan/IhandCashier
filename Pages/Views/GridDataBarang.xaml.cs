@@ -21,7 +21,7 @@ namespace IhandCashier.Pages.Views
             FilterOne.Initialize(ModuleName);
             DatagridProvider.Reset();
             List<ColumnType> columns = [
-                new ColumnType { Type = ColumnTypes.Numeric,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
+                new ColumnType { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "gambar", HeaderText = "GAMBAR"}

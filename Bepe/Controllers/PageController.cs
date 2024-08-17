@@ -37,7 +37,6 @@ namespace IhandCashier.Bepe.Controllers
                try {
                     _contentView = (ContentView)Activator.CreateInstance(type);
                     _layout.SetContent(_contentView);
-                    //Content = layout.GenerateFrame();
                }
                catch (TargetInvocationException ex)
                {

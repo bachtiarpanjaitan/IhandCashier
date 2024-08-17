@@ -7,7 +7,7 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <local:MainContent x:Name="Container" AbsoluteLayout.LayoutBounds="0,0,0,0" AbsoluteLayout.LayoutFlags="All"/>
@@ -18,12 +18,9 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
 
             <Frame
-                   Padding="10,0,0,0"
+                   Padding="5,0,0,0"
                    Grid.Row="0"
                    Grid.Column="0">
                 <Label x:Name="LJamAplikasi"  FontSize="10" Text="0000-00-00 00:00:00" VerticalOptions="Center"/>
@@ -31,17 +28,17 @@
 
             <Frame
                    x:Name="LUser"
-                   Padding="10,0"
+                   Padding="5,0"
                    Grid.Row="0"
                    Grid.Column="1">
                 <Label Text="Unknown"  FontSize="10" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Frame>
 
             <Frame
-                   Padding="10,0"
+                   Padding="5,0"
                    Grid.Row="0"
                    Grid.Column="2">
-                <Label Text="© 2024 HMP Basapadi" FontSize="10" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Label  x:Name="Copyright" FontSize="10" HorizontalOptions="Center" VerticalOptions="Center" />
             </Frame>
         </Grid>
     </Grid>

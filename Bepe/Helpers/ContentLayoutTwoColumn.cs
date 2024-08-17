@@ -1,16 +1,20 @@
-﻿using System;
-using IhandCashier.Bepe.Configs;
-using System.Linq;
+﻿using IhandCashier.Bepe.Configs;
+using IhandCashier.Bepe.Models;
+using IhandCashier.Bepe.Services;
+using Font = Microsoft.Maui.Font;
+using StackLayout = Microsoft.Maui.Controls.Compatibility.StackLayout;
 
 namespace IhandCashier.Bepe.Helpers
 {
 	public class ContentLayoutTwoColumn
 	{
-
+        
         public Grid grid { get; private set; }
         private Grid ContentPlaceholder;
+        private Label _companyLabel = new();
+        AppSetting _settings = AppSettingService.Settings;
         public ContentLayoutTwoColumn()
-		{
+        {
             grid = new Grid
             {
                 ColumnDefinitions = {
@@ -24,8 +28,29 @@ namespace IhandCashier.Bepe.Helpers
             },
 
             };
-
-            ContentPlaceholder = new Grid();
+            ContentPlaceholder = new Grid
+            {
+                Children =
+                {
+                    new StackLayout()
+                    {
+                        HorizontalOptions = LayoutOptions.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                        Children =
+                        {
+                            new Image(){
+                                Source = "logo.icns",
+                                WidthRequest = 100,
+                                HeightRequest = 100,
+                                HorizontalOptions = LayoutOptions.Center,
+                                VerticalOptions = LayoutOptions.Center
+                            },
+                            new Label(){ HorizontalTextAlignment = TextAlignment.Center, FontSize = 20, FontAttributes = FontAttributes.Bold,Text = _settings.Perusahaan },
+                            new Label(){ Text = "Klik menu disamping untuk membuka data."}
+                        }
+                    }
+                }
+            };
             grid.Add(ContentPlaceholder, 2, 0);
         }
 
@@ -41,8 +66,7 @@ namespace IhandCashier.Bepe.Helpers
         }
 
         public Frame GenerateFrame()
-		{
-            
+        {
             var splitter = new BoxView { Color = (Color) Application.Current.Resources["IcBorderColor"], WidthRequest = 2 };
             grid.Add(splitter,1,0);
             var frame = new Frame

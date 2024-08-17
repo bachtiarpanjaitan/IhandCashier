@@ -7,3 +7,9 @@ public enum ColumnTypes
     Date,
     Checkbox
 }
+
+public enum Themes
+{
+    Dark,
+    Light
+}

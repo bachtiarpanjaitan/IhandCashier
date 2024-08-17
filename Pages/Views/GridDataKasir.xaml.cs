@@ -23,7 +23,7 @@ public partial class GridDataKasir : ContentView
             
 		DatagridProvider.Reset();
 		List<ColumnType> columns = [
-			new ColumnType { Type = ColumnTypes.Numeric,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
+			new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "username", HeaderText = "USERNAME" },
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA"},
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "email", HeaderText = "EMAIL"},

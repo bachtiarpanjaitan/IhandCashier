@@ -107,8 +107,14 @@
 	  <None Remove="Bepe\Models\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <EmbeddedResource Include="Resources\Datas\menu.json" />
+	  <EmbeddedResource Include="Resources\Datas\menu.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	  <EmbeddedResource Include="Resources\Datas\schema.sql" />
+	  <None Remove="Resources\Datas\Templates\settings.xml" />
+	  <EmbeddedResource Include="Resources\Datas\Templates\settings.xml">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
 	  <ImageAsset Include="Resources\Images\document.png" />
@@ -121,6 +127,9 @@
 	<ItemGroup>
 	  <Reference Include="Basapadi">
 	    <HintPath>Basapadi\Basapadi.dll</HintPath>
+	  </Reference>
+	  <Reference Include="System.Private.Xml.Linq">
+	    <HintPath>bin\Debug\net8.0-maccatalyst\maccatalyst-arm64\IhandCashier.app\Contents\MonoBundle\System.Private.Xml.Linq.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 </Project>

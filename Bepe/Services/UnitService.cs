@@ -25,7 +25,8 @@ public class UnitService : IDataService<Unit>
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
             query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%") || 
-                                        EF.Functions.Like(item.kode_satuan, $"%{searchQuery}%")
+                                        EF.Functions.Like(item.kode_satuan, $"%{searchQuery}%") ||
+                                        EF.Functions.Like(item.BasicUnit.nama, $"%{searchQuery}%")
             );
         }
         return await query.WithNavigation()
@@ -35,9 +36,9 @@ public class UnitService : IDataService<Unit>
             .ToListAsync();
     }
 
-    public async Task AddAsync(Unit product)
+    public async Task AddAsync(Unit unit)
     {
-        _context.Units.Add(product);
+        _context.Units.Add(unit);
         await _context.SaveChangesAsync();
     }
 }

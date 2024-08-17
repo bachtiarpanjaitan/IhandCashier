@@ -20,10 +20,10 @@ public partial class GridDataSatuanBarang
 		FilterOne.Initialize(ModuleName);
 		DatagridProvider.Reset();
 		List<ColumnType> columns = [
-			new ColumnType { Type = ColumnTypes.Numeric, MappingName = "id",ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },
+			new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center, MappingName = "id",ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "kode_satuan", HeaderText = "KODE SATUAN"},
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA SATUAN"},
-			new ColumnType { Type = ColumnTypes.Text, MappingName = "BasicUnit.nama", HeaderText = "SATUAN TERENDAH"},
+			new ColumnType { Type = ColumnTypes.Text, MappingName = "BasicUnit.nama", HeaderText = "SATUAN DASAR"},
 			new ColumnType { Type = ColumnTypes.Numeric, TextAlignment = TextAlignment.End ,MappingName = "konversi", HeaderText = "NILAI KONVERSI", Format = "N0"}
 		];
             

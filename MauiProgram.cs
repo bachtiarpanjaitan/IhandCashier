@@ -1,4 +1,6 @@
 ﻿using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Injections;
+using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Providers;
 using Syncfusion.Maui.Core.Hosting;
 
@@ -19,7 +21,11 @@ public static class MauiProgram
 			});
         builder.Services.AddAppServices();
 
-        #region Initialize Component Provider
+        #region Region Injections
+
+        #endregion
+        
+        #region Region Initialize Component Provider
         DatagridProvider.Initialize();
         #endregion
         
