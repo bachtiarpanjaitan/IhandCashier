@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ic-application>
-    <ic-initial>true</ic-initial>
+    <ic-initial>false</ic-initial>
     <ic-perusahaan>HMP Basapadi</ic-perusahaan>
     <ic-thema>
         <ic-selected>Dark</ic-selected>
@@ -15,4 +15,24 @@
     <ic-layouts>
         <ic-lebar_menu_kiri>200</ic-lebar_menu_kiri>
     </ic-layouts>
+    <ic-database>
+        <ic-dbtype>sqlite</ic-dbtype>
+        <ic-sqlite>
+            <ic-dbsource/>
+            <ic-version/>
+        </ic-sqlite>
+        <ic-mysql>
+            <ic-dbserver/>
+            <ic-port/>
+            <ic-database/>
+            <ic-username/>
+            <ic-password/>
+            <ic-pooling/>
+            <ic-maxpoolsize/>
+            <ic-minpoolsize/>
+            <ic-charset/>
+            <ic-sslmode/>
+            <ic-connectiontimeout/>
+        </ic-mysql>
+    </ic-database>
 </ic-application>

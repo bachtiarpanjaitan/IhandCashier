@@ -88,7 +88,6 @@
 	  <Folder Include="Bepe\Migrations\" />
 	  <Folder Include="Bepe\Repositories\" />
 	  <Folder Include="Layouts\" />
-	  <Folder Include="Pages\" />
 	  <Folder Include="Bepe\ViewModels\" />
 	  <Folder Include="Bepe\Controllers\" />
 	</ItemGroup>
