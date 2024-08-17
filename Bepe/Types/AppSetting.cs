@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace IhandCashier.Bepe.Models;
+namespace IhandCashier.Bepe.Types;
 
 [XmlRoot("ic-application")]
 public class AppSetting

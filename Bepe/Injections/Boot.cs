@@ -1,5 +1,5 @@
 using IhandCashier.Bepe.Interfaces;
-using IhandCashier.Bepe.Models;
+using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Services;
 
 namespace IhandCashier.Bepe.Injections;

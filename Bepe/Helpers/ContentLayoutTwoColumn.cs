@@ -1,5 +1,5 @@
 ﻿using IhandCashier.Bepe.Configs;
-using IhandCashier.Bepe.Models;
+using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Services;
 using Font = Microsoft.Maui.Font;
 using StackLayout = Microsoft.Maui.Controls.Compatibility.StackLayout;

@@ -1,5 +1,5 @@
 using IhandCashier.Bepe.Configs;
-using IhandCashier.Bepe.Models;
+using IhandCashier.Bepe.Types;
 
 namespace IhandCashier.Bepe.Services;
 

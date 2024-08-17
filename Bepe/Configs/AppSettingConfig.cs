@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 using IhandCashier.Bepe.Helpers;
-using IhandCashier.Bepe.Models;
+using IhandCashier.Bepe.Types;
 
 namespace IhandCashier.Bepe.Configs;
 
