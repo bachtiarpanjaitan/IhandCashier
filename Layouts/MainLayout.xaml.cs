@@ -2,7 +2,6 @@
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Pages;
-using Syncfusion.Maui.Themes;
 
 namespace IhandCashier.Layouts;
 
