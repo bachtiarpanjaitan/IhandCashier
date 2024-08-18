@@ -9,7 +9,7 @@ public class AppSetting
     public string Perusahaan { get; set; }
     
     [XmlElement("ic-initial")]
-    public string Initial { get; set; }
+    public bool Initial { get; set; }
     
     [XmlElement("ic-database")]
     public IcDatabase Database { get; set; }

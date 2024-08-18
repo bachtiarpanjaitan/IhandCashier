@@ -20,9 +20,9 @@ public enum DbTypes
     MySql
 }
 
-public class AppEnumeration()
+public class AppEnumeration
 {
-    public Dictionary<Enum, string> DbTypes = new()
+    public static Dictionary<Enum, string> GetDbTypes = new()
     {
         { Constants.DbTypes.SqLite, "sqlite" },
         { Constants.DbTypes.MySql, "mysql" }

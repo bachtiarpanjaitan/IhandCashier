@@ -65,14 +65,4 @@ public partial class MainLayout : ContentPage
         _timer?.Dispose();
     }
 
-    private void OnInitialInstall()
-    {
-        
-    }
-
-    private void IsAuthenticated()
-    {
-        
-    }
-
 }

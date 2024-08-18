@@ -1,6 +1,4 @@
 ﻿using IhandCashier.Bepe.Database;
-using IhandCashier.Bepe.Injections;
-using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Providers;
 using Syncfusion.Maui.Core.Hosting;
 
