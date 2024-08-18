@@ -1,6 +1,5 @@
 ﻿using IhandCashier.Bepe.Database;
-using IhandCashier.Bepe.Providers;
-using Syncfusion.Maui.Core.Hosting;
+using IhandCashier.Core;
 
 namespace IhandCashier;
 
@@ -11,7 +10,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureSyncfusionCore()
+			.ConfigureBasapadiCore()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -24,7 +23,7 @@ public static class MauiProgram
         #endregion
         
         #region Region Initialize Component Provider
-        DatagridProvider.Initialize();
+        Core.Maui.Providers.DatagridProvider.Initialize();
         #endregion
         
         var app = builder.Build();

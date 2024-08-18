@@ -3,7 +3,7 @@ using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Helpers;
-using IhandCashier.Bepe.Providers;
+using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Types;
 using Syncfusion.Maui.DataGrid;

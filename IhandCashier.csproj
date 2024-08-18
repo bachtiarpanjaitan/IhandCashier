@@ -86,6 +86,7 @@
 	<ItemGroup>
 	  <Folder Include="Bepe\Helpers\Factories\" />
 	  <Folder Include="Bepe\Migrations\" />
+	  <Folder Include="Bepe\Providers\" />
 	  <Folder Include="Bepe\Repositories\" />
 	  <Folder Include="Layouts\" />
 	  <Folder Include="Bepe\ViewModels\" />
@@ -126,6 +127,9 @@
 	<ItemGroup>
 	  <Reference Include="Basapadi">
 	    <HintPath>Basapadi\Basapadi.dll</HintPath>
+	  </Reference>
+	  <Reference Include="IhandCashier.Core">
+	    <HintPath>Basapadi\IhandCashier.Core.dll</HintPath>
 	  </Reference>
 	  <Reference Include="System.Private.Xml.Linq">
 	    <HintPath>bin\Debug\net8.0-maccatalyst\maccatalyst-arm64\IhandCashier.app\Contents\MonoBundle\System.Private.Xml.Linq.dll</HintPath>

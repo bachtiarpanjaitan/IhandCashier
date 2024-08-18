@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ic-application>
-    <ic-initial>true</ic-initial>
+    <ic-initial>false</ic-initial>
     <ic-perusahaan>HMP Basapadi</ic-perusahaan>
     <ic-thema>
         <ic-selected>Dark</ic-selected>

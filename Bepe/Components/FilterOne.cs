@@ -1,5 +1,5 @@
 using IhandCashier.Bepe.Extensions;
-using IhandCashier.Bepe.Providers;
+using IhandCashier.Core.Maui.Providers;
 
 namespace IhandCashier.Bepe.Components;
 

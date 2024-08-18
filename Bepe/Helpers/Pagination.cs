@@ -1,7 +1,7 @@
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Interfaces;
-using IhandCashier.Bepe.Providers;
+using IhandCashier.Core.Maui.Providers;
 
 namespace IhandCashier.Bepe.Helpers
 {
