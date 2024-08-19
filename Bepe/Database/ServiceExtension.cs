@@ -1,4 +1,4 @@
-using IhandCashier.Bepe.Entities;
+using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Services;
 
 namespace IhandCashier.Bepe.Database;

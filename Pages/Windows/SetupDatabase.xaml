@@ -6,22 +6,15 @@
              x:Class="IhandCashier.Pages.Windows.SetupDatabase">
     <ContentPage.Content>
         <VerticalStackLayout>
-            <Label 
-                x:Name="WellcomeText"
-                FontSize="20"
-                Padding="0,20,0,5"
-                FontAttributes="Bold"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <Label 
-                x:Name="WellcomeDescription"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
+            <Label x:Name="WellcomeText" FontSize="20" Padding="0,20,0,5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Label x:Name="WellcomeDescription" VerticalOptions="Center" HorizontalOptions="Center" />
             <VerticalStackLayout HorizontalOptions="Start" Padding="30" x:Name="Form">
                 <editors:SfComboBox x:Name="DbType" DisplayMemberPath="Label" TextMemberPath="Label" SelectedValuePath="Value" IsEditable="false" IsClearButtonVisible="false" SelectedIndex="0"/>
-                <VerticalStackLayout x:Name="SelectedDbConfig">
-                    
-                </VerticalStackLayout>
+                <VerticalStackLayout x:Name="SelectedDbConfig" Padding="0,30"/>
+                <HorizontalStackLayout HorizontalOptions="End">
+                    <Button Text="Buat Pengaturan Default (SQLite)" x:Name="BtnAutoCreate" Margin="10,0"></Button>
+                    <Button Text="Simpan" x:Name="BtnSave" Margin="10,0"></Button>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ContentPage.Content>

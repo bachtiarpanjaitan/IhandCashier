@@ -1,5 +1,6 @@
 using System.Xml.Serialization;
 using IhandCashier.Bepe.Helpers;
+using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Types;
 
 namespace IhandCashier.Bepe.Configs;
@@ -8,8 +9,8 @@ public class AppSettingConfig
 {
     public static AppSetting LoadSettings()
     {
-        var resource = "IhandCashier.Resources.Datas";
-        var settings = ResourceHelper.ReadAsStreamReader(resource + ".Templates.settings.xml");
+        string xmlsettingpath = AppConfig.RESOURCES_FOLDER + ".Datas.Templates.settings.xml";
+        var settings = ResourceHelper.ReadAsStreamReader(xmlsettingpath);
         if (settings == null) return new AppSetting()
         {
             Data =
@@ -30,4 +31,36 @@ public class AppSettingConfig
         XmlSerializer serializer = new XmlSerializer(typeof(AppSetting));
         return (AppSetting)serializer.Deserialize(settings);
     }
+    
+    public static void SaveToAppSettings(AppSetting settings, string path)
+    {
+        
+        var serializer = new XmlSerializer(typeof(AppSetting));
+        using (var writer = new StreamWriter(path))
+        {
+            serializer.Serialize(writer, settings);
+        }
+    }
+
+    public static string CreateAppPath(string folder)
+    {
+        var path = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH, folder);
+        try
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                Console.WriteLine("Folder created at: " + path);
+            }
+
+            return path;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error creating folder: " + ex.Message);
+            return null;
+        }
+    }
+    
+    
 }

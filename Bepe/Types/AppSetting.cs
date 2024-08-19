@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 
 namespace IhandCashier.Bepe.Types;
@@ -7,6 +8,9 @@ public class AppSetting
 {
     [XmlElement("ic-perusahaan")]
     public string Perusahaan { get; set; }
+    
+    [XmlElement("ic-app_path")]
+    public string AppPath { get; set; }
     
     [XmlElement("ic-initial")]
     public bool Initial { get; set; }
@@ -39,15 +43,19 @@ public class IcDatabase
 public class MySql
 {
     [XmlElement("ic-dbserver")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "DbServer tidak boleh kosong")]
     public string DbServer { get; set; }
     
     [XmlElement("ic-port")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Port tidak boleh kosong")]
     public string Port { get; set; }
     
     [XmlElement("ic-database")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Databse tidak boleh kosong")]
     public string Database { get; set; }
     
     [XmlElement("ic-username")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Username tidak boleh kosong")]
     public string Username { get; set; }
     
     [XmlElement("ic-password")]
@@ -75,7 +83,9 @@ public class MySql
 public class SqLite
 {
     [XmlElement("ic-dbsource")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "DbSource tidak boleh kosong")]
     public string DbSource { get; set; }
+    
     [XmlElement("ic-version")]
     public string Version { get; set; }
 }

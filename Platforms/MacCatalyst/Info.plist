@@ -26,5 +26,9 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
+	<key>NSFileAccessUsageDescription</key>
+	<string>Aplikasi ini membutuhkan akses ke file untuk menyimpan dan mengelola data.</string>
 </dict>
 </plist>

@@ -1,5 +1,7 @@
 ﻿using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Core;
+using IhandCashier.Pages.Windows;
 
 namespace IhandCashier;
 
@@ -18,13 +20,19 @@ public static class MauiProgram
 			});
         builder.Services.AddAppServices();
 
-        #region Region Injections
-
+        #region Region Service
+			builder.Services.AddTransient<SetupDatabase>();
         #endregion
         
         #region Region Initialize Component Provider
         Core.Maui.Providers.DatagridProvider.Initialize();
         #endregion
+        
+		#if WINDOWS
+			builder.Services.AddTransient<IFolderPicker, FolderPicker>();
+		#elif MACCATALYST
+		    builder.Services.AddTransient<IFolderPicker, FolderPicker>();
+		#endif
         
         var app = builder.Build();
         ServiceLocator.ServiceProvider = app.Services;

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ic-application>
-    <ic-initial>false</ic-initial>
+    <ic-initial>true</ic-initial>
     <ic-perusahaan>HMP Basapadi</ic-perusahaan>
+    <ic-app_path/>
     <ic-thema>
-        <ic-selected>Dark</ic-selected>
+        <ic-selected>Light</ic-selected>
         <ic-options>
             <ic-option>Dark</ic-option>
             <ic-option>Light</ic-option>

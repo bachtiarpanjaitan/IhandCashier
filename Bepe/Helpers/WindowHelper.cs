@@ -10,12 +10,14 @@ public static class WindowHelper
                 if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
                 {
                     var size = new CoreGraphics.CGSize(width, height);
-                    handler.PlatformView.WindowScene.SizeRestrictions.MinimumSize = size;
-                    handler.PlatformView.WindowScene.SizeRestrictions.MaximumSize = size;
+                    handler.PlatformView.WindowScene.SizeRestrictions.MinimumSize = new CoreGraphics.CGSize(200, 200);
+                    handler.PlatformView.WindowScene.SizeRestrictions.MaximumSize = new CoreGraphics.CGSize(1600, 1600);
                 }
                 else if (DeviceInfo.Platform == DevicePlatform.WinUI)
                 {
                     //TODO : Riset tentang mengubah ukuran window di windows
+                    // var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(Microsoft.UI.Win32Interop.GetWindowIdFromWindow(WinRT.Interop.WindowNative.GetWindowHandle(handler.PlatformView)));
+                    // appWindow.Resize(new SizeInt32(width, height));
                 }
             });
     }

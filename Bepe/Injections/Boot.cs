@@ -1,3 +1,4 @@
+using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Types;
@@ -9,7 +10,8 @@ namespace IhandCashier.Bepe.Injections;
 public class Boot : IStartupTask
 {
     private static AppSetting _settings;
-    public Boot() {}
+
+    public Boot(){}
     
     public void Execute()
     {
@@ -33,7 +35,7 @@ public class Boot : IStartupTask
     {
         if (Application.Current != null)
         {
-            Application.Current.MainPage = new SetupDatabase();
+            Application.Current.MainPage = ServiceLocator.ServiceProvider.GetRequiredService<SetupDatabase>();
             WindowHelper.SetWindowSize(600,600);
 
         }

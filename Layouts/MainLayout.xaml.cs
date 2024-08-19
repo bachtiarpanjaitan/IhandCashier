@@ -13,6 +13,7 @@ public partial class MainLayout : ContentPage
     public MainLayout()
 	{
 		InitializeComponent();
+        WindowHelper.SetWindowSize(1280,800);
         Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
         _ = LoadMenu();
         SetupClock();
