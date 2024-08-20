@@ -14,6 +14,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -23,22 +24,29 @@
                    Padding="5,0,0,0"
                    Grid.Row="0"
                    Grid.Column="0">
-                <Label x:Name="LJamAplikasi"  FontSize="10" Text="0000-00-00 00:00:00" VerticalOptions="Center"/>
+                <Label x:Name="LJamAplikasi"  FontSize="12" Text="0000-00-00 00:00:00" VerticalOptions="Center"/>
             </Frame>
-
+            
+            <Frame
+                Padding="5,0"
+                Grid.Row="0"
+                Grid.Column="1">
+                <Label  x:Name="LogLabel" FontFamily="Consolas" TextColor="Brown"  FontSize="12" HorizontalOptions="Start" VerticalOptions="Center"/>
+            </Frame>
+            
             <Frame
                    x:Name="LUser"
                    Padding="5,0"
                    Grid.Row="0"
-                   Grid.Column="1">
-                <Label Text="Unknown"  FontSize="10" HorizontalOptions="Center" VerticalOptions="Center"/>
+                   Grid.Column="2">
+                <Label Text="Unknown"  FontSize="12" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Frame>
 
             <Frame
                    Padding="5,0"
                    Grid.Row="0"
-                   Grid.Column="2">
-                <Label  x:Name="Copyright" FontSize="10" HorizontalOptions="Center" VerticalOptions="Center" />
+                   Grid.Column="3">
+                <Label  x:Name="Copyright" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" />
             </Frame>
         </Grid>
     </Grid>

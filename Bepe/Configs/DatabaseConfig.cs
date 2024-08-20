@@ -9,7 +9,7 @@ namespace IhandCashier.Bepe.Configs
         {
             if (AppConfig.SAVE_DB_IN_APPDATA)
             {
-                var dir = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH);
+                var dir = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH,"Data");
                 Directory.CreateDirectory(dir);
                 return Path.Combine(dir, DatabaseFilename);
             } else

@@ -1,14 +1,3 @@
--- User --
-CREATE TABLE users (
-   id INTEGER PRIMARY KEY AUTOINCREMENT,
-   nama TEXT NOT NULL CHECK(length(nama) <= 100),
-   username TEXT NOT NULL CHECK(length(username) <= 50),
-   password TEXT NOT NULL,
-   email TEXT CHECK(length(email) <= 100),
-   avatar TEXT CHECK(length(avatar) <= 255),
-   is_active INTEGER NOT NULL DEFAULT 1
-);
-
 -- Basic Unit --
 CREATE TABLE basic_units (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -108,11 +97,3 @@ CREATE TABLE product_stocks (
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (unit_id) REFERENCES units(id)
 );
-
-
-
-
-
-
-
-
