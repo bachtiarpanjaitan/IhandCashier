@@ -14,8 +14,8 @@ namespace IhandCashier.Pages.Windows;
 public partial class SetupDatabase : ContentPage
 {
     private AppSetting _setting = new();
-    private SqLite _sqlite = new();
-    private MySql _mysql = new();
+    private IcSqLite _sqlite = new();
+    private IcMySql _mysql = new();
     private SfDataForm _dataSqliteForm = new();
     private SfDataForm _dataMySqlForm = new();
     private Dictionary<Enum, string> _dbtypes = AppEnumeration.GetDbTypes;
@@ -24,8 +24,8 @@ public partial class SetupDatabase : ContentPage
     {
         _folderPicker = folderPicker;
         InitializeComponent();
-        WellcomeText.Text = "Selamat datang di aplikasi Ihand Cashier";
-        WellcomeDescription.Text = "Silahkan pilih type koneksi dan isi pengaturan koneksi database";
+        WellcomeText.Text = "Selamat datang di Aplikasi Ihand Cashier";
+        WellcomeDescription.Text = "Silahkan pilih tipe koneksi dan isi pengaturan koneksi database";
         LoadForm();
     }
 
@@ -37,7 +37,7 @@ public partial class SetupDatabase : ContentPage
             _options.Add(new PickerOption { Value = type.Value, Label = type.Key.ToString() });
         }
 
-        _setting = AppSettingConfig.LoadSettings();
+        _setting = AppSettingConfig.LoadInitSettings();
         
         _setting.Database.SqLite = _sqlite;
         _setting.Database.MySql = _mysql;
@@ -59,7 +59,7 @@ public partial class SetupDatabase : ContentPage
         AutoCreateNewDatabase();
     }
 
-    private async void AutoCreateNewDatabase()
+    private void AutoCreateNewDatabase()
     {
         try
         {
@@ -82,15 +82,21 @@ public partial class SetupDatabase : ContentPage
             {
                 var sql = stream.ReadToEnd();
                 if(File.Exists(dbpath)) File.Delete(dbpath);
+                
                 var sqlite = new SQLiteConnection(dbpath);
-                sqlite.Execute(sql);
+                var queries = sql.Split(new[] { ';' }, StringSplitOptions.TrimEntries);
+                foreach (var query in queries)
+                {
+                    if(query != "") sqlite.Execute(query.Trim());
+                }
             }
-            Application.Current.MainPage = new NavigationPage(new MainLayout());
-            await DisplayAlert("Berhasil membuat database","Database berhasil dibuat, silahkan isi pengaturan lanjutan di menu Pengaturan","OK");
+            Application.Current.MainPage = new MainLayout();
+            Console.WriteLine("Database berhasil dibuat");
         }
         catch (Exception e)
         {
-            await DisplayAlert("Gagal membuat database karena ", e.Message, "OK");
+            Console.WriteLine($"Gagal membuat database karena {e.Message}");
+            DisplayAlert("Gagal membuat database karena ", e.Message, "OK");
         }
     }
 
@@ -99,12 +105,12 @@ public partial class SetupDatabase : ContentPage
         SelectedDbConfig.Clear();
         if (DbType.SelectedValue.ToString() == _dbtypes[DbTypes.SqLite])
         {
-            BtnAutoCreate.IsEnabled = true;
+            BtnAutoCreate.IsVisible = true;
             SelectSqLite();
         }
         else
         {
-            BtnAutoCreate.IsEnabled = false;
+            BtnAutoCreate.IsVisible = false;
             SelectMySql();
         }
     }

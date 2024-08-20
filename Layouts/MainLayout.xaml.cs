@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Pages;
@@ -19,6 +20,8 @@ public partial class MainLayout : ContentPage
         SetupClock();
         Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
         Container.Content = new PageHome();
+        
+        Console.SetOut(new LabelWriter(LogLabel));
     }
 
     private async Task LoadMenu()

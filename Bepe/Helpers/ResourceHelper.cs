@@ -33,4 +33,14 @@ public class ResourceHelper
         var reader = new StreamReader(resourceStream);
         return reader;
     }
+    
+    public static StreamReader ReadAsStreamReaderFromPath(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
+
+        return new StreamReader(filePath);
+    }
 }

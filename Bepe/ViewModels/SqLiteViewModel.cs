@@ -4,10 +4,10 @@ namespace IhandCashier.Bepe.ViewModels;
 
 public class SqLiteViewModel
 {
-    public SqLite SqLite { get; set; }
+    public IcSqLite SqLite { get; set; }
 
     public SqLiteViewModel()
     {
-        SqLite = new SqLite();
+        SqLite = new IcSqLite();
     }
 }

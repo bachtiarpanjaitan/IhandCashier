@@ -7,7 +7,7 @@ namespace IhandCashier.Bepe.Configs;
 
 public class AppSettingConfig
 {
-    public static AppSetting LoadSettings()
+    public static AppSetting LoadInitSettings()
     {
         string xmlsettingpath = AppConfig.RESOURCES_FOLDER + ".Datas.Templates.settings.xml";
         var settings = ResourceHelper.ReadAsStreamReader(xmlsettingpath);
@@ -40,6 +40,15 @@ public class AppSettingConfig
         {
             serializer.Serialize(writer, settings);
         }
+    }
+    
+    public static AppSetting LoadSettings()
+    {
+        string xmlsettingpath = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH,"Resources", "settings.xml");;
+        var settings = ResourceHelper.ReadAsStreamReaderFromPath(xmlsettingpath);
+        if (settings == null) return LoadInitSettings();
+        XmlSerializer serializer = new XmlSerializer(typeof(AppSetting));
+        return (AppSetting)serializer.Deserialize(settings);
     }
 
     public static string CreateAppPath(string folder)

@@ -82,6 +82,7 @@
 		  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 		  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
+		  <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
 		  <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		  <PackageReference Include="Syncfusion.Maui.DataForm" Version="26.2.9" />
 		  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="26.2.9" />

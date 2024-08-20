@@ -34,13 +34,13 @@ public class IcDatabase
     public string DbType { get; set; }
     
     [XmlElement("ic-sqlite")]
-    public SqLite SqLite { get; set; }
+    public IcSqLite SqLite { get; set; }
     
     [XmlElement("ic-mysql")]
-    public MySql MySql { get; set; }
+    public IcMySql MySql { get; set; }
 }
 
-public class MySql
+public class IcMySql
 {
     [XmlElement("ic-dbserver")]
     [Required(AllowEmptyStrings = false, ErrorMessage = "DbServer tidak boleh kosong")]
@@ -80,7 +80,7 @@ public class MySql
     public string ConnectionTimeout { get; set; }
 }
 
-public class SqLite
+public class IcSqLite
 {
     [XmlElement("ic-dbsource")]
     [Required(AllowEmptyStrings = false, ErrorMessage = "DbSource tidak boleh kosong")]

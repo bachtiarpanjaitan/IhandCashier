@@ -30,5 +30,9 @@
 	<true/>
 	<key>NSFileAccessUsageDescription</key>
 	<string>Aplikasi ini membutuhkan akses ke file untuk menyimpan dan mengelola data.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
 </dict>
 </plist>

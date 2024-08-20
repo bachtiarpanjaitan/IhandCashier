@@ -1,5 +1,7 @@
 ﻿using IhandCashier.Bepe.Configs;
+using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Entities;
+using IhandCashier.Bepe.Types;
 using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Database;
@@ -121,9 +123,20 @@ public class AppDbContext : DbContext
 
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite($"Data Source={DatabaseConfig.DatabasePath()}");
+        AppSetting _setting = AppSettingConfig.LoadSettings();
+        if (_setting.Database.DbType == AppEnumeration.GetDbTypes[DbTypes.SqLite])
+        {
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite($"Data Source={DatabaseConfig.DatabasePath()}");
+        } 
+        else if (_setting.Database.DbType == AppEnumeration.GetDbTypes[DbTypes.MySql])
+        {
+            IcMySql db = _setting.Database.MySql;
+            var connectionString = $"server={db.DbServer};database={db.Database};user={db.Username};password={db.Password};port={db.Port};";
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        }
+        
     }
 
 

@@ -1,3 +1,4 @@
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Interfaces;
@@ -15,7 +16,9 @@ public class Boot : IStartupTask
     
     public void Execute()
     {
-        _settings = AppSettingService.Settings;
+        _settings = AppSettingConfig.LoadSettings();
+        if(_settings == null) _settings = AppSettingService.Settings;
+       
         if (Application.Current != null)
             Application.Current.UserAppTheme = (_settings.Thema.Selected == "Dark") ? AppTheme.Dark : AppTheme.Light;
 
