@@ -1,39 +1,25 @@
 ﻿using System;
+using IhandCashier.Bepe.Constants;
+using IhandCashier.Bepe.Types;
+
 namespace IhandCashier.Bepe.Configs
 {
 	public class DatabaseConfig
 	{
         public const string DatabaseFilename = "ihandcashier.db3";
-        
+        private static AppSetting _settings;
         public static string DatabasePath()
         {
-            if (AppConfig.SAVE_DB_IN_APPDATA)
+            _settings = AppSettingConfig.LoadSettings();
+            if (_settings.Database.DbType == AppEnumeration.GetDbTypes[DbTypes.SqLite])
             {
-                var dir = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH,"Data");
-                Directory.CreateDirectory(dir);
-                return Path.Combine(dir, DatabaseFilename);
-            } else
-            {
-                string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string path = Path.Combine(docPath, AppConfig.DEFAULT_PATH);
-                try
-                {
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                        Console.WriteLine("Folder created at: " + path);
-                    }
-
-                    return Path.Combine(path, DatabaseFilename);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error creating folder: " + ex.Message);
-                    return null;
-                }
+                return _settings.Database.SqLite.DbSource;
             }
-            
 
+            //Default
+            var dir = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH,"Data");
+            if(!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            return Path.Combine(dir, DatabaseFilename);
         }
             
             

@@ -13,7 +13,7 @@ public class AppSettingService
         {
             if (_settings == null)
             {
-                _settings = AppSettingConfig.LoadSettings();
+                _settings = AppSettingConfig.LoadInitSettings();
             }
             return _settings;
         }

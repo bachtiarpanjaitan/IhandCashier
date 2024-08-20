@@ -4,10 +4,10 @@ namespace IhandCashier.Bepe.ViewModels;
 
 public class MySqlViewModel
 {
-    public MySql MySql { get; set; }
+    public IcMySql MySql { get; set; }
 
     public MySqlViewModel()
     {
-        MySql = new MySql();
+        MySql = new IcMySql();
     }
 }

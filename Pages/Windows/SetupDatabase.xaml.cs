@@ -14,8 +14,8 @@ namespace IhandCashier.Pages.Windows;
 public partial class SetupDatabase : ContentPage
 {
     private AppSetting _setting = new();
-    private SqLite _sqlite = new();
-    private MySql _mysql = new();
+    private IcSqLite _sqlite = new();
+    private IcMySql _mysql = new();
     private SfDataForm _dataSqliteForm = new();
     private SfDataForm _dataMySqlForm = new();
     private Dictionary<Enum, string> _dbtypes = AppEnumeration.GetDbTypes;
@@ -37,7 +37,7 @@ public partial class SetupDatabase : ContentPage
             _options.Add(new PickerOption { Value = type.Value, Label = type.Key.ToString() });
         }
 
-        _setting = AppSettingConfig.LoadSettings();
+        _setting = AppSettingConfig.LoadInitSettings();
         
         _setting.Database.SqLite = _sqlite;
         _setting.Database.MySql = _mysql;
@@ -95,6 +95,7 @@ public partial class SetupDatabase : ContentPage
         }
         catch (Exception e)
         {
+            Console.WriteLine($"Gagal membuat database karena {e.Message}");
             DisplayAlert("Gagal membuat database karena ", e.Message, "OK");
         }
     }
@@ -104,12 +105,12 @@ public partial class SetupDatabase : ContentPage
         SelectedDbConfig.Clear();
         if (DbType.SelectedValue.ToString() == _dbtypes[DbTypes.SqLite])
         {
-            BtnAutoCreate.IsEnabled = true;
+            BtnAutoCreate.IsVisible = true;
             SelectSqLite();
         }
         else
         {
-            BtnAutoCreate.IsEnabled = false;
+            BtnAutoCreate.IsVisible = false;
             SelectMySql();
         }
     }
