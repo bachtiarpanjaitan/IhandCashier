@@ -4,6 +4,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IhandCashier.Pages.Windows.LoginForm">
     <ContentPage.Content>
-        
+        <VerticalStackLayout>
+            <Label x:Name="WellcomeText" FontSize="20" Padding="0,20,0,5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Frame BorderColor="Grey" BackgroundColor="Transparent" HeightRequest="400" HorizontalOptions="Center" Margin="10" VerticalOptions="Center">
+                <VerticalStackLayout>
+                    <StackLayout x:Name="FormLogin" Padding="0,5"/>
+                    <Button  HorizontalOptions="Fill" Text="Masuk" x:Name="BtnLogin" Margin="10,0"></Button>
+                </VerticalStackLayout>
+            </Frame>
+            <ActivityIndicator x:Name="LoadingIndicator"
+               IsRunning="False"
+               IsVisible="False"
+               Color="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"/>
+        </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

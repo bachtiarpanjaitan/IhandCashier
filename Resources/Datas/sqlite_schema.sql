@@ -1,3 +1,15 @@
+-- Hapus tabel jika ada --
+DROP TABLE IF EXISTS basic_units;
+DROP TABLE IF EXISTS units;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS suppliers;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS product_prices;
+DROP TABLE IF EXISTS product_receipts;
+DROP TABLE IF EXISTS product_receipt_details;
+DROP TABLE IF EXISTS product_stocks;
+
 -- Basic Unit --
 CREATE TABLE basic_units (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,7 +36,9 @@ CREATE TABLE users (
    password TEXT NOT NULL,
    email TEXT CHECK(length(email) <= 100),
    avatar TEXT CHECK(length(avatar) <= 255),
-   is_active INTEGER NOT NULL DEFAULT 1 -- SQLite uses INTEGER for boolean values
+   is_active INTEGER NOT NULL DEFAULT 1,-- SQLite uses INTEGER for boolean values
+    is_admin integer NOT NULL DEFAULT 0
+    
 );
 
 -- Customer --

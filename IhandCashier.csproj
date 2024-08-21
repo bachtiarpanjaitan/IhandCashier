@@ -142,4 +142,7 @@
 	    <HintPath>bin\Debug\net8.0-maccatalyst\maccatalyst-arm64\IhandCashier.app\Contents\MonoBundle\System.Private.Xml.Linq.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove=".env" />
+	</ItemGroup>
 </Project>

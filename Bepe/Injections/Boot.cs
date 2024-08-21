@@ -4,6 +4,7 @@ using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Services;
+using IhandCashier.Bepe.Statics;
 using IhandCashier.Pages.Windows;
 
 namespace IhandCashier.Bepe.Injections;
@@ -13,22 +14,39 @@ public class Boot : IStartupTask
     private static AppSetting _settings;
 
     public Boot(){}
-    
+
     public void Execute()
     {
+        if(AppConfig.CLEAR_SESSION_WHEN_START) new SessionManager().ResetSession();
+        
         _settings = AppSettingConfig.LoadSettings();
-        if(_settings == null) _settings = AppSettingService.Settings;
-       
+        if (_settings == null) _settings = AppSettingService.Settings;
+
         if (Application.Current != null)
             Application.Current.UserAppTheme = (_settings.Thema.Selected == "Dark") ? AppTheme.Dark : AppTheme.Light;
 
-        if (_settings.Initial) OnInitialInstall();
+        if (_settings.Initial)
+        {
+            OnInitialInstall();
+        }
         else
         {
             if (Application.Current != null)
             {
-                Application.Current.MainPage = new AppShell();
-                WindowHelper.SetWindowSize(1280,800);
+                if (IsAuthenticated())
+                {
+                    Application.Current.MainPage = new AppShell()
+                    {
+                        WidthRequest = AppConfig.MAIN_WIDTH,
+                        HeightRequest = AppConfig.MAIN_HEIGHT,
+                    };
+                }
+                else
+                {
+                    new SessionManager().ResetSession();
+                    Application.Current.MainPage = new LoginForm();
+                }
+                
             }
         }
                
@@ -39,13 +57,11 @@ public class Boot : IStartupTask
         if (Application.Current != null)
         {
             Application.Current.MainPage = ServiceLocator.ServiceProvider.GetRequiredService<SetupDatabase>();
-            WindowHelper.SetWindowSize(600,600);
-
         }
     }
 
-    private void IsAuthenticated()
+    private bool IsAuthenticated()
     {
-        if (Application.Current != null) Application.Current.MainPage = new LoginForm();
+        return new SessionManager().IsLogin();
     }
 }

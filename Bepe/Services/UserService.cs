@@ -1,7 +1,11 @@
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Dtos;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Interfaces;
+using IhandCashier.Bepe.Statics;
+using IhandCashier.Bepe.Types;
+using IhandCashier.Bepe.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Services;
@@ -52,14 +56,39 @@ public class UserService : IDataService<UserDto>
                 email = u.email,
                 avatar = u.avatar,
                 is_active = u.is_active,
+                is_admin = u.is_admin,
                 status = u.is_active ? "Aktif" : "Tidak Aktif"
             })
             .ToListAsync();
     }
 
-    public async Task AddAsync(User product)
+    public async Task<User> GetByUsername(string username)
     {
-        _context.Users.Add(product);
+        return await _context.Users.FirstOrDefaultAsync(item => item.username == username);
+    }
+
+    public UserSession Login(DataLogin data)
+    {
+        User user = _context.Users.Where(u => u.username == data.Username.Trim()).FirstOrDefaultAsync().Result;
+        if(user == null) throw new Exception($"Pengguna dengan {data.Username} tidak ditemukan");
+        string ePassword = Crypto.Encrypt(data.Password, AppConfig.APP_KEY);
+        if(ePassword != user.password) throw new Exception("Password salah");
+        if (!user.is_active) throw new Exception("Akun pengguna sudah tidak aktif");
+        
+        return new SessionManager().SetSession(new UserSession()
+        {
+            Username = user.username,
+            Avatar = user.avatar,
+            Email = user.email,
+            IsAdmin = user.is_admin,
+            IsActive = user.is_active,
+            IsLogin = true
+        }).GetSession();
+    }
+    
+    public async Task AddAsync(User user)
+    {
+        _context.Users.Add(user);
         await _context.SaveChangesAsync();
     }
 }

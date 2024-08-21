@@ -10,8 +10,16 @@ public static class WindowHelper
                 if (DeviceInfo.Platform == DevicePlatform.MacCatalyst)
                 {
                     var size = new CoreGraphics.CGSize(width, height);
-                    handler.PlatformView.WindowScene.SizeRestrictions.MinimumSize = new CoreGraphics.CGSize(200, 200);
-                    handler.PlatformView.WindowScene.SizeRestrictions.MaximumSize = new CoreGraphics.CGSize(1600, 1600);
+                    
+                    handler.PlatformView.WindowScene.SizeRestrictions.MinimumSize = new CoreGraphics.CGSize(400, 400);
+                    handler.PlatformView.WindowScene.SizeRestrictions.MaximumSize = new CoreGraphics.CGSize(1280, 800);
+                    var currentFrame = handler.PlatformView.Frame;
+                    handler.PlatformView.Frame = new CoreGraphics.CGRect(
+                        currentFrame.X,
+                        currentFrame.Y,
+                        size.Width,
+                        size.Height
+                    );
                 }
                 else if (DeviceInfo.Platform == DevicePlatform.WinUI)
                 {
