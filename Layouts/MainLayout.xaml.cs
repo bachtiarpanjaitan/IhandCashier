@@ -2,6 +2,8 @@
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
+using IhandCashier.Bepe.Statics;
+using IhandCashier.Bepe.Types;
 using IhandCashier.Pages;
 
 namespace IhandCashier.Layouts;
@@ -12,14 +14,16 @@ public partial class MainLayout : ContentPage
     private readonly CultureInfo _cultureInfo = new("id-ID");
     
     public MainLayout()
-	{
-		InitializeComponent();
-        WindowHelper.SetWindowSize(1280,800);
+    {
+        InitializeComponent();
         Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
         _ = LoadMenu();
         SetupClock();
         Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
         Container.Content = new PageHome();
+        
+        UserSession userSession = new SessionManager().GetSession();
+        LUser.Text = $"[ {userSession.Username} ]";
         
         Console.SetOut(new LabelWriter(LogLabel));
     }

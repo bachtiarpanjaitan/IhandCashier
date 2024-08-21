@@ -10,5 +10,6 @@ public class UserDto
     public string avatar { get; set; }
     public bool is_active { get; set; }
     public string status { get; set; }
+    public bool is_admin { get; set; }
     
 }

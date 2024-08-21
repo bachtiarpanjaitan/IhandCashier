@@ -29,6 +29,9 @@ namespace IhandCashier.Bepe.Entities
         [StringLength(255)]  // Adjust length as needed
         public string avatar { get; set; }
 
+        public bool is_admin { get; set; } = false;
         public bool is_active { get; set; } = true;
+        
+        public User(){}
     }
 }

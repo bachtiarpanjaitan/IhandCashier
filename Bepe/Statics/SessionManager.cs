@@ -1,19 +1,41 @@
+using IhandCashier.Bepe.Configs;
+using IhandCashier.Bepe.Types;
+
 namespace IhandCashier.Bepe.Statics;
 
 public class SessionManager
 {
-    public static string Username { get; set; }
-    public static string Theme { get; set; }
-    
-    public static void SetSession(string username, string theme)
+    public SessionManager(){}
+    public SessionManager SetSession(UserSession session)
     {
-        Username = username;
-        Theme = theme;
+        Preferences.Set("Username", Crypto.Encrypt(session.Username,AppConfig.APP_KEY));
+        Preferences.Set("Email", Crypto.Encrypt(session.Email,AppConfig.APP_KEY));
+        Preferences.Set("IsAdmin", session.IsAdmin);
+        Preferences.Set("IsActive", session.IsActive);
+        Preferences.Set("IsLogin", session.IsLogin);
+        Preferences.Set("Avatar", session.Avatar);
+        return this;
     }
 
-    // Method untuk mendapatkan session
-    public static (string, string) GetSession()
+    public UserSession GetSession()
     {
-        return (Username, Theme);
+        return new UserSession()
+        {
+            Username = Crypto.Decrypt(Preferences.Get("Username", String.Empty),AppConfig.APP_KEY),
+            Email = Crypto.Decrypt(Preferences.Get("Email",String.Empty),AppConfig.APP_KEY),
+            IsLogin = Preferences.Get("IsLogin", false),
+            IsAdmin = Preferences.Get("IsAdmin", false),
+            IsActive = Preferences.Get("IsActive", false),
+            Avatar = Preferences.Get("Avatar", string.Empty),
+        };
+    }
+
+    public bool IsLogin()
+    {
+        return Preferences.Get("IsLogin", false);
+    }
+    public void ResetSession()
+    {
+        Preferences.Clear();
     }
 }

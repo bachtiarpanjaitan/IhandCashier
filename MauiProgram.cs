@@ -1,4 +1,5 @@
-﻿using IhandCashier.Bepe.Database;
+﻿using IhandCashier.Bepe.Configs;
+using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Core;
 using IhandCashier.Pages.Windows;
