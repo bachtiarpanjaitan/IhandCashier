@@ -30,7 +30,7 @@ public partial class GridDataSatuanBarang
             
 		foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
 		
-		// _ = new Pagination<Unit, BarangForm>(_service, typeof(FilterOne));
+		_ = new Pagination<Unit>(_service, typeof(FilterOne));
 		Content = DatagridProvider.LayoutDatagrid;
 	}
 	

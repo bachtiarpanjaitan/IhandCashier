@@ -15,7 +15,7 @@ namespace IhandCashier.Bepe.Helpers
         private string _search = null;
         private static IDataService<T> _dataService = null;
         private Type _typeHeader = null;
-        private Popup _form;
+        private Type _form;
         
         /// <summary>
         /// Mengelola Pagination data di datagrid.
@@ -23,9 +23,9 @@ namespace IhandCashier.Bepe.Helpers
         /// <typeparam name="T">Entity atau DTO.</typeparam>
         /// <param name="dataService">Service Entity</param>
         /// <param name="typeHeader">Header Datagrid yang ingin digunakan</param>
-        /// <param name="form">Form data yang digunakan pada header</param>
+        /// <param name="form">Type Form data yang digunakan pada header</param>
         /// <author>Bachtiar Panjaitan</author>
-        public Pagination(IDataService<T> dataService, Type typeHeader, Popup form = null){
+        public Pagination(IDataService<T> dataService, Type typeHeader, Type form = null){
             ResetDataPagination(); //keep on top
             
             _typeHeader = typeHeader;
@@ -75,7 +75,7 @@ namespace IhandCashier.Bepe.Helpers
             }
         }
 
-        private void GetComponentHandler()
+        private async void GetComponentHandler()
         {
             if (_typeHeader == typeof(FilterOne))
             {
@@ -87,8 +87,12 @@ namespace IhandCashier.Bepe.Helpers
 
         private void OnAddFormClicked(object sender, EventArgs e)
         {
-            if (Application.Current != null && Application.Current.MainPage != null) 
-                Application.Current.MainPage.ShowPopup(_form);
+            if (Application.Current != null && Application.Current.MainPage != null)
+            {
+                var manager = new PopupManager();
+                manager.ShowPopup(_form);
+            }
+                
         }
 
         private void OnSearchHandler(object sender, TextChangedEventArgs e)

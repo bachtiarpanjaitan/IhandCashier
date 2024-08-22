@@ -30,7 +30,7 @@ namespace IhandCashier.Pages.Views
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "gambar", HeaderText = "GAMBAR"}
             ];
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-            _ = new Pagination<Product>(_service, typeof(FilterOne), new FormBarang());
+            _ = new Pagination<Product>(_service, typeof(FilterOne), typeof(FormBarang));
             Content = DatagridProvider.LayoutDatagrid;
             
             

@@ -89,6 +89,7 @@
 		  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="26.2.9" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Folder Include="Bepe\Components\DataForm\" />
 	  <Folder Include="Bepe\Helpers\Factories\" />
 	  <Folder Include="Bepe\Migrations\" />
 	  <Folder Include="Bepe\Providers\" />

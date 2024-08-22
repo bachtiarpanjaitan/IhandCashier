@@ -11,7 +11,7 @@ namespace IhandCashier.Bepe.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-
+        
         [Required]
         public string kode { get; set; }
 
