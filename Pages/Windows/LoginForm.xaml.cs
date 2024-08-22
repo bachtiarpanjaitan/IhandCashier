@@ -17,6 +17,7 @@ public partial class LoginForm : ContentPage
         WidthRequest = 500;
         HeightRequest = 520;
         WellcomeText.Text = "Selamat datang di Aplikasi Ihand Cashier";
+        Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
         LoadForm();
     }
 

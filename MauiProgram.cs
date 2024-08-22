@@ -1,4 +1,5 @@
-﻿using IhandCashier.Bepe.Configs;
+﻿using CommunityToolkit.Maui;
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Core;
@@ -13,6 +14,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkit()
 			.ConfigureIhandCashierCore()
 			.ConfigureFonts(fonts =>
 			{

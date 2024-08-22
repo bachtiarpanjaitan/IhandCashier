@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Interfaces;
@@ -14,12 +15,21 @@ namespace IhandCashier.Bepe.Helpers
         private string _search = null;
         private static IDataService<T> _dataService = null;
         private Type _typeHeader = null;
+        private Type _form;
         
-        public Pagination(IDataService<T> dataService, Type typeHeader)
-        {
+        /// <summary>
+        /// Mengelola Pagination data di datagrid.
+        /// </summary>
+        /// <typeparam name="T">Entity atau DTO.</typeparam>
+        /// <param name="dataService">Service Entity</param>
+        /// <param name="typeHeader">Header Datagrid yang ingin digunakan</param>
+        /// <param name="form">Type Form data yang digunakan pada header</param>
+        /// <author>Bachtiar Panjaitan</author>
+        public Pagination(IDataService<T> dataService, Type typeHeader, Type form = null){
             ResetDataPagination(); //keep on top
             
             _typeHeader = typeHeader;
+            _form = form;
             _dataService = dataService;
             _pageIndex = 0;
             _pageSize = AppConfig.DATA_ROW_PER_PAGE;
@@ -27,7 +37,7 @@ namespace IhandCashier.Bepe.Helpers
             GetComponentHandler();
             DatagridProvider.AddPaginationClickHandlers(OnPrevButtonClicked, OnNextButtonClicked);
         }
-        
+
         private void OnPrevButtonClicked(object sender, EventArgs e)
         {
             if (_pageIndex <= 0) return;
@@ -65,10 +75,24 @@ namespace IhandCashier.Bepe.Helpers
             }
         }
 
-        private void GetComponentHandler()
+        private async void GetComponentHandler()
         {
-            if (_typeHeader == typeof(FilterOne)) FilterOne.FilterOneHandlers(OnSearchHandler);
+            if (_typeHeader == typeof(FilterOne))
+            {
+                FilterOne.SearchHandler(OnSearchHandler);
+                FilterOne.AddFormClickHandler(OnAddFormClicked);
+            }
             
+        }
+
+        private void OnAddFormClicked(object sender, EventArgs e)
+        {
+            if (Application.Current != null && Application.Current.MainPage != null)
+            {
+                var manager = new PopupManager();
+                manager.ShowPopup(_form);
+            }
+                
         }
 
         private void OnSearchHandler(object sender, TextChangedEventArgs e)

@@ -1,4 +1,5 @@
 ﻿
+using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
@@ -7,6 +8,8 @@ using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Helpers;
+using IhandCashier.Bepe.Interfaces;
+using IhandCashier.Pages.Forms;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views
@@ -27,7 +30,7 @@ namespace IhandCashier.Pages.Views
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "gambar", HeaderText = "GAMBAR"}
             ];
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-            _ = new Pagination<Product>(_service, typeof(FilterOne));
+            _ = new Pagination<Product>(_service, typeof(FilterOne), typeof(FormBarang));
             Content = DatagridProvider.LayoutDatagrid;
             
             

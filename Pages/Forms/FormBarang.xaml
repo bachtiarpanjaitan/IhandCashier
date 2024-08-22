@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           CanBeDismissedByTappingOutsideOfPopup="False"
+           Size="600,700"
+           x:Class="IhandCashier.Pages.Forms.FormBarang">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Text="Form Barang" FontSize="20" Padding="0,20,0,5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackLayout x:Name="Form" Margin="0,10"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center">
+                        <Button Text="Batal" x:Name="BtnBatal" Margin="10,0" Clicked="BtnBatal_OnClicked"></Button>
+                        <Button Text="Simpan" x:Name="BtnSimpan" Margin="10,0" Clicked="BtnSimpan_OnClicked"></Button>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Grid>
+</toolkit:Popup>

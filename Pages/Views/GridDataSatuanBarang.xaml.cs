@@ -6,6 +6,7 @@ using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Helpers;
+using IhandCashier.Pages.Forms;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
