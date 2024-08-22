@@ -6,6 +6,7 @@ using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Helpers;
+using IhandCashier.Pages.Forms;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
@@ -29,7 +30,7 @@ public partial class GridDataSatuanBarang
             
 		foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
 		
-		_ = new Pagination<Unit>(_service, typeof(FilterOne));
+		// _ = new Pagination<Unit, BarangForm>(_service, typeof(FilterOne));
 		Content = DatagridProvider.LayoutDatagrid;
 	}
 	

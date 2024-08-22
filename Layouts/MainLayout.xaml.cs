@@ -12,20 +12,17 @@ public partial class MainLayout : ContentPage
 {
     private System.Timers.Timer _timer;
     private readonly CultureInfo _cultureInfo = new("id-ID");
-    
+    private UserSession userSession = new SessionManager().GetSession();
     public MainLayout()
     {
         InitializeComponent();
-        Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
         _ = LoadMenu();
         SetupClock();
+        
         Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
+        
         Container.Content = new PageHome();
         
-        UserSession userSession = new SessionManager().GetSession();
-        LUser.Text = $"[ {userSession.Username} ]";
-        
-        Console.SetOut(new LabelWriter(LogLabel));
     }
 
     private async Task LoadMenu()
@@ -35,13 +32,17 @@ public partial class MainLayout : ContentPage
             if (Application.Current != null)
             {
                 MenuBarItems.Clear();
-                var menuCreator = await new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync();
+                var menuCreator = await new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync().ConfigureAwait(false);
                 foreach (var item in menuCreator)
                 {
                     MenuBarItems.Add(item);
                 }
             }
         }
+        
+        LUser.Text = $"[ {userSession.Username} ]";
+        Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
+        Console.SetOut(new LabelWriter(LogLabel));
     }
 
     [Obsolete]

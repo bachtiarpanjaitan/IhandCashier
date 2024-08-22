@@ -1,11 +1,14 @@
 using IhandCashier.Bepe.Extensions;
+using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Core.Maui.Providers;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IhandCashier.Bepe.Components;
 
 public static class FilterOne
 {
     private static EventHandler<TextChangedEventArgs> _entrySearchChangedHandler;
+    private static EventHandler _addFormClickHandler;
     private static readonly Entry Search = new()
     {
         HorizontalOptions = LayoutOptions.End,
@@ -55,8 +58,8 @@ public static class FilterOne
         DatagridProvider.HeaderFrame.Content = Grid;
         Search.Text = "";
     }
-    
-    public static void FilterOneHandlers(EventHandler<TextChangedEventArgs> searchHandler)
+
+    public static void SearchHandler(EventHandler<TextChangedEventArgs> searchHandler)
     {
         if (_entrySearchChangedHandler != null) 
         {
@@ -64,6 +67,16 @@ public static class FilterOne
         }
         _entrySearchChangedHandler = searchHandler;
         Search.DebounceTextChanged(OnSearchTextChanged, 1000);
+    }
+
+    public static void AddFormClickHandler(EventHandler handler)
+    {
+        if (_addFormClickHandler != null) 
+        {
+            AddBtn.Clicked -= _addFormClickHandler;
+        }
+        _addFormClickHandler = handler;
+        AddBtn.Clicked += _addFormClickHandler;
     }
     
     private static void OnSearchTextChanged(object sender, TextChangedEventArgs e)
