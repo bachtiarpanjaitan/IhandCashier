@@ -4,7 +4,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
            CanBeDismissedByTappingOutsideOfPopup="False"
-           Size="600,700"
+           Size="600,500"
            x:Class="IhandCashier.Pages.Forms.FormBarang">
             <Grid>
                 <Grid.RowDefinitions>
@@ -16,7 +16,23 @@
                     <Label Text="Form Barang" FontSize="20" Padding="0,20,0,5" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" />
                 </Grid>
                 <Grid Grid.Row="1">
-                    <StackLayout x:Name="Form" Margin="0,10"/>
+                    <VerticalStackLayout Padding="20" Margin="20">
+                        <StackLayout Padding="0,5" x:Name="ErrorContainer"></StackLayout>
+                        <StackLayout Padding="0,10">
+                            <Label Text="Kode Produk" />
+                            <Entry Text="{Binding Kode,Mode=TwoWay}" Placeholder="Masukkan kode produk" />
+                        </StackLayout>
+                        
+                        <StackLayout Padding="0,10">
+                            <Label Text="Nama Produk" />
+                            <Entry Text="{Binding Nama, Mode=TwoWay}" Placeholder="Masukkan nama produk" />
+                        </StackLayout>
+                        
+                        <StackLayout Padding="0,10">
+                            <Button Text="Pilih Gambar Produk" Clicked="OnPickImageClicked" />
+                            <Label Text="{Binding Gambar,Mode=TwoWay}" />
+                        </StackLayout>
+                    </VerticalStackLayout>
                 </Grid>
                 <Grid Grid.Row="2">
                     <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center">
