@@ -1,11 +1,14 @@
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Dtos;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Interfaces;
+using IhandCashier.Core.Maui.Providers;
 using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Services;
 
-public class ProductService : IDataService<Product>
+public class ProductService : IDataService<ProductDto>
 {
     private readonly AppDbContext _context;
 
@@ -30,7 +33,7 @@ public class ProductService : IDataService<Product>
         return _context.Products.Count();
     }
 
-    public async Task<List<Product>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
+    public async Task<List<ProductDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
         IQueryable<Product> query = _context.Products;
         if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -39,7 +42,21 @@ public class ProductService : IDataService<Product>
                                                 EF.Functions.Like(item.kode, $"%{searchQuery}%")
                                                 );
         }
-        return await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+        var result =  await query
+            .OrderByDescending(i => i.id)
+            .Skip(pageIndex * pageSize)
+            .Take(pageSize)
+            .Select(item => new ProductDto()
+            {
+                id = item.id,
+                nama = item.nama,
+                kode = item.kode,
+                gambar = item.gambar,
+                resourceGambar = ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"),item.gambar))
+            })
+            .ToListAsync();
+        DatagridProvider.DataGrid.ItemsSource = result;
+        return result;
     }
 
     public async Task AddAsync(Product product)
