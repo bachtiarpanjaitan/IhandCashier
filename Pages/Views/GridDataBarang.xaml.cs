@@ -28,7 +28,7 @@ namespace IhandCashier.Pages.Views
                 new ColumnType { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
-                new ColumnType { Type = ColumnTypes.Image, MappingName = "resourceGambar", HeaderText = "GAMBAR", ImageHeight = 50, ImageWidth = 50}
+                new ColumnType { Type = ColumnTypes.Image, MappingName = "resourceGambar", Width = 150, HeaderText = "GAMBAR", ImageHeight = 50, ImageWidth = 50}
             ];
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
             _ = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
