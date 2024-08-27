@@ -13,6 +13,9 @@ namespace IhandCashier.Bepe.Types
 
         public TextAlignment TextAlignment { get; set; } = TextAlignment.Start;
 
+        public int ImageHeight = 20;
+        public int ImageWidth = 20;
+
         public string Format { get; set; } = "";
         
         public DataGridColumn Create()
@@ -34,6 +37,20 @@ namespace IhandCashier.Bepe.Types
                 ColumnTypes.Checkbox => new DataGridDateColumn()
                 {
                     MappingName = MappingName, HeaderText = HeaderText, CellTextAlignment = TextAlignment, ColumnWidthMode = ColumnMode, Format = Format
+                },
+                ColumnTypes.Image => new DataGridTemplateColumn()
+                {
+                    MappingName = MappingName, HeaderText = HeaderText, CellTextAlignment = TextAlignment, ColumnWidthMode = ColumnMode, CellTemplate = new DataTemplate(
+                        () =>
+                        {
+                            Image image = new Image
+                            {
+                                HeightRequest = ImageHeight,
+                                WidthRequest = ImageWidth
+                            };
+                            image.SetBinding(Image.SourceProperty, MappingName);
+                            return image;
+                        })
                 },
                 _ => throw new ArgumentException("Invalid column type")
             };

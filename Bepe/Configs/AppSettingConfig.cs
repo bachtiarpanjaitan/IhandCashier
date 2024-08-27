@@ -44,7 +44,7 @@ public class AppSettingConfig
     
     public static AppSetting LoadSettings()
     {
-        string xmlsettingpath = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH,"Resources", "settings.xml");;
+        string xmlsettingpath = Path.Combine(FileSystem.AppDataDirectory, AppConfig.DEFAULT_PATH,"Resources", "settings.xml");
         var settings = ResourceHelper.ReadAsStreamReaderFromPath(xmlsettingpath);
         if (settings == null) return LoadInitSettings();
         XmlSerializer serializer = new XmlSerializer(typeof(AppSetting));

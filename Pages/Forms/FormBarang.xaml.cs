@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Statics;
@@ -10,6 +11,8 @@ public partial class FormBarang
 {
     ProductService _service  = ServiceLocator.ServiceProvider.GetService<ProductService>();
     ProductViewModel _model = new();
+    private FileResult _imageStream = null;
+    private string _fileName = null;
     public FormBarang()
     {
         InitializeComponent();
@@ -39,7 +42,14 @@ public partial class FormBarang
             try
             {
                 var data = _model.ToProduct();
-                _service.AddAsync(data).ConfigureAwait(true);
+                await _service.AddAsync(data).ConfigureAwait(true);
+                
+                var path = AppSettingConfig.CreateAppPath("Images");
+                var destination = Path.Combine(path, _fileName);
+                using var fileStream = new FileStream(destination, FileMode.Create, FileAccess.Write);
+                using var stream = await _imageStream.OpenReadAsync();
+                await stream.CopyToAsync(fileStream);
+
                 Close();
                 await Application.Current.MainPage.DisplayAlert("Berhasil", "Produk berhasil ditambahkan", "OK");
             }
@@ -61,7 +71,17 @@ public partial class FormBarang
         var result = await FilePicker.Default.PickAsync();
         if (result != null)
         {
-            _model.Gambar = result.FullPath;
+            _imageStream = result;
+            _fileName = result.FileName;
+            _model.Gambar = result.FileName;
+            using (var stream = await _imageStream.OpenReadAsync())
+            {
+                var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                UploadedImage.Source = ImageSource.FromStream(() => memoryStream);
+            }
+            
         }
     }
 }

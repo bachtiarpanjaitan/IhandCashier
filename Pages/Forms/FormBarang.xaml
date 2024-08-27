@@ -28,9 +28,9 @@
                             <Entry Text="{Binding Nama, Mode=TwoWay}" Placeholder="Masukkan nama produk" />
                         </StackLayout>
                         
-                        <StackLayout Padding="0,10">
+                        <StackLayout Padding="0,10,0,0">
                             <Button Text="Pilih Gambar Produk" Clicked="OnPickImageClicked" />
-                            <Label Text="{Binding Gambar,Mode=TwoWay}" />
+                            <Image x:Name="UploadedImage" WidthRequest="100" HeightRequest="100" />
                         </StackLayout>
                     </VerticalStackLayout>
                 </Grid>

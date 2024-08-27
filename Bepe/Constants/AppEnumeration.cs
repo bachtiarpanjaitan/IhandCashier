@@ -5,7 +5,8 @@ public enum ColumnTypes
     Numeric,
     Text,
     Date,
-    Checkbox
+    Checkbox,
+    Image
 }
 
 public enum Themes
