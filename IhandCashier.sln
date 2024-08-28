@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IhandCashier", "IhandCashier.csproj", "{4F2570B0-6B36-4040-8272-C9E0FBC401C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IhandCashier.Core", "..\IhandCashier.Core\IhandCashier.Core.csproj", "{47CD95AA-23D9-4BDE-80C4-08ED1800D8EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,10 @@ Global
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{47CD95AA-23D9-4BDE-80C4-08ED1800D8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47CD95AA-23D9-4BDE-80C4-08ED1800D8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47CD95AA-23D9-4BDE-80C4-08ED1800D8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47CD95AA-23D9-4BDE-80C4-08ED1800D8EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

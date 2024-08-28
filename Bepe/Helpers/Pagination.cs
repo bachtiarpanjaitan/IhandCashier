@@ -38,6 +38,11 @@ namespace IhandCashier.Bepe.Helpers
             DatagridProvider.AddPaginationClickHandlers(OnPrevButtonClicked, OnNextButtonClicked);
         }
 
+        public void RefreshData()
+        {
+            _ = UpdatePagedData();
+        }
+
         private void OnPrevButtonClicked(object sender, EventArgs e)
         {
             if (_pageIndex <= 0) return;
