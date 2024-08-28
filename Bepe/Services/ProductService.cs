@@ -64,4 +64,10 @@ public class ProductService : IDataService<ProductDto>
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync(Product product)
+    {
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync();
+    }
 }
