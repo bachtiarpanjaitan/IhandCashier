@@ -6,7 +6,9 @@
     xmlns:layouts="clr-namespace:IhandCashier.Layouts"
     Shell.FlyoutBehavior="Disabled" FlyoutIsPresented="False">
     
-    <ShellContent ContentTemplate="{DataTemplate layouts:MainLayout}" Route="MainLayout" />
+    <ShellContent ContentTemplate="{DataTemplate layouts:MainLayout}" Route="MainLayout">
+       
+    </ShellContent>
 
 </Shell>
 

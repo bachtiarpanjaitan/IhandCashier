@@ -27,7 +27,8 @@ namespace IhandCashier.Bepe.Helpers
         /// <author>Bachtiar Panjaitan</author>
         public Pagination(IDataService<T> dataService, Type typeHeader, Type form = null){
             ResetDataPagination(); //keep on top
-            
+            DatagridProvider.Indicator.IsRunning = true;
+            DatagridProvider.Indicator.IsVisible = true;
             _typeHeader = typeHeader;
             _form = form;
             _dataService = dataService;
@@ -40,11 +41,15 @@ namespace IhandCashier.Bepe.Helpers
 
         public void RefreshData()
         {
+            DatagridProvider.Indicator.IsRunning = true;
+            DatagridProvider.Indicator.IsVisible = true;
             _ = UpdatePagedData();
         }
 
         private void OnPrevButtonClicked(object sender, EventArgs e)
         {
+            DatagridProvider.Indicator.IsRunning = true;
+            DatagridProvider.Indicator.IsVisible = true;
             if (_pageIndex <= 0) return;
             _pageIndex--;
             _ = UpdatePagedData();
@@ -53,6 +58,8 @@ namespace IhandCashier.Bepe.Helpers
 
         private void OnNextButtonClicked(object sender, EventArgs e)
         {
+            DatagridProvider.Indicator.IsRunning = true;
+            DatagridProvider.Indicator.IsVisible = true;
             if ((_pageIndex + 1) >= _pageCount) return;
             _pageIndex++;
             _ = UpdatePagedData();
@@ -72,12 +79,15 @@ namespace IhandCashier.Bepe.Helpers
                     DatagridProvider.TotalLabel.Text = $"Total {_total} data";
                     DatagridProvider.DataGrid.ItemsSource = await _dataService.GetPagingData(_pageIndex, _pageSize, _search).ConfigureAwait(true);
                     Console.WriteLine($"Data Total {_total} rows.");
+                   
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("Error Pagination::UpdatePagedData() : ", e.Message);
                 }
             }
+            DatagridProvider.Indicator.IsRunning = false;
+            DatagridProvider.Indicator.IsVisible = false;
         }
 
         private async void GetComponentHandler()
@@ -102,6 +112,8 @@ namespace IhandCashier.Bepe.Helpers
 
         private void OnSearchHandler(object sender, TextChangedEventArgs e)
         {
+            DatagridProvider.Indicator.IsRunning = true;
+            DatagridProvider.Indicator.IsVisible = true;
             _search = e.NewTextValue;
             Device.BeginInvokeOnMainThread(() =>
             {

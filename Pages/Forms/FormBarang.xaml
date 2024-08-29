@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<toolkit:Popup Color="Transparent" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
            CanBeDismissedByTappingOutsideOfPopup="False"
-           Size="600,500"
+           Size="500,450"
            x:Class="IhandCashier.Pages.Forms.FormBarang">
             <Grid>
                 <Grid.RowDefinitions>
