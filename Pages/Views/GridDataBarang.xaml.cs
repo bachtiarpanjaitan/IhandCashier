@@ -28,57 +28,77 @@ namespace IhandCashier.Pages.Views
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
             DatagridProvider.Reset();
+            CreateContextMenu();
+            
             List<ColumnType> columns = [
                 new ColumnType { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
                 new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
                 new ColumnType { Type = ColumnTypes.Image, MappingName = "resourceGambar", Width = 150, HeaderText = "GAMBAR", ImageHeight = 50, ImageWidth = 50}
             ];
+            
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
             _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
-            Content = DatagridProvider.LayoutDatagrid;
-            
             DatagridProvider.DataGrid.CellTapped += OnRightClick;
-            
+            Content = DatagridProvider.LayoutDatagrid;
         }
         
         private void OnRightClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
         {
-            ContextMenu.Clear();
             _selectedProduct = dataGridCellTappedEventArgs.RowData as ProductDto;
-            
-            MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
-            MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
-            editMenu.Clicked += OnEditClicked;
-            deleteMenu.Clicked += OnDeleteClicked;
-            ContextMenu.Add(editMenu);
-            ContextMenu.Add(deleteMenu);
-
-            Console.WriteLine($"Barang : {_selectedProduct.nama}");
+            if (_selectedProduct != null) Console.WriteLine($"Barang : {_selectedProduct.kode}");
         }
 
         private async  void OnDeleteClicked(object sender, EventArgs e)
         {
-            bool accept = await Application.Current.MainPage.DisplayAlert($"Hapus Data Barang", $"Anda yakin menghapus barang {_selectedProduct.nama}?.", "Hapus", "Batal");
+            bool accept = await Application.Current.MainPage.DisplayAlert($"Hapus Data Barang", $"Anda yakin menghapus barang {_selectedProduct.kode}?.", "Hapus", "Batal");
             if (accept)
             {
                 try
                 {
                     await _service.DeleteAsync(_selectedProduct.ToProduct());
+                    Application.Current.MainPage.DisplayAlert("Berhasil", "Barang berhasil dihapus", "OK");
+                    _pagination.RefreshData();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Application.Current.MainPage.DisplayAlert("Gagal", ex.Message, "OK");
                 }
             }
-
-            Application.Current.MainPage.DisplayAlert("Berhasil", "Barang berhasil dihapus", "OK");
-            _pagination.RefreshData();
         }
 
         private void OnEditClicked(object sender, EventArgs e)
         {
+            if (Application.Current != null && Application.Current.MainPage != null)
+            {
+                if (_selectedProduct != null)
+                {
+                    var manager = new PopupManager();
+                    manager.ShowPopup(new FormBarang(_selectedProduct.ToProductViewModel()));
+                }
+                
+            }
+        }
+
+        private void CreateContextMenu()
+        {
+            MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
+            MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
+            MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
+            editMenu.Clicked += OnEditClicked;
+            deleteMenu.Clicked += OnDeleteClicked;
+            refreshMenu.Clicked += OnRefreshClicked;
+            ContextMenu.Add(refreshMenu);
+            ContextMenu.Add(editMenu);
+            ContextMenu.Add(new MenuFlyoutSeparator());
+            ContextMenu.Add(deleteMenu);
            
+        }
+
+        private void OnRefreshClicked(object sender, EventArgs e)
+        {
+            _pagination.RefreshData();
         }
     }
 }

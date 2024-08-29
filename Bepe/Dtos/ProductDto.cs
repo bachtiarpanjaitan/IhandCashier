@@ -1,4 +1,5 @@
 using IhandCashier.Bepe.Entities;
+using IhandCashier.Bepe.ViewModels;
 
 namespace IhandCashier.Bepe.Dtos;
 
@@ -19,7 +20,16 @@ public class ProductDto
             kode = this.kode,
             nama = this.nama,
         };
+    }
 
-
+    public ProductViewModel ToProductViewModel()
+    {
+        return new ProductViewModel()
+        {
+            Id = this.id,
+            Gambar = this.gambar,
+            Kode = this.kode,
+            Nama = this.nama,
+        };
     }
 }

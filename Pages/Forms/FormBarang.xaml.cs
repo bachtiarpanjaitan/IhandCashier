@@ -13,12 +13,25 @@ public partial class FormBarang
     ProductViewModel _model = new();
     private FileResult _imageStream = null;
     private string _fileName = null;
+    public FormBarang(ProductViewModel model = null)
+    {
+        InitializeComponent();
+        _model.ErrorsChanged += OnErrorsChanged;
+        if (model != null)
+        {
+            _model = model;
+            UploadedImage.Source =
+                ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"), model.Gambar));
+        }
+        BindingContext = _model;
+        
+    }
+
     public FormBarang()
     {
         InitializeComponent();
         _model.ErrorsChanged += OnErrorsChanged;
         BindingContext = _model;
-        
     }
 
     private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
@@ -42,16 +55,20 @@ public partial class FormBarang
             try
             {
                 var data = _model.ToProduct();
-                await _service.AddAsync(data).ConfigureAwait(true);
-                
-                var path = AppSettingConfig.CreateAppPath("Images");
-                var destination = Path.Combine(path, _fileName);
-                using var fileStream = new FileStream(destination, FileMode.Create, FileAccess.Write);
-                using var stream = await _imageStream.OpenReadAsync();
-                await stream.CopyToAsync(fileStream);
+                if (data.id > 0) await _service.UpdateAsync(data).ConfigureAwait(true);
+                else await _service.AddAsync(data).ConfigureAwait(true);
+
+                if (_fileName != null)
+                {
+                    var path = AppSettingConfig.CreateAppPath("Images");
+                    var destination = Path.Combine(path, _fileName);
+                    using var fileStream = new FileStream(destination, FileMode.Create, FileAccess.Write);
+                    using var stream = await _imageStream.OpenReadAsync();
+                    await stream.CopyToAsync(fileStream);
+                }
 
                 Close();
-                await Application.Current.MainPage.DisplayAlert("Berhasil", "Produk berhasil ditambahkan", "OK");
+                await Application.Current.MainPage.DisplayAlert("Berhasil", "Produk berhasil disimpan", "OK");
             }
             catch (Exception ex)
             {
