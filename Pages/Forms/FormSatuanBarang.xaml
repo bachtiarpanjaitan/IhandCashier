@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             CanBeDismissedByTappingOutsideOfPopup="False"
-             Size="500,600"
-             x:Class="IhandCashier.Pages.Forms.FormSatuanBarang">
-    
-</toolkit:Popup>
+<helpers:Form xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+              xmlns:helpers="clr-namespace:IhandCashier.Bepe.Helpers"
+              x:Class="IhandCashier.Pages.Forms.FormSatuanBarang">
+    <VerticalStackLayout Padding="20" Margin="20">
+        <StackLayout Padding="0,5" x:Name="ErrorContainer"></StackLayout>
+        <StackLayout Padding="0,10">
+            <Label Text="Satuan Dasar" />
+            <editors:SfComboBox BackgroundColor="Transparent"
+                                Placeholder="Masukkan Satuan Dasar"
+                                DisplayMemberPath="Label"
+                                TextMemberPath="Label"
+                                SelectedValuePath="Value"
+                                SelectedValue="{Binding BasicUnitId,Mode=TwoWay}"
+                                IsEditable="false"
+                                x:Name="BasicUnitSelectBox"/>
+        </StackLayout>
+        <StackLayout Padding="0,10">
+            <Label Text="Kode Satuan" />
+            <Entry Text="{Binding KodeSatuan,Mode=TwoWay}" Placeholder="Masukkan kode satuan" />
+        </StackLayout>
+        <StackLayout Padding="0,10">
+            <Label Text="Sama Satuan" />
+            <Entry Text="{Binding Nama,Mode=TwoWay}" Placeholder="Masukkan nama satuan" />
+        </StackLayout>
+        <StackLayout Padding="0,10">
+            <Label Text="Nilai Konversi" />
+            <Entry Keyboard="Numeric"  Text="{Binding Konversi,Mode=TwoWay}" Placeholder="Besaran nilai konversi" />
+        </StackLayout>
+    </VerticalStackLayout>
+</helpers:Form>

@@ -3,7 +3,6 @@
 <helpers:Form Color="Transparent" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:helpers="clr-namespace:IhandCashier.Bepe.Helpers"
-           xmlns:forms="clr-namespace:IhandCashier.Pages.Forms"
            x:Class="IhandCashier.Pages.Forms.FormBarang">
             <VerticalStackLayout Padding="20" Margin="20">
                 <StackLayout Padding="0,5" x:Name="ErrorContainer"></StackLayout>

@@ -19,6 +19,11 @@ public class BasicUnitService : IDataService<BasicUnit>
         return await _context.BasicUnits.ToListAsync();
     }
     
+    public List<BasicUnit> Get()
+    {
+        return _context.BasicUnits.ToList();
+    }
+    
     public IQueryable<BasicUnit> Query()
     {
         return _context.BasicUnits.AsQueryable();

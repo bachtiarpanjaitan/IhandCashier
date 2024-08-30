@@ -1,7 +1,6 @@
 ﻿using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Services;
-using Font = Microsoft.Maui.Font;
 using StackLayout = Microsoft.Maui.Controls.Compatibility.StackLayout;
 
 namespace IhandCashier.Bepe.Helpers
@@ -67,13 +66,13 @@ namespace IhandCashier.Bepe.Helpers
 
         public Frame GenerateFrame()
         {
-            var splitter = new BoxView { Color = (Color) Application.Current.Resources["IcBorderColor"], WidthRequest = 2 };
+            var splitter = new BoxView { Color = Colors.DarkOrange, WidthRequest = 2 };
             grid.Add(splitter,1,0);
             var frame = new Frame
             {
                 Content = grid,
                 BackgroundColor = Colors.Transparent,
-                BorderColor = (Color)Application.Current.Resources["IcBorderColor"],
+                BorderColor = Colors.DarkOrange,
                 CornerRadius = 5,
                 Padding = 0,
                 Margin = new Thickness(0,0,0,5),

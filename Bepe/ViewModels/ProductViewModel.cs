@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using IhandCashier.Bepe.Entities;
-using IhandCashier.Core.Maui.Providers;
-using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Bepe.ViewModels
 {

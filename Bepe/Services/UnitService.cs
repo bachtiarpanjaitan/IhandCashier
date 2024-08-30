@@ -1,11 +1,12 @@
 using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Dtos;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Services;
 
-public class UnitService : IDataService<Unit>
+public class UnitService : IDataService<UnitDto>
 {
     private readonly AppDbContext _context;
 
@@ -19,7 +20,7 @@ public class UnitService : IDataService<Unit>
         return _context.Units.Count();
     }
 
-    public async Task<List<Unit>> GetPagingData(int pageIndex, int pageSize,string searchQuery)
+    public async Task<List<UnitDto>> GetPagingData(int pageIndex, int pageSize,string searchQuery)
     {
         IQueryable<Unit> query = _context.Units;
         if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -33,12 +34,33 @@ public class UnitService : IDataService<Unit>
             .Include(b => b.BasicUnit)
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
+            .Select(item => new UnitDto()
+            {
+                id = item.id,
+                basic_unit_id = item.basic_unit_id,
+                kode_satuan = item.kode_satuan,
+                nama = item.nama,
+                konversi = item.konversi,
+                BasicUnit = item.BasicUnit
+            })
             .ToListAsync();
     }
 
     public async Task AddAsync(Unit unit)
     {
         _context.Units.Add(unit);
+        await _context.SaveChangesAsync();
+    }
+    
+    public async Task UpdateAsync(Unit product)
+    {
+        _context.Units.Update(product);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Unit product)
+    {
+        _context.Units.Remove(product);
         await _context.SaveChangesAsync();
     }
 }

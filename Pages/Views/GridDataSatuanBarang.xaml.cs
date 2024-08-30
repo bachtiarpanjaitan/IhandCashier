@@ -1,6 +1,7 @@
 ﻿using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Dtos;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Bepe.Services;
@@ -15,11 +16,14 @@ public partial class GridDataSatuanBarang
 {
 	private const string ModuleName = "Data Satuan Barang";
 	UnitService _service  = ServiceLocator.ServiceProvider.GetService<UnitService>();
+	private Pagination<UnitDto> _pagination;
+	UnitDto _selected;
 	public GridDataSatuanBarang()
 	{
 		InitializeComponent();
 		FilterOne.Initialize(ModuleName);
 		DatagridProvider.Reset();
+		CreateContextMenu();
 		List<ColumnType> columns = [
 			new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center, MappingName = "id",ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "kode_satuan", HeaderText = "KODE SATUAN"},
@@ -30,8 +34,68 @@ public partial class GridDataSatuanBarang
             
 		foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
 		
-		_ = new Pagination<Unit>(_service, typeof(FilterOne));
+		_pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
+		DatagridProvider.DataGrid.CellTapped += OnRightClick;
 		Content = DatagridProvider.LayoutDatagrid;
+	}
+	
+	private void OnRightClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
+	{
+		_selected = dataGridCellTappedEventArgs.RowData as UnitDto;
+		if (_selected != null) Console.WriteLine($"Barang : {_selected.kode_satuan}");
+	}
+	
+	private async  void OnDeleteClicked(object sender, EventArgs e)
+	{
+		bool accept = await Application.Current.MainPage.DisplayAlert($"Hapus Satuan Barang", $"Anda yakin menghapus satuan {_selected.kode_satuan}?.", "Hapus", "Batal");
+		if (accept)
+		{
+			try
+			{
+				await _service.DeleteAsync(_selected.ToUnit());
+				Application.Current.MainPage.DisplayAlert("Berhasil", "Satuan berhasil dihapus", "OK");
+				_pagination.RefreshData();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				Application.Current.MainPage.DisplayAlert("Gagal", ex.Message, "OK");
+			}
+		}
+	}
+
+	private void OnEditClicked(object sender, EventArgs e)
+	{
+		if (Application.Current != null && Application.Current.MainPage != null)
+		{
+			if (_selected != null)
+			{
+				var manager = new PopupManager();
+				var data = _selected.ToUnitViewModel();
+				manager.ShowPopup(new FormSatuanBarang(data));
+			}
+                
+		}
+	}
+
+	private void OnRefreshClicked(object sender, EventArgs e)
+	{
+		_pagination.RefreshData();
+	}
+	
+	private void CreateContextMenu()
+	{
+		MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
+		MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
+		MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
+		editMenu.Clicked += OnEditClicked;
+		deleteMenu.Clicked += OnDeleteClicked;
+		refreshMenu.Clicked += OnRefreshClicked;
+		ContextMenu.Add(refreshMenu);
+		ContextMenu.Add(editMenu);
+		ContextMenu.Add(new MenuFlyoutSeparator());
+		ContextMenu.Add(deleteMenu);
+           
 	}
 	
 	

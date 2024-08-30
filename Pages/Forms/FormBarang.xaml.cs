@@ -1,14 +1,14 @@
 using System.ComponentModel;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
-using IhandCashier.Bepe.Helpers;
+using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.ViewModels;
 
 namespace IhandCashier.Pages.Forms;
 
-public partial class FormBarang
+public sealed partial class FormBarang : IForm
 {
     ProductService _service  = ServiceLocator.ServiceProvider.GetService<ProductService>();
     ProductViewModel _model = new();
@@ -16,32 +16,25 @@ public partial class FormBarang
     private string _fileName = null;
     public FormBarang(ProductViewModel model = null)
     {
-        InitializeComponent();
         _model = model;
-        _model.ErrorsChanged += OnErrorsChanged;
+        Initialize();
         if (_model.Gambar != null)
         {
             UploadedImage.Source = ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"), _model.Gambar));
         }
-       
-        BindingContext = _model;
-        
-        SetTitle("Form Barang").SetSize(500, 450).Create(Content);
-        SetBtnEvent();
     }
 
     public FormBarang()
     {
-        InitializeComponent();
-        SetTitle("Form Barang").SetSize(500, 450).Create(Content);
-        _model.ErrorsChanged += OnErrorsChanged;
-        BindingContext = _model;
-        
-        SetBtnEvent();
+        Initialize();
     }
 
-    private void SetBtnEvent()
+    public void Initialize()
     {
+        InitializeComponent();
+        _model.ErrorsChanged += OnErrorsChanged;
+        BindingContext = _model;
+        SetTitle("Form Barang").SetSize(500, 450).Create(Content);
         BtnClose.Clicked += BtnBatal_OnClicked;
         BtnSave.Clicked += BtnSimpan_OnClicked;
     }
@@ -54,7 +47,7 @@ public partial class FormBarang
         }
     }
 
-    private async void BtnSimpan_OnClicked(object sender, EventArgs e)
+    public async void BtnSimpan_OnClicked(object sender, EventArgs e)
     {
         FormValidation.ShowErrors(ErrorContainer, _model.Errors);
         if (_model.Errors.Count > 0) return;
@@ -90,7 +83,7 @@ public partial class FormBarang
         
     }
 
-    private void BtnBatal_OnClicked(object sender, EventArgs e)
+    public void BtnBatal_OnClicked(object sender, EventArgs e)
     {
         Close();
     }
