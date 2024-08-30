@@ -56,7 +56,7 @@ namespace IhandCashier.Bepe.ViewModels
         
         [Required(AllowEmptyStrings = false, ErrorMessage = "Nama tidak boleh kosong")]
         [MinLength(4, ErrorMessage = "Nama barang tidak boleh lebih kecil dari 4 karakter")]
-        [MaxLength(20, ErrorMessage = "Maksimal panjang nama barang adalah 20 karakter")]
+        [MaxLength(20, ErrorMessage = "Maksimal panjang nama barang adalah 100 karakter")]
         [Display(Prompt = "Masukkan Nama Barang")]
         public string Nama
         {

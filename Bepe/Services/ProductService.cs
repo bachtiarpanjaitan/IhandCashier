@@ -67,7 +67,7 @@ public class ProductService : IDataService<ProductDto>
 
     public async Task UpdateAsync(Product product)
     {
-        _context.Products.Update(product);
+         _context.Products.Update(product);
         await _context.SaveChangesAsync();
     }
 

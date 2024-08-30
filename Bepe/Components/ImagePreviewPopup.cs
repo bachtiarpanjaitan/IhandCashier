@@ -20,6 +20,8 @@ public class ImagePreviewPopup : Popup
        {
            Close(true);
        };
+       
+       Color = Colors.Transparent;
     }
     
     public void SetImage(ImageSource imageSource, int width = 200, int height = 200)

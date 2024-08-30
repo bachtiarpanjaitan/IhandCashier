@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.ViewModels;
@@ -16,22 +17,33 @@ public partial class FormBarang
     public FormBarang(ProductViewModel model = null)
     {
         InitializeComponent();
+        _model = model;
         _model.ErrorsChanged += OnErrorsChanged;
-        if (model != null)
+        if (_model.Gambar != null)
         {
-            _model = model;
-            UploadedImage.Source =
-                ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"), model.Gambar));
+            UploadedImage.Source = ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"), _model.Gambar));
         }
+       
         BindingContext = _model;
         
+        SetTitle("Form Barang").SetSize(500, 450).Create(Content);
+        SetBtnEvent();
     }
 
     public FormBarang()
     {
         InitializeComponent();
+        SetTitle("Form Barang").SetSize(500, 450).Create(Content);
         _model.ErrorsChanged += OnErrorsChanged;
         BindingContext = _model;
+        
+        SetBtnEvent();
+    }
+
+    private void SetBtnEvent()
+    {
+        BtnClose.Clicked += BtnBatal_OnClicked;
+        BtnSave.Clicked += BtnSimpan_OnClicked;
     }
 
     private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)

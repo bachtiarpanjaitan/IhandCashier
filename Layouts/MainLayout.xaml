@@ -23,27 +23,33 @@
             <Frame
                 Padding="5,0,0,0"
                 Grid.Row="0"
+                BorderColor="DarkOrange"
                 Grid.Column="0">
                 <Label x:Name="LJamAplikasi" FontAttributes="Bold"  FontSize="12" Text="0000-00-00 00:00:00" VerticalOptions="Center"/>
             </Frame>
 
             <Frame
                 Padding="5,0"
+                Margin="5,0"
                 Grid.Row="0"
+                BorderColor="DarkOrange"
                 Grid.Column="1">
-                <Label  x:Name="LogLabel" FontFamily="Consolas" FontAttributes="Bold" TextColor="Brown"  FontSize="12" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  x:Name="LogLabel" FontFamily="Consolas" FontAttributes="Bold" TextColor="GreenYellow"  FontSize="12" HorizontalOptions="Start" VerticalOptions="Center"/>
             </Frame>
 
             <Frame
                 Padding="5,0"
                 Grid.Row="0"
+                BorderColor="DarkOrange"
                 Grid.Column="2">
                 <Label x:Name="LUser" Text="Unknown" FontAttributes="Bold" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center"/>
             </Frame>
 
             <Frame
                 Padding="5,0"
+                Margin="5,0,0,0"
                 Grid.Row="0"
+                BorderColor="DarkOrange"
                 Grid.Column="3">
                 <Label  x:Name="Copyright" FontSize="12" HorizontalOptions="Center" VerticalOptions="Center" />
             </Frame>

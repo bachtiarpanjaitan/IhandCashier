@@ -16,7 +16,7 @@ public partial class MainLayout : ContentPage
     public MainLayout()
     {
         InitializeComponent();
-        _ = LoadMenu();
+        LoadMenu();
         SetupClock();
         
         Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
@@ -25,14 +25,14 @@ public partial class MainLayout : ContentPage
         
     }
 
-    private async Task LoadMenu()
+    private void LoadMenu()
     {
         if (DeviceInfo.Platform == DevicePlatform.MacCatalyst ||DeviceInfo.Platform == DevicePlatform.WinUI)
         {
             if (Application.Current != null)
             {
                 MenuBarItems.Clear();
-                var menuCreator = await new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync().ConfigureAwait(false);
+                var menuCreator = new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync().Result;
                 foreach (var item in menuCreator)
                 {
                     MenuBarItems.Add(item);
@@ -40,7 +40,7 @@ public partial class MainLayout : ContentPage
             }
         }
         
-        LUser.Text = $"[ {userSession.Username} ]";
+        LUser.Text = $" {userSession.Username} ";
         Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
         Console.SetOut(new LabelWriter(LogLabel));
     }

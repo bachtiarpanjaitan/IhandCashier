@@ -48,9 +48,9 @@ namespace IhandCashier.Bepe.Helpers
 
         private void OnPrevButtonClicked(object sender, EventArgs e)
         {
+            if (_pageIndex <= 0) return;
             DatagridProvider.Indicator.IsRunning = true;
             DatagridProvider.Indicator.IsVisible = true;
-            if (_pageIndex <= 0) return;
             _pageIndex--;
             _ = UpdatePagedData();
 
@@ -58,9 +58,9 @@ namespace IhandCashier.Bepe.Helpers
 
         private void OnNextButtonClicked(object sender, EventArgs e)
         {
+            if ((_pageIndex + 1) >= _pageCount) return;
             DatagridProvider.Indicator.IsRunning = true;
             DatagridProvider.Indicator.IsVisible = true;
-            if ((_pageIndex + 1) >= _pageCount) return;
             _pageIndex++;
             _ = UpdatePagedData();
 
