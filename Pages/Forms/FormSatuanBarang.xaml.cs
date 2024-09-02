@@ -2,6 +2,7 @@ using System.ComponentModel;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Services;
+using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.ViewModels;
 
@@ -60,9 +61,31 @@ public sealed partial class FormSatuanBarang : IForm
         }
     }
 
-    public void BtnSimpan_OnClicked(object sender, EventArgs e)
+    public async void BtnSimpan_OnClicked(object sender, EventArgs e)
     {
-       
+        _model.ValidateAllProperties();
+        FormValidation.ShowErrors(ErrorContainer, _model.Errors);
+        if (_model.Errors.Count > 0) return;
+        
+        bool accept = await Application.Current.MainPage.DisplayAlert("Simpan Satuan Barang",
+            "Apakah anda yakin menyimpan satuan barang ini ?",
+            "Simpan", "Tidak");
+        if (accept)
+        {
+            try
+            {
+                var data = _model.ToUnit();
+                if (data.id > 0) await _service.UpdateAsync(data);
+                else await _service.AddAsync(data).ConfigureAwait(true);
+                Close();
+                await Application.Current.MainPage.DisplayAlert("Berhasil", "Satuan barang berhasil disimpan", "OK");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                await Application.Current.MainPage.DisplayAlert("Gagal", ex.Message, "OK");
+            }
+        }
     }
 
     public void BtnBatal_OnClicked(object sender, EventArgs e)

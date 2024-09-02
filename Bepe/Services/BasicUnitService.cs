@@ -16,12 +16,12 @@ public class BasicUnitService : IDataService<BasicUnit>
 
     public async Task<List<BasicUnit>> GetAsync()
     {
-        return await _context.BasicUnits.ToListAsync();
+        return await _context.BasicUnits.AsNoTracking().ToListAsync();
     }
     
     public List<BasicUnit> Get()
     {
-        return _context.BasicUnits.ToList();
+        return _context.BasicUnits.AsNoTracking().ToList();
     }
     
     public IQueryable<BasicUnit> Query()
@@ -31,12 +31,12 @@ public class BasicUnitService : IDataService<BasicUnit>
     
     public int TotalData()
     {
-        return _context.BasicUnits.Count();
+        return _context.BasicUnits.AsNoTracking().Count();
     }
 
     public async Task<List<BasicUnit>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
-        IQueryable<BasicUnit> query = _context.BasicUnits;
+        IQueryable<BasicUnit> query = _context.BasicUnits.AsNoTracking();
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
             query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%")

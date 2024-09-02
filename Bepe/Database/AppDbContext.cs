@@ -136,7 +136,9 @@ public class AppDbContext : DbContext
             var connectionString = $"server={db.DbServer};database={db.Database};user={db.Username};password={db.Password};port={db.Port};";
             if (!optionsBuilder.IsConfigured) optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
-        
+
+        optionsBuilder.EnableSensitiveDataLogging();
+
     }
 
 

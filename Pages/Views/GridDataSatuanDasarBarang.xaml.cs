@@ -1,6 +1,7 @@
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Dtos;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Bepe.Services;
@@ -13,8 +14,11 @@ namespace IhandCashier.Pages.Views
 {
     public partial class GridDataSatuanDasarBarang
     {
+        
         private const string ModuleName = "Data Satuan Dasar Barang";
         BasicUnitService _service  = ServiceLocator.ServiceProvider.GetService<BasicUnitService>();
+        private Pagination<BasicUnitDto> _pagination;
+        UnitDto _selected;
         public GridDataSatuanDasarBarang()
         {
             InitializeComponent();

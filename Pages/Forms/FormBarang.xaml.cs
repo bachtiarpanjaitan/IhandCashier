@@ -53,7 +53,7 @@ public sealed partial class FormBarang : IForm
         if (_model.Errors.Count > 0) return;
         
         bool accept = await Application.Current.MainPage.DisplayAlert("Simpan Produk",
-            "Apakah anda yakin menyimpan produk ini ?",
+            "Apakah anda yakin menyimpan barang ini ?",
             "Simpan", "Tidak");
         if (accept)
         {
@@ -73,11 +73,12 @@ public sealed partial class FormBarang : IForm
                 }
 
                 Close();
-                await Application.Current.MainPage.DisplayAlert("Berhasil", "Produk berhasil disimpan", "OK");
+                await Application.Current.MainPage.DisplayAlert("Berhasil", "Barang berhasil disimpan", "OK");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                await Application.Current.MainPage.DisplayAlert("Gagal", ex.Message, "OK");
             }
         }
         

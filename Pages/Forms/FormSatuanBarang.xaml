@@ -23,7 +23,7 @@
             <Entry Text="{Binding KodeSatuan,Mode=TwoWay}" Placeholder="Masukkan kode satuan" />
         </StackLayout>
         <StackLayout Padding="0,10">
-            <Label Text="Sama Satuan" />
+            <Label Text="Nama Satuan" />
             <Entry Text="{Binding Nama,Mode=TwoWay}" Placeholder="Masukkan nama satuan" />
         </StackLayout>
         <StackLayout Padding="0,10">

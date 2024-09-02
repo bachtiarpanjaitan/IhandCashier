@@ -2,11 +2,12 @@ using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using IhandCashier.Bepe.Database.Attributes;
 using IhandCashier.Bepe.Entities;
 
 namespace IhandCashier.Bepe.ViewModels;
 
-public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
+public class UnitViewModel : BaseViewModel
 {
 
     private int _id;
@@ -15,9 +16,8 @@ public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     private string _nama;
     private decimal _konversi;
     
-    public readonly Dictionary<string, List<string>> Errors = new();
-    
     [Bindable(false)]
+    [IdProperty]
     public int Id
     {
         get => _id;
@@ -42,7 +42,7 @@ public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
             {
                 _basic_unit_id = value;
                 OnPropertyChanged();
-                ValidateProperty(nameof(BasicUnitId), value);
+                ValidateProperty(nameof(BasicUnitId));
             }
         }
     }
@@ -59,7 +59,7 @@ public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
             {
                 _kode_satuan = value;
                 OnPropertyChanged();
-                ValidateProperty(nameof(KodeSatuan), value);
+                ValidateProperty(nameof(KodeSatuan));
             }
         }
     }
@@ -76,7 +76,7 @@ public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
             {
                 _nama = value;
                 OnPropertyChanged();
-                ValidateProperty(nameof(Nama), value);
+                ValidateProperty(nameof(Nama));
             }
         }
     }
@@ -92,7 +92,7 @@ public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
             {
                 _konversi = value;
                 OnPropertyChanged();
-                ValidateProperty(nameof(Konversi), value);
+                ValidateProperty(nameof(Konversi));
             }
         }
     }
@@ -109,6 +109,8 @@ public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
         _kode_satuan = unit.kode_satuan;
         _nama = unit.nama;
         _konversi = unit.konversi;
+        
+        ValidateAllProperties();
     }
 
     public Unit ToUnit()
@@ -123,60 +125,21 @@ public class UnitViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
         };
     }
     
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    public void ValidateAllProperties()
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        if (propertyName != null)
-        {
-            ValidateProperty(propertyName, GetType().GetProperty(propertyName)?.GetValue(this));
-        }
-    }
-    
-    public event PropertyChangedEventHandler PropertyChanged;
-    public IEnumerable GetErrors(string propertyName)
-    {
-        return Errors.TryGetValue(propertyName, out var errors) ? errors : null;
-    }
+        // ValidateProperty(nameof(BasicUnitId), _basic_unit_id);
+        // ValidateProperty(nameof(Nama), _nama);
+        // ValidateProperty(nameof(KodeSatuan), _kode_satuan);
+        // ValidateProperty(nameof(Konversi), _konversi);
+        
+        var properties = this.GetType().GetProperties()
+            .Where(p => p.CanRead && p.CanWrite)
+            .ToList();
 
-    public bool HasErrors
-    {
-        get => Errors.Any();
-        private set { }
-    }
-    
-    private void ValidateProperty(string propertyName, object value)
-    {
-        var validationContext = new ValidationContext(this) { MemberName = propertyName };
-        var results = new List<ValidationResult>();
-
-        // Validasi properti menggunakan Validator
-        bool isValid = Validator.TryValidateProperty(value, validationContext, results);
-
-        // Menyimpan hasil validasi ke dictionary _errors
-        if (isValid)
+        foreach (var property in properties)
         {
-            Errors.Remove(propertyName);
-        }
-        else
-        {
-            Errors[propertyName] = results.Select(x => x.ErrorMessage).ToList();
+            ValidateProperty(property.Name); // Panggil metode dinamis untuk memvalidasi properti
         }
 
-        // Memperbarui status HasErrors
-        HasErrors = Errors.Any();
-
-        // Notifikasi bahwa error telah berubah
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }
-    
-    private void ValidateAllProperties()
-    {
-        ValidateProperty(nameof(BasicUnitId), _basic_unit_id);
-        ValidateProperty(nameof(Nama), _nama);
-        ValidateProperty(nameof(KodeSatuan), _kode_satuan);
-        ValidateProperty(nameof(Konversi), _konversi);
-
-    }
-    
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 }

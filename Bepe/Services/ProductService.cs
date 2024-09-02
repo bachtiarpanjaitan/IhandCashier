@@ -19,7 +19,7 @@ public class ProductService : IDataService<ProductDto>
 
     public async Task<List<Product>> GetAsync()
     {
-        return await _context.Products.ToListAsync();
+        return await _context.Products.AsNoTracking().ToListAsync();
     }
     
     public IQueryable<Product> Query()
@@ -30,7 +30,7 @@ public class ProductService : IDataService<ProductDto>
 
     public int TotalData()
     {
-        return _context.Products.Count();
+        return _context.Products.AsNoTracking().Count();
     }
 
     public async Task<List<ProductDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
@@ -44,6 +44,7 @@ public class ProductService : IDataService<ProductDto>
         }
         var result =  await query
             .OrderByDescending(i => i.id)
+            .AsNoTracking()
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
             .Select(item => new ProductDto()
