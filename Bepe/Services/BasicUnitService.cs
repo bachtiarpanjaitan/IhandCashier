@@ -16,12 +16,12 @@ public class BasicUnitService : IDataService<BasicUnit>
 
     public async Task<List<BasicUnit>> GetAsync()
     {
-        return await _context.BasicUnits.ToListAsync();
+        return await _context.BasicUnits.AsNoTracking().ToListAsync();
     }
     
     public List<BasicUnit> Get()
     {
-        return _context.BasicUnits.ToList();
+        return _context.BasicUnits.AsNoTracking().ToList();
     }
     
     public IQueryable<BasicUnit> Query()
@@ -42,7 +42,7 @@ public class BasicUnitService : IDataService<BasicUnit>
             query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%")
             );
         }
-        return await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+        return await query.AsNoTracking().Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task AddAsync(BasicUnit product)

@@ -44,6 +44,7 @@ public class ProductService : IDataService<ProductDto>
         }
         var result =  await query
             .OrderByDescending(i => i.id)
+            .AsNoTracking()
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
             .Select(item => new ProductDto()

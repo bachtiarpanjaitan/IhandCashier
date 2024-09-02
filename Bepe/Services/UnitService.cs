@@ -31,6 +31,7 @@ public class UnitService : IDataService<UnitDto>
             );
         }
         return await query.WithNavigation()
+            .AsNoTracking()
             .Include(b => b.BasicUnit)
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
@@ -52,15 +53,15 @@ public class UnitService : IDataService<UnitDto>
         await _context.SaveChangesAsync();
     }
     
-    public async Task UpdateAsync(Unit product)
+    public async Task UpdateAsync(Unit unit)
     {
-        _context.Units.Update(product);
+        _context.Units.Update(unit);
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Unit product)
+    public async Task DeleteAsync(Unit unit)
     {
-        _context.Units.Remove(product);
+        _context.Units.Remove(unit);
         await _context.SaveChangesAsync();
     }
 }
