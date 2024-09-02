@@ -9,13 +9,13 @@
         <StackLayout Padding="0,5" x:Name="ErrorContainer"></StackLayout>
         <StackLayout Padding="0,10">
             <Label Text="Satuan Dasar" />
-            <editors:SfComboBox BackgroundColor="Transparent"
-                                Placeholder="Masukkan Satuan Dasar"
+            <editors:SfComboBox Placeholder="Masukkan Satuan Dasar"
                                 DisplayMemberPath="Label"
                                 TextMemberPath="Label"
                                 SelectedValuePath="Value"
                                 SelectedValue="{Binding BasicUnitId,Mode=TwoWay}"
                                 IsEditable="false"
+                                ShowBorder="True"
                                 x:Name="BasicUnitSelectBox"/>
         </StackLayout>
         <StackLayout Padding="0,10">

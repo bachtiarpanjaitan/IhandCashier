@@ -139,6 +139,9 @@
 	  <Reference Include="IhandCashier.Core">
 	    <HintPath>Basapadi\IhandCashier.Core.dll</HintPath>
 	  </Reference>
+	  <Reference Include="Syncfusion.Maui.Inputs">
+	    <HintPath>..\..\..\..\..\.nuget\packages\syncfusion.maui.inputs\26.2.9\lib\net8.0\Syncfusion.Maui.Inputs.dll</HintPath>
+	  </Reference>
 	  <Reference Include="System.Private.Xml.Linq">
 	    <HintPath>bin\Debug\net8.0-maccatalyst\maccatalyst-arm64\IhandCashier.app\Contents\MonoBundle\System.Private.Xml.Linq.dll</HintPath>
 	  </Reference>

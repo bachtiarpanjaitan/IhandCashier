@@ -10,8 +10,8 @@ public class Form : Popup
         Color = Colors.Transparent;
     }
 
-    public Button BtnClose = new() { Text = "Batal", Margin = new Thickness(10, 0) };
-    public Button BtnSave = new() { Text = "Simpan", Margin = new Thickness(10, 0) };
+    public Button BtnClose = new() { Text = "Batal", Margin = new Thickness(10, 0), Padding = new Thickness(15,10) };
+    public Button BtnSave = new() { Text = "Simpan", Margin = new Thickness(10, 0), Padding = new Thickness(15,10) };
     
     private Grid grid = new()
     {

@@ -7,17 +7,17 @@
             <VerticalStackLayout Padding="20" Margin="20">
                 <StackLayout Padding="0,5" x:Name="ErrorContainer"></StackLayout>
                 <StackLayout Padding="0,10">
-                    <Label Text="Kode Produk" />
-                    <Entry Text="{Binding Kode,Mode=TwoWay}" Placeholder="Masukkan kode produk" />
+                    <Label Text="Kode Barang" />
+                    <Entry Text="{Binding Kode,Mode=TwoWay}" Placeholder="Masukkan kode barang" />
                 </StackLayout>
                                 
                 <StackLayout Padding="0,10">
-                    <Label Text="Nama Produk" />
-                    <Entry Text="{Binding Nama, Mode=TwoWay}" Placeholder="Masukkan nama produk" />
+                    <Label Text="Nama Barang" />
+                    <Entry Text="{Binding Nama, Mode=TwoWay}" Placeholder="Masukkan nama barang" />
                 </StackLayout>
                                 
                 <StackLayout Padding="0,10,0,0">
-                    <Button Text="Pilih Gambar Produk" Clicked="OnPickImageClicked" Padding="0,10" />
+                    <Button Text="Pilih Gambar Barang" Clicked="OnPickImageClicked" Padding="0,10" />
                     <Image x:Name="UploadedImage" WidthRequest="100" HeightRequest="100" />
                 </StackLayout>
             </VerticalStackLayout>
