@@ -2,25 +2,20 @@ using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using IhandCashier.Bepe.Database.Attributes;
 using IhandCashier.Bepe.Entities;
 
 namespace IhandCashier.Bepe.ViewModels
 {
-    public class ProductViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
+    public class ProductViewModel : BaseViewModel
     {
         private int _id;
         private string _kode;
         private string _nama;
         private string _gambar;
-        public readonly Dictionary<string, List<string>> Errors = new();
-        
-        public bool HasErrors
-        {
-            get => Errors.Any();
-            private set { }
-        }
 
         [Bindable(false)]
+        [IdProperty]
         public int Id
         {
             get => _id;
@@ -47,7 +42,7 @@ namespace IhandCashier.Bepe.ViewModels
                 {
                     _kode = value;
                     OnPropertyChanged();
-                    ValidateProperty(nameof(Kode), value);
+                    ValidateProperty(nameof(Kode));
                 }
             }
         }
@@ -65,7 +60,7 @@ namespace IhandCashier.Bepe.ViewModels
                 {
                     _nama = value;
                     OnPropertyChanged();
-                    ValidateProperty(nameof(Nama), value);
+                    ValidateProperty(nameof(Nama));
                 }
             }
         }
@@ -80,20 +75,8 @@ namespace IhandCashier.Bepe.ViewModels
                 {
                     _gambar = value;
                     OnPropertyChanged();
-                    ValidateProperty(nameof(Gambar), value);
+                    ValidateProperty(nameof(Gambar));
                 }
-            }
-        }
-        
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            if (propertyName != null)
-            {
-                ValidateProperty(propertyName, GetType().GetProperty(propertyName)?.GetValue(this));
             }
         }
 
@@ -120,54 +103,12 @@ namespace IhandCashier.Bepe.ViewModels
                 gambar = _gambar
             };
         }
-
-        public IEnumerable GetErrors(string propertyName)
-        {
-            return Errors.TryGetValue(propertyName, out var errors) ? errors : null;
-        }
-
-        private void ValidateProperty(string propertyName, object value)
-        {
-            var validationContext = new ValidationContext(this) { MemberName = propertyName };
-            var results = new List<ValidationResult>();
-
-            // Validasi properti menggunakan Validator
-            bool isValid = Validator.TryValidateProperty(value, validationContext, results);
-
-            // Menyimpan hasil validasi ke dictionary _errors
-            if (isValid)
-            {
-                Errors.Remove(propertyName);
-            }
-            else
-            {
-                Errors[propertyName] = results.Select(x => x.ErrorMessage).ToList();
-            }
-
-            // Memperbarui status HasErrors
-            HasErrors = Errors.Any();
-
-            // Notifikasi bahwa error telah berubah
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-
-
-
-        IEnumerable INotifyDataErrorInfo.GetErrors(string propertyName)
-        {
-            return GetErrors(propertyName);
-        }
-        
-        protected virtual void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
         
         private void ValidateAllProperties()
         {
-            ValidateProperty(nameof(Kode), _kode);
-            ValidateProperty(nameof(Nama), _nama);
-            ValidateProperty(nameof(Gambar), _gambar);
+            ValidateProperty(nameof(Kode));
+            ValidateProperty(nameof(Nama));
+            ValidateProperty(nameof(Gambar));
         }
     }
 }

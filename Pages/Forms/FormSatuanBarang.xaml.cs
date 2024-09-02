@@ -63,6 +63,7 @@ public sealed partial class FormSatuanBarang : IForm
 
     public async void BtnSimpan_OnClicked(object sender, EventArgs e)
     {
+        _model.ValidateAllProperties();
         FormValidation.ShowErrors(ErrorContainer, _model.Errors);
         if (_model.Errors.Count > 0) return;
         
@@ -74,7 +75,7 @@ public sealed partial class FormSatuanBarang : IForm
             try
             {
                 var data = _model.ToUnit();
-                if (data.id > 0) await _service.UpdateAsync(data).ConfigureAwait(true);
+                if (data.id > 0) await _service.UpdateAsync(data);
                 else await _service.AddAsync(data).ConfigureAwait(true);
                 Close();
                 await Application.Current.MainPage.DisplayAlert("Berhasil", "Satuan barang berhasil disimpan", "OK");

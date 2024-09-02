@@ -17,12 +17,14 @@ public class UnitService : IDataService<UnitDto>
     
     public int TotalData()
     {
-        return _context.Units.Count();
+        return _context.Units.AsNoTracking().Count();
     }
 
     public async Task<List<UnitDto>> GetPagingData(int pageIndex, int pageSize,string searchQuery)
     {
-        IQueryable<Unit> query = _context.Units;
+        IQueryable<Unit> query = _context.Units
+            .AsNoTracking()
+            .Include(b => b.BasicUnit);;
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
             query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%") || 
@@ -30,9 +32,7 @@ public class UnitService : IDataService<UnitDto>
                                         EF.Functions.Like(item.BasicUnit.nama, $"%{searchQuery}%")
             );
         }
-        return await query.WithNavigation()
-            .AsNoTracking()
-            .Include(b => b.BasicUnit)
+        return await query
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
             .Select(item => new UnitDto()
@@ -61,7 +61,7 @@ public class UnitService : IDataService<UnitDto>
 
     public async Task DeleteAsync(Unit unit)
     {
-        _context.Units.Remove(unit);
+        _context.Units.Remove(unit);    
         await _context.SaveChangesAsync();
     }
 }
