@@ -56,7 +56,7 @@ namespace IhandCashier.Pages.Views
             {
                 try
                 {
-                    await _service.DeleteAsync(_selectedProduct.ToProduct());
+                    await _service.DeleteAsync(_selectedProduct.ToEntity());
                     Application.Current.MainPage.DisplayAlert("Berhasil", "Barang berhasil dihapus", "OK");
                     _pagination.RefreshData();
                 }
@@ -75,7 +75,7 @@ namespace IhandCashier.Pages.Views
                 if (_selectedProduct != null)
                 {
                     var manager = new PopupManager();
-                    manager.ShowPopup(new FormBarang(_selectedProduct.ToProductViewModel()));
+                    manager.ShowPopup(new FormBarang(_selectedProduct.ToViewModel()));
                 }
                 
             }

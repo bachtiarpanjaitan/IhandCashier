@@ -42,7 +42,7 @@ public partial class GridDataSatuanBarang
 	private void OnRightClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
 	{
 		_selected = dataGridCellTappedEventArgs.RowData as UnitDto;
-		if (_selected != null) Console.WriteLine($"Barang : {_selected.kode_satuan}");
+		if (_selected != null) Console.WriteLine($"Satuan : {_selected.kode_satuan}");
 	}
 	
 	private async  void OnDeleteClicked(object sender, EventArgs e)
@@ -52,7 +52,7 @@ public partial class GridDataSatuanBarang
 		{
 			try
 			{
-				await _service.DeleteAsync(_selected.ToUnit());
+				await _service.DeleteAsync(_selected.ToEntity());
 				Application.Current.MainPage.DisplayAlert("Berhasil", "Satuan berhasil dihapus", "OK");
 				_pagination.RefreshData();
 			}
@@ -71,7 +71,7 @@ public partial class GridDataSatuanBarang
 			if (_selected != null)
 			{
 				var manager = new PopupManager();
-				var data = _selected.ToUnitViewModel();
+				var data = _selected.ToViewModel();
 				manager.ShowPopup(new FormSatuanBarang(data));
 			}
                 
