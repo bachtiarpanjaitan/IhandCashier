@@ -53,7 +53,7 @@ public class BasicUnitViewModel: BaseViewModel
         _nama = unit.nama;
     }
 
-    public BasicUnit ToUnit()
+    public BasicUnit ToEntity()
     {
         return new BasicUnit
         {
@@ -62,7 +62,7 @@ public class BasicUnitViewModel: BaseViewModel
         };
     }
     
-    private void ValidateAllProperties()
+    public void ValidateAllProperties()
     {
         ValidateProperty(nameof(Nama));
 

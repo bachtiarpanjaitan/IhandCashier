@@ -64,12 +64,17 @@ public class ProductService : IDataService<ProductDto>
     {
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
+        _context.Products.Entry(product).State = EntityState.Detached;
     }
 
-    public async Task UpdateAsync(Product product)
+    public async Task UpdateAsync(Product item)
     {
-         _context.Products.Update(product);
+        var entity = await _context.Products.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
+        _context.Entry(entity).CurrentValues.SetValues(item);
+        _context.Update(entity);
         await _context.SaveChangesAsync();
+        
+        _context.Entry(entity).State = EntityState.Detached;
     }
 
     public async Task DeleteAsync(Product product)

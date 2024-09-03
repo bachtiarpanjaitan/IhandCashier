@@ -11,7 +11,7 @@ public class ProductDto
     public string gambar { get; set; }
     public ImageSource resourceGambar { get; set; }
 
-    public Product ToProduct()
+    public Product ToEntity()
     {
         return new Product
         {
@@ -22,7 +22,7 @@ public class ProductDto
         };
     }
 
-    public ProductViewModel ToProductViewModel()
+    public ProductViewModel ToViewModel()
     {
         return new ProductViewModel()
         {

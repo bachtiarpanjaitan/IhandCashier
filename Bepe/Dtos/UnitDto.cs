@@ -13,7 +13,7 @@ public class UnitDto
     
     public BasicUnit BasicUnit { get; set; }
     
-    public Unit ToUnit()
+    public Unit ToEntity()
     {
         return new Unit
         {
@@ -26,7 +26,7 @@ public class UnitDto
         };
     }
     
-    public UnitViewModel ToUnitViewModel()
+    public UnitViewModel ToViewModel()
     {
         return new UnitViewModel()
         {

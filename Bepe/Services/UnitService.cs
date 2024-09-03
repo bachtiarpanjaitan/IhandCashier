@@ -51,12 +51,17 @@ public class UnitService : IDataService<UnitDto>
     {
         _context.Units.Add(unit);
         await _context.SaveChangesAsync();
+        _context.Units.Entry(unit).State = EntityState.Detached;
     }
     
-    public async Task UpdateAsync(Unit unit)
+    public async Task UpdateAsync(Unit item)
     {
-        _context.Units.Update(unit);
+        var entity = await _context.Units.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
+        _context.Entry(entity).CurrentValues.SetValues(item);
+        _context.Update(entity);
         await _context.SaveChangesAsync();
+        
+        _context.Entry(entity).State = EntityState.Detached;
     }
 
     public async Task DeleteAsync(Unit unit)
