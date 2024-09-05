@@ -116,7 +116,7 @@
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Disabled">
+                    <VisualState x:Name="Disabled"> 
                         <VisualState.Setters>
                             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
                         </VisualState.Setters>
@@ -426,6 +426,34 @@
     <Style TargetType="dataGrid:SfComboBox">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource WhiteBrush}, Dark={StaticResource BlackBrush}}"></Setter>
         <Setter Property="ShowBorder" Value="True"></Setter>
+    </Style>
+    <Style TargetType="dataGrid:SfTextInputLayout">
+        <Setter Property="ContainerBackground" Value="Transparent"></Setter>
+        <Setter Property="ContainerType" Value="Outlined"></Setter>
+        <Setter Property="HintLabelStyle" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"></Setter>
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"></Setter>
+        <Setter Property="HelperLabelStyle" Value="{StaticResource Tertiary}"></Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="HintLabelStyle" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"></Setter>
+                            <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"></Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState Name="Focused">
+                        <VisualState.Setters>
+                            <Setter Property="HintLabelStyle" Value="{StaticResource Tertiary}"></Setter>
+                            <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"></Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState Name="Error">
+                        
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
 </ResourceDictionary>
