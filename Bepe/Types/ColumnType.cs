@@ -10,6 +10,7 @@ namespace IhandCashier.Bepe.Types
     {
         public ColumnTypes Type { get; set; } = ColumnTypes.Text;
         public string MappingName { get; set; } = "id";
+        public string MappingImage { get; set; } = "";
         public string HeaderText { get; set; } = "ID";
         public ColumnWidthMode ColumnMode { get; set; } = ColumnWidthMode.Fill;
         public double? Width { get; set; }
@@ -55,7 +56,7 @@ namespace IhandCashier.Bepe.Types
                             var tapGestureRecognizer = new TapGestureRecognizer();
                             tapGestureRecognizer.Tapped += Image_Tapped;
                             image.GestureRecognizers.Add(tapGestureRecognizer);
-                            image.SetBinding(Image.SourceProperty, MappingName);
+                            image.SetBinding(Image.SourceProperty, MappingImage);
                             return image;
                         })
                 },

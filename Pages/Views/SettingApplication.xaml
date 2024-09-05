@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:core="http://schemas.syncfusion.com/maui"
+             x:Class="IhandCashier.Pages.Views.SettingApplication">
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent" HorizontalOptions="Center"><Label FontSize="18" FontAttributes="Bold">Pengaturan Umum</Label></Frame>
+            <Frame BackgroundColor="Transparent" Grid.Row="0" Grid.Column="1" BorderColor="Transparent" HorizontalOptions="Center"><Label FontSize="18" FontAttributes="Bold" >Pengaturan Basis Data</Label></Frame>
+            <Frame Grid.Row="1" Grid.Column="0" Margin="10" Padding="10">
+                <VerticalStackLayout >
+                    <core:SfTextInputLayout Hint="Nama Perusahaan/Toko" HelperText="Silahkan isi nama perusahaan/toko anda">
+                        <Entry BackgroundColor="Transparent" Text="{Binding Perusahaan, Mode=TwoWay}" />
+                    </core:SfTextInputLayout>
+                    <core:SfTextInputLayout Hint="Thema Aplikasi" ContainerType="Outlined">
+                        <inputs:SfComboBox Placeholder="Tema aplikasi"
+                                           SelectedItem="{Binding Thema.Selected,Mode=TwoWay}"
+                                           IsEditable="false"
+                                           x:Name="ThemeSelector"
+                                           BackgroundColor="Transparent"
+                                           TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
+                                           ItemsSource="{Binding Thema.Options}"
+                                           ShowBorder="True"/>
+                    </core:SfTextInputLayout>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Grid.Column="1" Grid.Row="1" Margin="10" Padding="10">
+                <VerticalStackLayout >
+                    <StackLayout x:Name="SelectedDbConfig"/>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+        
+        <HorizontalStackLayout HorizontalOptions="End" Padding="10,0">
+            <Button Text="Simpan" FontSize="18" FontAttributes="Bold" x:Name="BtnSave" Padding="40,10"></Button>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

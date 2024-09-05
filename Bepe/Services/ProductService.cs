@@ -53,7 +53,8 @@ public class ProductService : IDataService<ProductDto>
                 nama = item.nama,
                 kode = item.kode,
                 gambar = item.gambar,
-                resourceGambar = ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"),item.gambar))
+                resourceGambar = ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"),item.gambar)),
+                resourceGambarThumbnail = ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"),"Thumbnails",item.gambar)),
             })
             .ToListAsync();
         DatagridProvider.DataGrid.ItemsSource = result;

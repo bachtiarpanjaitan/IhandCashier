@@ -41,6 +41,13 @@ public class AppSettingConfig
             serializer.Serialize(writer, settings);
         }
     }
+
+    public static void SaveToAppSettings(AppSetting settings)
+    {
+        var path = CreateAppPath("Resources");
+        var settingFile = Path.Combine(path, "settings.xml");
+        SaveToAppSettings(settings, settingFile);
+    }
     
     public static AppSetting LoadSettings()
     {

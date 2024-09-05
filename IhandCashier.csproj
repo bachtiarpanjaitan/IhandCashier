@@ -84,9 +84,10 @@
 		  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 		  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
 		  <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+		  <PackageReference Include="SkiaSharp" Version="2.88.8" />
 		  <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-		  <PackageReference Include="Syncfusion.Maui.DataForm" Version="26.2.9" />
-		  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="26.2.9" />
+		  <PackageReference Include="Syncfusion.Maui.DataForm" Version="26.2.13" />
+		  <PackageReference Include="Syncfusion.Maui.DataGrid" Version="26.2.13" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Bepe\Helpers\Factories\" />
@@ -138,6 +139,9 @@
 	  </Reference>
 	  <Reference Include="IhandCashier.Core">
 	    <HintPath>Basapadi\IhandCashier.Core.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Syncfusion.Maui.Core">
+	    <HintPath>..\..\..\..\..\.nuget\packages\syncfusion.maui.core\26.2.9\lib\net8.0\Syncfusion.Maui.Core.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Syncfusion.Maui.Inputs">
 	    <HintPath>..\..\..\..\..\.nuget\packages\syncfusion.maui.inputs\26.2.9\lib\net8.0\Syncfusion.Maui.Inputs.dll</HintPath>
