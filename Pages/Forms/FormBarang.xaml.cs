@@ -5,6 +5,7 @@ using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.ViewModels;
+using SkiaSharp;
 
 namespace IhandCashier.Pages.Forms;
 
@@ -52,7 +53,7 @@ public sealed partial class FormBarang : IForm
         FormValidation.ShowErrors(ErrorContainer, _model.Errors);
         if (_model.Errors.Count > 0) return;
         
-        bool accept = await Application.Current.MainPage.DisplayAlert("Simpan Produk",
+        bool accept = await Application.Current.MainPage.DisplayAlert("Simpan Barang",
             "Apakah anda yakin menyimpan barang ini ?",
             "Simpan", "Tidak");
         if (accept)
@@ -70,6 +71,9 @@ public sealed partial class FormBarang : IForm
                     using var fileStream = new FileStream(destination, FileMode.Create, FileAccess.Write);
                     using var stream = await _imageStream.OpenReadAsync();
                     await stream.CopyToAsync(fileStream);
+                    
+                    stream.Seek(0, SeekOrigin.Begin);
+                    CreateThumbnail(stream, destination);
                 }
 
                 Close();
@@ -105,6 +109,42 @@ public sealed partial class FormBarang : IForm
                 UploadedImage.Source = ImageSource.FromStream(() => memoryStream);
             }
             
+        }
+    }
+    
+    private void CreateThumbnail(Stream imageStream, string originalFileName)
+    {
+        // Muat gambar menggunakan SkiaSharp
+        using (var inputStream = new SKManagedStream(imageStream))
+        using (var original = SKBitmap.Decode(inputStream))
+        {
+            // Tentukan ukuran thumbnail (misalnya, lebar 150px, tinggi disesuaikan proporsional)
+            int width = 150;
+            int height = (int)((width / (float)original.Width) * original.Height);
+
+            using (var resizedImage = original.Resize(new SKImageInfo(width, height), SKFilterQuality.High))
+            using (var image = SKImage.FromBitmap(resizedImage))
+            {
+                var originalDirectory = Path.GetDirectoryName(originalFileName);
+
+                // Tentukan folder thumbnails
+                var thumbnailsFolder = Path.Combine(originalDirectory, "Thumbnails");
+
+                // Buat folder thumbnails jika belum ada
+                if (!Directory.Exists(thumbnailsFolder))
+                {
+                    Directory.CreateDirectory(thumbnailsFolder);
+                }
+                
+                var thumbnailFileName = Path.Combine(thumbnailsFolder, 
+                    Path.GetFileNameWithoutExtension(originalFileName) + Path.GetExtension(originalFileName));
+
+                // Simpan thumbnail ke folder thumbnails
+                using (var output = File.OpenWrite(thumbnailFileName))
+                {
+                    image.Encode(SKEncodedImageFormat.Jpeg, 80).SaveTo(output);
+                }
+            }
         }
     }
 }
