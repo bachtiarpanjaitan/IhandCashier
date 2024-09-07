@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using IhandCashier.Bepe.Entities;
 
 namespace IhandCashier.Bepe.Dtos;

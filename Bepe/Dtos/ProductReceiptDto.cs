@@ -1,3 +1,5 @@
+using System.Collections;
+using IhandCashier.Bepe.Dtos.Details;
 using IhandCashier.Bepe.Entities;
 
 namespace IhandCashier.Bepe.Dtos;
@@ -12,9 +14,12 @@ public class ProductReceiptDto
     public string Penerima { get; set; }
     public DateTime Tanggal { get; set; }
     public string Keterangan { get; set; }
+    public int ItemCount { get; set; }
+    public bool Expand { get; set; } = false;
     
     public Supplier Supplier { get; set; }
-    public IEnumerable<ProductReceiptDetailDto> Details { get; set; }
+    public List<ProductReceiptDetailDto> Details { get; set; }
+    public List<ProductReceiptDetailGrid> Views { get; set; }
     
     public ProductReceipt ToEntity()
     {

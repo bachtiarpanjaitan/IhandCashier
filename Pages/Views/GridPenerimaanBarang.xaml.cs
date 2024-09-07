@@ -29,8 +29,10 @@ public partial class GridPenerimaanBarang : ContentView
         CreateContextMenu();
         
         List<ColumnType> columns = [
-            new() { Type = ColumnTypes.Numeric,MappingName = "Id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
+            new() { Type = ColumnTypes.Numeric, MappingName = "Id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
+            new() { Type = ColumnTypes.Detail, MappingName = "Expand", HeaderText = "DETAIL", ColumnMode = ColumnWidthMode.FitByCell},
             new() { Type = ColumnTypes.Text, MappingName = "KodeTransaksi", HeaderText = "KODE" },
+            new() { Type = ColumnTypes.Text, MappingName = "ItemCount", HeaderText = "ITEM", Format = "N0", ColumnMode = ColumnWidthMode.FitByCell},
             new() { Type = ColumnTypes.Text, MappingName = "SupplierName", HeaderText = "PEMASOK"},
             new() { Type = ColumnTypes.Text, MappingName = "Penerima", HeaderText = "PENERIMA"},
             new() { Type = ColumnTypes.Text, MappingName = "Tanggal", HeaderText = "TANGGAL"},
@@ -47,6 +49,17 @@ public partial class GridPenerimaanBarang : ContentView
     {
         _selectedProduct = e.RowData as ProductReceiptDto;
         if (_selectedProduct != null) Console.WriteLine($"Transaksi : {_selectedProduct.KodeTransaksi}");
+        DatagridProvider.DataGrid.SelectedIndex = e.RowColumnIndex.RowIndex;
+    }
+
+    private DataGridUnboundRow CreateRow()
+    {
+        var detail = new DataGridUnboundRow()
+        {
+            Position = DataGridUnboundRowPosition.Bottom,
+        };
+
+        return detail;
     }
 
     private void CreateContextMenu()
@@ -70,11 +83,11 @@ public partial class GridPenerimaanBarang : ContentView
 
     private void OnDeleteClicked(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        
     }
 
     private void OnEditClicked(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        
     }
 }

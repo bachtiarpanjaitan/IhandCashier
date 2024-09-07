@@ -427,6 +427,9 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource WhiteBrush}, Dark={StaticResource BlackBrush}}"></Setter>
         <Setter Property="ShowBorder" Value="True"></Setter>
     </Style>
+    <Style TargetType="dataGrid:DataGridUnboundRowView">
+        <Setter Property="Background" Value="{StaticResource Tertiary}"></Setter>
+    </Style>
     <Style TargetType="dataGrid:SfTextInputLayout">
         <Setter Property="ContainerBackground" Value="Transparent"></Setter>
         <Setter Property="ContainerType" Value="Outlined"></Setter>

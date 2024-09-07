@@ -63,6 +63,8 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<ProductReceipt>()
             .HasIndex(pr => pr.supplier_id);
+        modelBuilder.Entity<ProductReceipt>()
+            .HasMany(d => d.Details);
 
         // ProductReceiptDetail Configuration
         modelBuilder.Entity<ProductReceiptDetail>()
@@ -73,6 +75,11 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<ProductReceiptDetail>()
             .HasIndex(prd => prd.unit_id);
+        
+        modelBuilder.Entity<ProductReceiptDetail>()
+            .HasOne(d => d.ProductReceipt) // Menentukan relasi ke ProductReceipt
+            .WithMany(pr => pr.Details) // Menentukan bahwa ProductReceipt memiliki banyak Detail
+            .HasForeignKey(d => d.product_receipt_id); // Menentukan foreign key
 
         // ProductStock Configuration
         modelBuilder.Entity<ProductStock>()

@@ -25,7 +25,7 @@ public class LabelWriter : TextWriter
         // Update Label di UI Thread
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            _label.Text = "Log :: " + text;
+            _label.Text = text;
         });
     }
 }

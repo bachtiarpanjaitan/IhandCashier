@@ -1,5 +1,6 @@
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Dtos;
+using IhandCashier.Bepe.Dtos.Details;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -16,14 +17,14 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
     }
     public int TotalData()
     {
-        return _context.ProductReceipts.AsNoTracking().Count();
+        return _context.ProductReceipts.AsNoTracking().Where(x => x.deleted_at == null).Count();
     }
 
     public async Task<List<ProductReceiptDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null)
     {
         IQueryable<ProductReceipt> query = _context.ProductReceipts
             .Include(s => s.Supplier)
-            .Include(d => d.Details);
+            .Where(x => x.deleted_at == null);
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
             query = query.Where(item => EF.Functions.Like(item.kode_transaksi, $"%{searchQuery}%") ||
@@ -31,6 +32,8 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
             );
         }
         var result = await query.Skip(pageIndex * pageSize).Take(pageSize)
+            .Include(d => d.Details).ThenInclude(x => x.Product)
+            .Include(d => d.Details).ThenInclude(x => x.Unit)
             .Select(item => new ProductReceiptDto()
             {
                 Id = item.id,
@@ -40,18 +43,29 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                 Tanggal = item.tanggal,
                 Keterangan = item.keterangan,
                 SupplierName = item.Supplier.nama,
+                ItemCount = item.Details.Count(),
+                // Details = item.Details
                 Details = item.Details.Select(d => new ProductReceiptDetailDto()
                 {
                     Id = d.id,
                     ProductReceiptId = d.product_receipt_id,
                     ProductId = d.product_id,
-                    ProductName = d.Product.nama,
+                    ProductName = d.Product != null ? d.Product.nama : null,
                     Jumlah = d.jumlah,
                     UnitId = d.unit_id,
-                    UnitName = d.Unit.nama,
+                    UnitName = d.Unit != null ? d.Unit.nama : null,
                     HargaSatuan = d.harga_satuan,
                     Total = (d.harga_satuan * d.jumlah),
-                })
+                }).ToList(),
+                Views = item.Details.Select(d => new ProductReceiptDetailGrid()
+                {
+                    Id = d.id,
+                    ProductName = d.Product != null ? d.Product.nama : null,
+                    UnitName = d.Unit != null ? d.Unit.nama : null,
+                    Jumlah = d.jumlah,
+                    HargaSatuan = d.harga_satuan,
+                    Total = (d.harga_satuan * d.jumlah)
+                }).ToList()
             })
             .ToListAsync();
         return result;

@@ -111,3 +111,7 @@ CREATE TABLE product_stocks (
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (unit_id) REFERENCES units(id)
 );
+
+-- menambah kolom deleted_at di product_receipts --
+ALTER TABLE product_receipts
+    add deleted_at TEXT;

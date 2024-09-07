@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Helpers;
+using IhandCashier.Core.Maui.Providers;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Bepe.Types
@@ -60,11 +61,47 @@ namespace IhandCashier.Bepe.Types
                             return image;
                         })
                 },
+                ColumnTypes.Detail => new DataGridTemplateColumn()
+                {
+                    Width =  Width??100,
+                    HeaderText = HeaderText, 
+                    CellTextAlignment = TextAlignment, 
+                    ColumnWidthMode = ColumnMode,
+                    CellTemplate  = new DataTemplate(() =>
+                    {
+                        var btn = new Button { Text = "Detail", TextColor = Colors.Coral ,BorderColor = Colors.Transparent, Margin = new Thickness(0,0,0,0) };
+                        btn.SetBinding(Button.CommandParameterProperty, ".");
+                        btn.Clicked += ShowDetail;
+                        return btn;
+                    })
+                },
                 _ => throw new ArgumentException("Invalid column type")
             };
             return column;
         }
-        
+
+        private async void ShowDetail(object sender, EventArgs e)
+        {
+            
+            if (sender is Button btn)
+            {
+                dynamic context = btn?.CommandParameter;
+                
+                var manager = new PopupManager();
+                var imagePopup = new DetailPreviewPopup()
+                {
+                    CanBeDismissedByTappingOutsideOfPopup = false
+                };
+
+                if (context != null)
+                {
+                    imagePopup.SetData(context.Views);
+                    await manager.ShowPopupAsync(imagePopup);
+                }
+                
+            }
+        }
+
         private async void Image_Tapped(object sender, EventArgs e)
         {
             if (sender is Image img)
