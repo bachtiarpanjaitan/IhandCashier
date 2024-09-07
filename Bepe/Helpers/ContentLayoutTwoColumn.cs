@@ -10,13 +10,13 @@ namespace IhandCashier.Bepe.Helpers
         
         public Grid grid { get; private set; }
         private Grid ContentPlaceholder;
-        AppSetting _settings = AppSettingService.Settings;
+        AppSetting _settings = AppSettingConfig.LoadSettings();
         public ContentLayoutTwoColumn()
         {
             grid = new Grid
             {
                 ColumnDefinitions = {
-                new ColumnDefinition { Width = new GridLength(AppConfig.SIDE_MENU_WIDTH) },
+                new ColumnDefinition { Width = new GridLength(_settings.Layouts.LebarMenuKiri) },
                 new ColumnDefinition { Width = 5 },
                 new ColumnDefinition { Width = GridLength.Star }
             },
@@ -65,7 +65,7 @@ namespace IhandCashier.Bepe.Helpers
 
         public Frame GenerateFrame()
         {
-            var splitter = new BoxView { Color = Color.FromArgb("#592f02"), WidthRequest = 2 };
+            var splitter = new BoxView { Color = Color.FromArgb("#592f02"), WidthRequest = 1 };
             grid.Add(splitter,1,0);
             var frame = new Frame
             {

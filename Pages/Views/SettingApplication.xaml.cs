@@ -22,9 +22,17 @@ public partial class SettingApplication
         Application.Current.UserAppTheme = (_settings.Thema.Selected == "Dark") ? AppTheme.Dark : AppTheme.Light;
         BindingContext = _settings;
         ThemeSelector.SelectionChanged += OnThemeChanged;
+        BtnSave.Clicked += OnSaveSetting;
         SelectedDbConfig.Clear();
         LoadDatabaseConfig();
     }
+
+    private void OnSaveSetting(object sender, EventArgs e)
+    {
+        AppSettingConfig.SaveToAppSettings(_settings);
+        Application.Current.MainPage.DisplayAlert("Simpan Pengaturan", "Pengaturan berhasil disimpan", "OK");
+    }
+
 
     private void LoadDatabaseConfig()
     {

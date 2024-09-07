@@ -3,17 +3,20 @@
 <helpers:Form Color="Transparent" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:helpers="clr-namespace:IhandCashier.Bepe.Helpers"
+           xmlns:core="http://schemas.syncfusion.com/maui"
            x:Class="IhandCashier.Pages.Forms.FormBarang">
             <VerticalStackLayout Padding="20" Margin="20">
                 <StackLayout Padding="0,5" x:Name="ErrorContainer"></StackLayout>
                 <StackLayout Padding="0,10">
-                    <Label Text="Kode Barang" />
-                    <Entry Text="{Binding Kode,Mode=TwoWay}" Placeholder="Masukkan kode barang" />
+                    <core:SfTextInputLayout Hint="Kode Barang" HelperText="Masukkan Kode Barang">
+                        <Entry Text="{Binding Kode,Mode=TwoWay}" Placeholder="Masukkan kode barang" />
+                    </core:SfTextInputLayout>
                 </StackLayout>
                                 
                 <StackLayout Padding="0,10">
-                    <Label Text="Nama Barang" />
-                    <Entry Text="{Binding Nama, Mode=TwoWay}" Placeholder="Masukkan nama barang" />
+                    <core:SfTextInputLayout Hint="Nama Barang" HelperText="Masukkan Nama Barang">
+                        <Entry Text="{Binding Nama, Mode=TwoWay}" Placeholder="Masukkan nama barang" />
+                    </core:SfTextInputLayout>
                 </StackLayout>
                                 
                 <StackLayout Padding="0,10,0,0">
