@@ -31,5 +31,6 @@ namespace IhandCashier.Bepe.Entities
         // Navigation property
         [ForeignKey("supplier_id")]
         public Supplier Supplier { get; set; }
+        public List<ProductReceiptDetail> Details { get; set; }
     }
 }
