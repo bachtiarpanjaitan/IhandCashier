@@ -37,30 +37,12 @@
                 "class": "PagePenjualanBarang"
             },
             {
-                "label": "Stok",
-                "child": [
-                    {
-                        "label": "Stok Barang",
-                        "class": "PageStokBarang"
-                    },
-                    {
-                        "label": "Penyesuaian Barang",
-                        "class": "PagePenyesuaianBarang"
-                    }
-                ]
+                "label": "Stok Barang",
+                "class": "PageStokBarang"
             },
             {
-                "label": "Retur",
-                "child": [
-                    {
-                        "label": "Retur Beli",
-                        "class": "PageReturBeli"
-                    },
-                    {
-                        "label": "Retur Jual",
-                        "class": "PageReturJual"
-                    }
-                ]
+                "label": "Retur Barang",
+                "class": "PageReturnBarang"
             }
         ]
     }

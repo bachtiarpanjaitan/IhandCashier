@@ -35,7 +35,7 @@ public sealed partial class FormBarang : IForm
         InitializeComponent();
         _model.ErrorsChanged += OnErrorsChanged;
         BindingContext = _model;
-        SetTitle("Form Barang").SetSize(500, 450).Create(Content);
+        SetTitle("Form Barang").SetSize(500, 600).Create(Content);
         BtnClose.Clicked += BtnBatal_OnClicked;
         BtnSave.Clicked += BtnSimpan_OnClicked;
     }

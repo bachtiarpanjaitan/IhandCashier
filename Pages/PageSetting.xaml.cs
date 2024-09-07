@@ -11,6 +11,8 @@ public partial class PageSetting : PageController
 		InitializeComponent();
 		
 		SideMenus.Add("setting_aplikasi", new MenuItemPage { Label = "APLIKASI", Page =  typeof(SettingApplication).FullName });
+		SideMenus.Add("setting_hak_akses", new MenuItemPage { Label = "HAK AKSES", Page =  typeof(SettingAcl).FullName });
+
 		DefineLayoutTwoColumn();
 	}
 }

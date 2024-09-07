@@ -32,6 +32,12 @@
                                            ItemsSource="{Binding Thema.Options}"
                                            ShowBorder="True"/>
                     </core:SfTextInputLayout>
+                    <core:SfTextInputLayout Hint="Jlh Data Per Halaman">
+                        <Entry BackgroundColor="Transparent" Text="{Binding Data.DataPerHalaman, Mode=TwoWay}" />
+                    </core:SfTextInputLayout>
+                    <core:SfTextInputLayout Hint="Lebar Menu Kiri">
+                        <Entry BackgroundColor="Transparent" Text="{Binding Layouts.LebarMenuKiri, Mode=TwoWay}" />
+                    </core:SfTextInputLayout>
                 </VerticalStackLayout>
             </Frame>
             <Frame Grid.Column="1" Grid.Row="1" Margin="10" Padding="10">
