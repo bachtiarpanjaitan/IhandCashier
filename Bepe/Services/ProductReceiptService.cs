@@ -1,8 +1,10 @@
+using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Dtos;
 using IhandCashier.Bepe.Dtos.Details;
 using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Interfaces;
+using IhandCashier.Bepe.Statics;
 using Microsoft.EntityFrameworkCore;
 
 namespace IhandCashier.Bepe.Services;
@@ -44,7 +46,9 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                 Keterangan = item.keterangan,
                 SupplierName = item.Supplier.nama,
                 ItemCount = item.Details.Count(),
-                // Details = item.Details
+                StatusName = Helper.SplitCamelCase(AppEnumeration.GetEnumName<ReceiptStatus>(item.status)),
+                Status = item.status,
+                Total = item.Details.Sum(x=> (double)(x.jumlah * x.harga_satuan)),
                 Details = item.Details.Select(d => new ProductReceiptDetailDto()
                 {
                     Id = d.id,
@@ -60,8 +64,8 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                 Views = item.Details.Select(d => new ProductReceiptDetailGrid()
                 {
                     Id = d.id,
-                    ProductName = d.Product != null ? d.Product.nama : null,
-                    UnitName = d.Unit != null ? d.Unit.nama : null,
+                    NamaBarang = d.Product != null ? d.Product.nama : null,
+                    Satuan = d.Unit != null ? d.Unit.nama : null,
                     Jumlah = d.jumlah,
                     HargaSatuan = d.harga_satuan,
                     Total = (d.harga_satuan * d.jumlah)

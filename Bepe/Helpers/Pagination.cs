@@ -83,7 +83,7 @@ namespace IhandCashier.Bepe.Helpers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error Pagination::UpdatePagedData() : ", e.Message);
+                    Console.WriteLine($"Error Pagination:: Message : {e.Message}");
                 }
             }
             DatagridProvider.Indicator.IsRunning = false;

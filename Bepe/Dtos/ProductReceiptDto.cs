@@ -16,6 +16,9 @@ public class ProductReceiptDto
     public string Keterangan { get; set; }
     public int ItemCount { get; set; }
     public bool Expand { get; set; } = false;
+    public double Total { get; set; }
+    public int Status { get; set; }
+    public string StatusName { get; set; }
     
     public Supplier Supplier { get; set; }
     public List<ProductReceiptDetailDto> Details { get; set; }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
@@ -34,6 +35,15 @@ namespace IhandCashier.Bepe.Types
                 ColumnTypes.Numeric => new DataGridNumericColumn()
                 {
                     MappingName = MappingName, HeaderText = HeaderText, CellTextAlignment = TextAlignment, ColumnWidthMode = ColumnMode, Format = Format
+                },
+                ColumnTypes.Currency => new DataGridNumericColumn()
+                {
+                    MappingName = MappingName, 
+                    HeaderText = HeaderText, 
+                    CellTextAlignment = TextAlignment.End, 
+                    ColumnWidthMode = ColumnMode, 
+                    Format = "C2",
+                    CultureInfo = new CultureInfo("id-ID")
                 },
                 ColumnTypes.Date => new DataGridDateColumn()
                 {

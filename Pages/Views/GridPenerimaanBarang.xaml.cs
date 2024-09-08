@@ -33,9 +33,11 @@ public partial class GridPenerimaanBarang : ContentView
             new() { Type = ColumnTypes.Detail, MappingName = "Expand", HeaderText = "DETAIL", ColumnMode = ColumnWidthMode.FitByCell},
             new() { Type = ColumnTypes.Text, MappingName = "KodeTransaksi", HeaderText = "KODE" },
             new() { Type = ColumnTypes.Text, MappingName = "ItemCount", HeaderText = "ITEM", Format = "N0", ColumnMode = ColumnWidthMode.FitByCell},
+            new() { Type = ColumnTypes.Currency, MappingName = "Total", HeaderText = "TOTAL HARGA"},
             new() { Type = ColumnTypes.Text, MappingName = "SupplierName", HeaderText = "PEMASOK"},
             new() { Type = ColumnTypes.Text, MappingName = "Penerima", HeaderText = "PENERIMA"},
             new() { Type = ColumnTypes.Text, MappingName = "Tanggal", HeaderText = "TANGGAL"},
+            new() { Type = ColumnTypes.Text, MappingName = "StatusName", HeaderText = "STATUS"},
             new() { Type = ColumnTypes.Text, MappingName = "Keterangan", HeaderText = "KETERANGAN"}
         ];
             
@@ -65,12 +67,14 @@ public partial class GridPenerimaanBarang : ContentView
     private void CreateContextMenu()
     {
         MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
+        MenuFlyoutItem statusMenu = new() { Text = "Ubah Status"};
         MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
         MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
         editMenu.Clicked += OnEditClicked;
         deleteMenu.Clicked += OnDeleteClicked;
         refreshMenu.Clicked += OnRefreshClicked;
         ContextMenu.Add(refreshMenu);
+        ContextMenu.Add(statusMenu);
         ContextMenu.Add(editMenu);
         ContextMenu.Add(new MenuFlyoutSeparator());
         ContextMenu.Add(deleteMenu);

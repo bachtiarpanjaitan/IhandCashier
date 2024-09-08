@@ -115,3 +115,5 @@ CREATE TABLE product_stocks (
 -- menambah kolom deleted_at di product_receipts --
 ALTER TABLE product_receipts
     add deleted_at TEXT;
+ALTER TABLE product_receipts
+    add status INT NOT NULL DEFAULT 0;

@@ -8,7 +8,20 @@ public enum ColumnTypes
     Checkbox,
     Image,
     Button,
-    Detail
+    Detail,
+    Currency
+}
+
+public enum ReceiptStatus
+{
+    Dipesan,
+    Perjalanan,
+    Diperiksa,
+    Diterima,
+    Ditolak,
+    Selesai,
+    SebagianDiterima,
+    Dibatalkan
 }
 
 public enum Themes
@@ -30,4 +43,9 @@ public class AppEnumeration
         { Constants.DbTypes.SqLite, "sqlite" },
         { Constants.DbTypes.MySql, "mysql" }
     };
+    
+    public static string GetEnumName<TEnum>(int value) where TEnum : struct, Enum
+    {
+        return Enum.GetName(typeof(TEnum), value);
+    }
 }

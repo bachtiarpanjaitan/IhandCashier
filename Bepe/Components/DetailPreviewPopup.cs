@@ -1,6 +1,8 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Types;
+using Syncfusion.Maui.Data;
 using Syncfusion.Maui.DataGrid;
 using Syncfusion.Maui.DataSource;
 
@@ -33,6 +35,7 @@ public class DetailPreviewPopup : Popup
         ColumnWidthMode = ColumnWidthMode.Fill,
         HeaderGridLinesVisibility = GridLinesVisibility.Both,
         GridLinesVisibility = GridLinesVisibility.Both,
+        AutoGenerateColumnsMode = AutoGenerateColumnsMode.ResetAll,
         DefaultStyle =
         {
             CurrentRowHighlightColor = Colors.Bisque,
@@ -59,24 +62,22 @@ public class DetailPreviewPopup : Popup
         _datagrid.ItemsSource = data;
         grid.Add(_datagrid,0,0);
         grid.Add(_btnClose,0,1);
-        
-        _datagrid.AutoGeneratingColumn += datagrid_AutoGeneratingColumn;
-        Content = grid;
-    }
-
-    private void datagrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-    {
-        foreach (var column in _datagrid.Columns)
+        _datagrid.AutoGeneratingColumn += (sender, args) =>
         {
-            // Periksa tipe kolom yang digenerate dan terapkan format yang diinginkan
-            if (column is DataGridNumericColumn numericColumn)
+            if (args.Column is DataGridNumericColumn column)
             {
-                // Terapkan format N0 (tanpa desimal)
-                numericColumn.Format = "N0";
+                if(column.MappingName.ToLower().Contains("harga") || column.MappingName.ToLower().Contains("total"))
+                {
+                    column.Format = "C2";
+                    column.CultureInfo = new CultureInfo("id-ID");
+                }
+                else column.Format = "N0";
             }
 
-            column.HeaderText = SplitCamelCase(column.HeaderText);
-        }
+            args.Column.HeaderText = SplitCamelCase(args.Column.HeaderText);
+        };
+        
+        Content = grid;
     }
 
     public static string SplitCamelCase(string input)

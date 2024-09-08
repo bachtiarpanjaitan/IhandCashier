@@ -16,6 +16,9 @@ namespace IhandCashier.Bepe.Entities
         [Required]
         public string kode_transaksi { get; set; }
 
+        [Required] 
+        public int status { get; set; } = 0;
+
         [Required]
         public int supplier_id { get; set; }
 
