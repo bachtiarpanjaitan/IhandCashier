@@ -35,8 +35,9 @@ public partial class FormPenerimaanBarang : IForm
         InitializeComponent();
         _model.ErrorsChanged += OnErrorsChanged;
         _model.Tanggal = DateTime.Now;
+        _model.KodeTransaksi = "PR-" + DateTime.Now.ToString("yyyyMMddHHmm");
         BindingContext = _model;
-        SetTitle("Form Penerimaan Barang").SetSize(1200, 800).Create(Content);
+        SetTitle("Form Penerimaan Barang").SetSize(800, 800).Create(Content);
         BtnClose.Clicked += BtnBatal_OnClicked;
         BtnSave.Clicked += BtnSimpan_OnClicked;
         
