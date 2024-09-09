@@ -31,12 +31,15 @@ public partial class MainLayout : ContentPage
         {
             if (Application.Current != null)
             {
-                MenuBarItems.Clear();
-                var menuCreator = new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync().Result;
-                foreach (var item in menuCreator)
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    MenuBarItems.Add(item);
-                }
+                    MenuBarItems.Clear();
+                    var menuCreator = new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync().Result;
+                    foreach (var item in menuCreator)
+                    {
+                        MenuBarItems.Add(item);
+                    }
+                });
             }
         }
         

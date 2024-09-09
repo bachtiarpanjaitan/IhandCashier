@@ -17,6 +17,11 @@ public class SupplierService : IDataService<Supplier>
     {
         return _context.Suppliers.Count();
     }
+    
+    public async Task<List<Supplier>> GetAsync()
+    {
+        return await _context.Suppliers.AsNoTracking().ToListAsync();
+    }
 
     public async Task<List<Supplier>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null)
     {

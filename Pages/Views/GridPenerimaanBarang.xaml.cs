@@ -11,6 +11,7 @@ using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Core.Maui.Providers;
+using IhandCashier.Pages.Forms;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
@@ -42,7 +43,7 @@ public partial class GridPenerimaanBarang : ContentView
         ];
             
         foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-        _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne));
+        _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne), typeof(FormPenerimaanBarang));
         DatagridProvider.DataGrid.CellTapped += OnRightClick;
         Content = DatagridProvider.LayoutDatagrid;
     }

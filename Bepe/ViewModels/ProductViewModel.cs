@@ -93,7 +93,7 @@ namespace IhandCashier.Bepe.ViewModels
             ValidateAllProperties();
         }
 
-        public Product ToProduct()
+        public Product ToEntity()
         {
             return new Product
             {

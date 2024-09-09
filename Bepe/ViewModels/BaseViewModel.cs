@@ -32,16 +32,18 @@ public class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
 
         // Validasi menggunakan Validator
         bool isValid = Validator.TryValidateProperty(value, validationContext, results);
-
-        // Tambahkan validasi khusus untuk tipe int dan decimal yang tidak boleh 0
-        if (property.PropertyType == typeof(int) && value != null && (int) value == 0 && !isIdProperty)
+        bool isStatusProperty = property.GetCustomAttributes(typeof(StatusPropertyAttribute), false).Any();
+        if (!isStatusProperty && !isIdProperty)
         {
-            results.Add(new ValidationResult($"{propertyName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
-            isValid = false;
-        } else if (property.PropertyType == typeof(decimal) && value != null && (decimal)value == 0m && !isIdProperty)
-        {
-            results.Add(new ValidationResult($"{propertyName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
-            isValid = false;
+            if (property.PropertyType == typeof(int) && value != null && (int) value == 0)
+            {
+                results.Add(new ValidationResult($"{propertyName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
+                isValid = false;
+            } else if (property.PropertyType == typeof(decimal) && value != null && (decimal)value == 0m)
+            {
+                results.Add(new ValidationResult($"{propertyName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
+                isValid = false;
+            }
         }
 
         if (isValid)

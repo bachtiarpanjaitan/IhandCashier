@@ -60,7 +60,7 @@ public sealed partial class FormBarang : IForm
         {
             try
             {
-                var data = _model.ToProduct();
+                var data = _model.ToEntity();
                 if (data.id > 0) await _service.UpdateAsync(data).ConfigureAwait(true);
                 else await _service.AddAsync(data).ConfigureAwait(true);
 

@@ -30,7 +30,8 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
             query = query.Where(item => EF.Functions.Like(item.kode_transaksi, $"%{searchQuery}%") ||
-                                        EF.Functions.Like(item.penerima, $"%{searchQuery}%")
+                                        EF.Functions.Like(item.penerima, $"%{searchQuery}%") ||
+                                        EF.Functions.Like(item.Supplier.nama, $"%{searchQuery}%")
             );
         }
         var result = await query.Skip(pageIndex * pageSize).Take(pageSize)
@@ -73,5 +74,28 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
             })
             .ToListAsync();
         return result;
+    }
+    
+    public async Task AddAsync(ProductReceipt product)
+    {
+        _context.ProductReceipts.Add(product);
+        await _context.SaveChangesAsync();
+        _context.ProductReceipts.Entry(product).State = EntityState.Detached;
+    }
+
+    public async Task UpdateAsync(ProductReceipt item)
+    {
+        var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
+        _context.Entry(entity).CurrentValues.SetValues(item);
+        _context.Update(entity);
+        await _context.SaveChangesAsync();
+        
+        _context.Entry(entity).State = EntityState.Detached;
+    }
+
+    public async Task DeleteAsync(ProductReceipt product)
+    {
+        _context.ProductReceipts.Remove(product);
+        await _context.SaveChangesAsync();
     }
 }
