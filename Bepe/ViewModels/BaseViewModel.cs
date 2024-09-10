@@ -35,13 +35,17 @@ public class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
         bool isStatusProperty = property.GetCustomAttributes(typeof(StatusPropertyAttribute), false).Any();
         if (!isStatusProperty && !isIdProperty)
         {
+            var displayAttribute = property.GetCustomAttributes(typeof(DisplayAttribute), false)
+                .FirstOrDefault() as DisplayAttribute;
+            var displayName = displayAttribute != null ? displayAttribute.Name : propertyName;
+            
             if (property.PropertyType == typeof(int) && value != null && (int) value == 0)
             {
-                results.Add(new ValidationResult($"{propertyName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
+                results.Add(new ValidationResult($"{displayName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
                 isValid = false;
             } else if (property.PropertyType == typeof(decimal) && value != null && (decimal)value == 0m)
             {
-                results.Add(new ValidationResult($"{propertyName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
+                results.Add(new ValidationResult($"{displayName} tidak boleh bernilai 0 atau kosong", new[] { propertyName }));
                 isValid = false;
             }
         }

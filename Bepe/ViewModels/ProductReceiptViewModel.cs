@@ -14,6 +14,7 @@ public class ProductReceiptViewModel : BaseViewModel
     private DateTime _tanggal;
     private string _keterangan;
     private int _status;
+    private ICollection<ProductReceiptDetailViewModel> _details;
     
     [Bindable(false)]
     [IdProperty]
@@ -30,6 +31,7 @@ public class ProductReceiptViewModel : BaseViewModel
         }
     }
     
+    [Display(Name = "Kode Penerimaan")]
     public string KodeTransaksi
     {
         get => _kode_transaksi;
@@ -45,7 +47,7 @@ public class ProductReceiptViewModel : BaseViewModel
     }
     
     [Required(AllowEmptyStrings = false, ErrorMessage = "Pemasok tidak boleh kosong")]
-    [Display(Prompt = "Pilih Nama Pemasok")]
+    [Display(Prompt = "Pilih Nama Pemasok",Name = "Pemasok")]
     public int SupplierId
     {
         get => _supplier_id;
@@ -124,6 +126,20 @@ public class ProductReceiptViewModel : BaseViewModel
         }
     }
 
+    public ICollection<ProductReceiptDetailViewModel> Details
+    {
+        get => _details;
+        set
+        {
+            if (_details != value)
+            {
+                _details = value;
+                OnPropertyChanged();
+                ValidateProperty(nameof(ProductReceiptDetailViewModel));
+            }
+        }
+    }
+
     public ProductReceiptViewModel()
     {
         ValidateAllProperties();
@@ -138,7 +154,16 @@ public class ProductReceiptViewModel : BaseViewModel
         _tanggal = item.tanggal;
         _keterangan = item.keterangan;
         _status = item.status;
-        
+        _details = item.Details.Select(x => new ProductReceiptDetailViewModel()
+        {
+          Id = x.id,
+          ProductReceiptId = x.product_receipt_id,
+          ProductId = x.product_id,
+          UnitId = x.unit_id,
+          Jumlah = x.jumlah,
+          HargaSatuan = x.harga_satuan,
+        }).ToList();
+
     }
     
     public ProductReceipt ToEntity()

@@ -15,6 +15,7 @@
                 <RowDefinition Height="AUTO"></RowDefinition>
                 <RowDefinition Height="AUTO"></RowDefinition>
                 <RowDefinition Height="AUTO"></RowDefinition>
+                <RowDefinition Height="AUTO"></RowDefinition>
             </Grid.RowDefinitions>
             <StackLayout Grid.ColumnSpan="2" Padding="20,5" x:Name="ErrorContainer"></StackLayout>
             <VerticalStackLayout Padding="20,10,10,10" Grid.Column="0" Grid.Row="1">
@@ -68,6 +69,13 @@
                         <Entry Text="{Binding Keterangan, Mode=TwoWay}" Placeholder="Masukkan Keterangan"></Entry>
                     </core:SfTextInputLayout>
                 </StackLayout>
+            </VerticalStackLayout>
+            <VerticalStackLayout HorizontalOptions="End" Padding="10,5,20,5" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                <Button Text="Tambah Item" x:Name="AddButton"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Padding="10,10,20,10" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0"
+                                 x:Name="DetailContainer">
+               
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

@@ -19,6 +19,11 @@ public class UnitService : IDataService<UnitDto>
     {
         return _context.Units.AsNoTracking().Count();
     }
+    
+    public async Task<List<Unit>> GetAsync()
+    {
+        return await _context.Units.AsNoTracking().ToListAsync();
+    }
 
     public async Task<List<UnitDto>> GetPagingData(int pageIndex, int pageSize,string searchQuery)
     {
