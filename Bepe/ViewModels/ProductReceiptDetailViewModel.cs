@@ -8,6 +8,7 @@ namespace IhandCashier.Bepe.ViewModels;
 public class ProductReceiptDetailViewModel : BaseViewModel
 {
     private int _id { get; set; }
+    private int _index { get; set; }
     private int _product_receipt_id { get; set; }
     private int _product_id { get; set; }
     private int _unit_id { get; set; }
@@ -25,6 +26,19 @@ public class ProductReceiptDetailViewModel : BaseViewModel
             if (_id != value)
             {
                 _id = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
+    public int Index
+    {
+        get => _index;
+        set
+        {
+            if (_index != value)
+            {
+                _index = value;
                 OnPropertyChanged();
             }
         }

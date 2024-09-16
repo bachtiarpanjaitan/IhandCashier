@@ -14,7 +14,7 @@ public class ProductReceiptViewModel : BaseViewModel
     private DateTime _tanggal;
     private string _keterangan;
     private int _status;
-    private ICollection<ProductReceiptDetailViewModel> _details;
+    private List<ProductReceiptDetailViewModel> _details;
     
     [Bindable(false)]
     [IdProperty]
@@ -126,7 +126,7 @@ public class ProductReceiptViewModel : BaseViewModel
         }
     }
 
-    public ICollection<ProductReceiptDetailViewModel> Details
+    public List<ProductReceiptDetailViewModel> Details
     {
         get => _details;
         set

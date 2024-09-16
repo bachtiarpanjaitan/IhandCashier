@@ -27,8 +27,6 @@ public partial class FormPenerimaanBarang : IForm
     
     List<PickerOptionInt> _productOptions = new ();
     List<PickerOptionInt> _unitOptions = new ();
-
-    private int _generateIndex = 0;
     
     Grid _detailGrid = new ()
     {
@@ -94,7 +92,6 @@ public partial class FormPenerimaanBarang : IForm
         
         AddButton.Clicked += (sender, args) =>
         {
-            _generateIndex = _detailGrid.RowDefinitions.Count -1;;
             var item = new ProductReceiptDetailViewModel()
             {
                 Id = 0,
@@ -102,10 +99,12 @@ public partial class FormPenerimaanBarang : IForm
                 HargaSatuan = 0,
                 ProductId = 0,
                 Jumlah = 0,
-                UnitId = 0
+                UnitId = 0,
+                Index = _detailGrid.RowDefinitions.Count
             };
             _model.Details.Add(item);
-            GenerateRow(item,_generateIndex);
+            GenerateRow(item,item.Index);
+           
         };
         
         try
@@ -155,13 +154,13 @@ public partial class FormPenerimaanBarang : IForm
         }
     }
 
-    private void GenerateRow(ProductReceiptDetailViewModel detail, int index)
+    private void GenerateRow(ProductReceiptDetailViewModel detail, int idx)
     {
        _detailGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
        var delBtn = new Button()
        {
            Text = "Hapus",
-           CommandParameter = index++
+           CommandParameter = idx
        };
        
        var productCb = new SfComboBox()
@@ -199,26 +198,26 @@ public partial class FormPenerimaanBarang : IForm
        unitCb.ItemsSource = _unitOptions;
        unitCb.SelectedItem = _unitOptions.FirstOrDefault(i => i.Value == detail.UnitId);
        
-       _detailGrid.Add(productCb,0,index);
-       _detailGrid.Add(unitCb,1,index);
+       _detailGrid.Add(productCb,0,idx);
+       _detailGrid.Add(unitCb,1,idx);
        _detailGrid.Add(new Entry()
        {
            Placeholder = "Jumlah Barang",
            BindingContext = detail.Jumlah,
            Keyboard = Keyboard.Numeric
-       },2,index);
+       },2,idx);
        _detailGrid.Add(new Entry()
        {
            Placeholder = "Harga Satuan",
            BindingContext = detail.HargaSatuan,
            Keyboard = Keyboard.Numeric,
-       },3,index);
+       },3,idx);
        _detailGrid.Add(new Entry()
        {
            Text = detail.TotalHarga.ToString(),
            IsEnabled = false
-       },4,index);
-       _detailGrid.Add(delBtn,5,index);
+       },4,idx);
+       _detailGrid.Add(delBtn,5,idx);
        delBtn.Clicked += RemoveItemRow;
     }
 
@@ -228,29 +227,21 @@ public partial class FormPenerimaanBarang : IForm
         if (button != null && button.CommandParameter != null)
         {
             int rowIndexToRemove = (int)button.CommandParameter;
-
-            // Hapus elemen di baris yang ingin dihapus
-            foreach (var child in _detailGrid.Children.ToList())
+            if (_model.Details.ToList().Count > 1)
             {
-                if (_detailGrid.GetRow(child) == rowIndexToRemove)
+                var myList = _model.Details.ToList();
+                // // Hapus elemen di baris yang ingin dihapus
+                foreach (var child in _detailGrid.Children.ToList())
                 {
-                    _detailGrid.Children.Remove(child);
+                    if (_detailGrid.GetRow(child) == rowIndexToRemove)
+                    {
+                        _detailGrid.Children.Remove(child);
+                    }
                 }
-            }
 
-            // Hapus RowDefinition yang sesuai
-            if (rowIndexToRemove >= 0 && rowIndexToRemove < _detailGrid.RowDefinitions.Count)
-            {
-                _detailGrid.RowDefinitions.RemoveAt(rowIndexToRemove);
-            }
-            
-            // Jika ada elemen setelah baris yang dihapus, perbarui barisnya
-            foreach (var child in _detailGrid.Children)
-            {
-                if (_detailGrid.GetRow(child) > rowIndexToRemove)
-                {
-                    _detailGrid.SetRow(child, _detailGrid.GetRow(child) - 1);
-                }
+                myList.RemoveAll(item => item.Index == rowIndexToRemove);
+                _model.Details = myList;
+                
             }
         }
     }
