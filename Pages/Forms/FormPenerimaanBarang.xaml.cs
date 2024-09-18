@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Entities;
@@ -14,6 +16,7 @@ using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.ViewModels;
 using Syncfusion.Maui.DataGrid;
 using Syncfusion.Maui.Inputs;
+using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
 
 namespace IhandCashier.Pages.Forms;
 
@@ -27,6 +30,8 @@ public partial class FormPenerimaanBarang : IForm
     
     List<PickerOptionInt> _productOptions = new ();
     List<PickerOptionInt> _unitOptions = new ();
+    
+    private ObservableCollection<ProductReceiptDetailViewModel> Details = new();
     
     Grid _detailGrid = new ()
     {
@@ -64,8 +69,7 @@ public partial class FormPenerimaanBarang : IForm
         if (_model.KodeTransaksi == null)
         {
             _model.KodeTransaksi = "PR-" + DateTime.Now.ToString("yyyyMMddHHmm");
-            _model.Details = new List<ProductReceiptDetailViewModel>();
-            _model.Details.Add( new ProductReceiptDetailViewModel()
+            Details.Add( new ProductReceiptDetailViewModel()
             {
                 Id = 0,
                 ProductReceiptId = 0,
@@ -102,9 +106,8 @@ public partial class FormPenerimaanBarang : IForm
                 UnitId = 0,
                 Index = _detailGrid.RowDefinitions.Count
             };
-            _model.Details.Add(item);
-            GenerateRow(item,item.Index);
-           
+            Details.Add(item);
+            GenerateRow(Details.FirstOrDefault(x => x == item),item.Index);
         };
         
         try
@@ -142,7 +145,7 @@ public partial class FormPenerimaanBarang : IForm
                 _unitOptions.Add(new PickerOptionInt() { Label = b.nama, Value = b.id });
             }
             
-            foreach (var (item, index) in _model.Details.Select((item, index) => (item, index)))
+            foreach (var (item, index) in Details.Select((item, index) => (item, index)))
             {
                 GenerateRow(item,index);
             }
@@ -171,7 +174,6 @@ public partial class FormPenerimaanBarang : IForm
             SelectedValuePath = "Value",
             TextSearchMode = ComboBoxTextSearchMode.Contains,
             SelectedItem = detail.ProductId,
-            BindingContext = detail.ProductId,
             IsEditable = true,
             IsFilteringEnabled = true,
             ShowBorder = true,
@@ -186,37 +188,52 @@ public partial class FormPenerimaanBarang : IForm
            SelectedValuePath = "Value",
            TextSearchMode = ComboBoxTextSearchMode.Contains,
            SelectedItem = detail.UnitId,
-           BindingContext = detail.UnitId,
            IsEditable = true,
            IsFilteringEnabled = true,
            ShowBorder = true,
            BackgroundColor = Colors.Transparent
        };
        
+       productCb.BindingContext = detail;
+       productCb.SetBinding(SfComboBox.SelectedValueProperty, new Binding(nameof(detail.ProductId), mode: BindingMode.TwoWay));
        productCb.ItemsSource = _productOptions;
        productCb.SelectedItem = _productOptions.FirstOrDefault(i => i.Value == detail.ProductId);
+       
+       unitCb.BindingContext = detail;
+       unitCb.SetBinding(SfComboBox.SelectedValueProperty, new Binding(nameof(detail.UnitId), mode: BindingMode.TwoWay));
        unitCb.ItemsSource = _unitOptions;
        unitCb.SelectedItem = _unitOptions.FirstOrDefault(i => i.Value == detail.UnitId);
        
        _detailGrid.Add(productCb,0,idx);
        _detailGrid.Add(unitCb,1,idx);
-       _detailGrid.Add(new Entry()
+
+       var jumlahEntry = new Entry()
        {
            Placeholder = "Jumlah Barang",
            BindingContext = detail.Jumlah,
            Keyboard = Keyboard.Numeric
-       },2,idx);
-       _detailGrid.Add(new Entry()
+       };
+       jumlahEntry.SetBinding(Entry.TextProperty, new Binding("Jumlah", source: detail, mode: BindingMode.TwoWay));
+       _detailGrid.Add(jumlahEntry,2,idx);
+
+       var hargaEntry = new Entry()
        {
            Placeholder = "Harga Satuan",
            BindingContext = detail.HargaSatuan,
            Keyboard = Keyboard.Numeric,
-       },3,idx);
-       _detailGrid.Add(new Entry()
+       };
+       hargaEntry.SetBinding(Entry.TextProperty, new Binding("HargaSatuan", source: detail, mode: BindingMode.TwoWay));
+       _detailGrid.Add(hargaEntry,3,idx);
+
+       var totalHargaEntry = new Entry()
        {
            Text = detail.TotalHarga.ToString(),
-           IsEnabled = false
-       },4,idx);
+           IsReadOnly = true
+       };
+       
+       totalHargaEntry.SetBinding(Entry.TextProperty, new Binding("TotalHarga", source: detail));
+       _detailGrid.Add(totalHargaEntry,4,idx);
+       
        _detailGrid.Add(delBtn,5,idx);
        delBtn.Clicked += RemoveItemRow;
     }
@@ -267,6 +284,7 @@ public partial class FormPenerimaanBarang : IForm
             try
             {
                 var data = _model.ToEntity();
+                data.Details = Details.Select(d => d.ToEntity()).ToList();
                 if (data.id > 0) await _service.UpdateAsync(data).ConfigureAwait(true);
                 else await _service.AddAsync(data).ConfigureAwait(true);
                 
@@ -284,4 +302,6 @@ public partial class FormPenerimaanBarang : IForm
     {
        Close();
     }
+    
+    
 }

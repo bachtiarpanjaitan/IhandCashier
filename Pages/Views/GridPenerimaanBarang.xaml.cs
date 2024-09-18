@@ -37,7 +37,7 @@ public partial class GridPenerimaanBarang : ContentView
             new() { Type = ColumnTypes.Currency, MappingName = "Total", HeaderText = "TOTAL HARGA"},
             new() { Type = ColumnTypes.Text, MappingName = "SupplierName", HeaderText = "PEMASOK"},
             new() { Type = ColumnTypes.Text, MappingName = "Penerima", HeaderText = "PENERIMA"},
-            new() { Type = ColumnTypes.Text, MappingName = "Tanggal", HeaderText = "TANGGAL"},
+            new() { Type = ColumnTypes.Datetime, MappingName = "Tanggal", HeaderText = "TANGGAL",ColumnMode = ColumnWidthMode.FitByCell, TextAlignment = TextAlignment.Center},
             new() { Type = ColumnTypes.Text, MappingName = "StatusName", HeaderText = "STATUS"},
             new() { Type = ColumnTypes.Text, MappingName = "Keterangan", HeaderText = "KETERANGAN"}
         ];

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,9 +31,9 @@ namespace IhandCashier.Bepe.Entities
         public DateTime? created_at { get; set; }
         public DateTime? updated_at { get; set; }
         public DateTime? deleted_at { get; set; }
-        public string keterangan { get; set; }
+        public string? keterangan { get; set; }
 
-        // Navigation property
+        // Navigation propertyx
         [ForeignKey("supplier_id")]
         public Supplier Supplier { get; set; }
         public ICollection<ProductReceiptDetail> Details { get; set; }

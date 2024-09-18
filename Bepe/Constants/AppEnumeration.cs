@@ -9,7 +9,8 @@ public enum ColumnTypes
     Image,
     Button,
     Detail,
-    Currency
+    Currency,
+    Datetime,
 }
 
 public enum ReceiptStatus

@@ -6,6 +6,7 @@ using IhandCashier.Bepe.Entities;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Statics;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Maui.DataSource.Extensions;
 
 namespace IhandCashier.Bepe.Services;
 
@@ -76,11 +77,28 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
         return result;
     }
     
-    public async Task AddAsync(ProductReceipt product)
+    public async Task AddAsync(ProductReceipt item)
     {
-        _context.ProductReceipts.Add(product);
+        var newItem = new ProductReceipt()
+        {
+            kode_transaksi = item.kode_transaksi,
+            supplier_id = item.supplier_id,
+            penerima = item.penerima,
+            tanggal = item.tanggal,
+            created_at = DateTime.Now,
+            status = item.status,
+            keterangan = item.keterangan,
+        };
+        _context.ProductReceipts.Add(newItem);
+        _context.SaveChanges();
+        var details = item.Details.Select(d =>
+        {
+            d.product_receipt_id = newItem.id;
+            return d;
+        }).ToList();
+        _context.ProductReceiptDetails.AddRange(details);
         await _context.SaveChangesAsync();
-        _context.ProductReceipts.Entry(product).State = EntityState.Detached;
+        _context.ProductReceipts.Entry(item).State = EntityState.Detached;
     }
 
     public async Task UpdateAsync(ProductReceipt item)

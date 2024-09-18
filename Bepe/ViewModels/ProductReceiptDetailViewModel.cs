@@ -96,6 +96,7 @@ public class ProductReceiptDetailViewModel : BaseViewModel
             {
                 _jumlah = value;
                 OnPropertyChanged();
+                UpdateTotalHarga();
             }
         }
     }
@@ -110,6 +111,7 @@ public class ProductReceiptDetailViewModel : BaseViewModel
             {
                 _harga_satuan = value;
                 OnPropertyChanged();
+                UpdateTotalHarga();
             }
         }
     }
@@ -152,5 +154,10 @@ public class ProductReceiptDetailViewModel : BaseViewModel
             jumlah = _jumlah,
             harga_satuan = _harga_satuan,
         };
+    }
+    
+    private void UpdateTotalHarga()
+    {
+        TotalHarga = Jumlah * HargaSatuan;
     }
 }

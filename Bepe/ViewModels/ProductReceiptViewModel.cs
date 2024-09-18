@@ -2,6 +2,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using IhandCashier.Bepe.Database.Attributes;
 using IhandCashier.Bepe.Entities;
+using Syncfusion.Maui.Data;
+using Syncfusion.Maui.DataSource.Extensions;
 
 namespace IhandCashier.Bepe.ViewModels;
 

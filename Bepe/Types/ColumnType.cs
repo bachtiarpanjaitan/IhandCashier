@@ -45,11 +45,25 @@ namespace IhandCashier.Bepe.Types
                     Format = "C2",
                     CultureInfo = new CultureInfo("id-ID")
                 },
-                ColumnTypes.Date => new DataGridDateColumn()
+                ColumnTypes.Date => new DataGridTextColumn()
                 {
-                    MappingName = MappingName, HeaderText = HeaderText, CellTextAlignment = TextAlignment, ColumnWidthMode = ColumnMode, Format = Format
+                    MappingName = MappingName, 
+                    HeaderText = HeaderText, 
+                    CellTextAlignment = TextAlignment.Start, 
+                    ColumnWidthMode = ColumnMode, 
+                    Format = Format != "" ? Format : "dddd, yyyy-MM-dd",
+                    CultureInfo = new CultureInfo("id-ID")
                 },
-                ColumnTypes.Checkbox => new DataGridDateColumn()
+                ColumnTypes.Datetime => new DataGridTextColumn()
+                {
+                    MappingName = MappingName, 
+                    HeaderText = HeaderText, 
+                    CellTextAlignment = TextAlignment.Start, 
+                    ColumnWidthMode = ColumnMode, 
+                    Format =  "dddd, yyyy-MM-dd HH:mm:ss",
+                    CultureInfo = new CultureInfo(Format != "" ? Format :"id-ID")
+                },
+                ColumnTypes.Checkbox => new DataGridCheckBoxColumn()
                 {
                     MappingName = MappingName, HeaderText = HeaderText, CellTextAlignment = TextAlignment, ColumnWidthMode = ColumnMode, Format = Format
                 },

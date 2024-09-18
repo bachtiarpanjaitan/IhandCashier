@@ -64,8 +64,12 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<ProductReceipt>()
             .HasIndex(pr => pr.supplier_id);
         modelBuilder.Entity<ProductReceipt>()
-            .HasMany(d => d.Details);
-
+            .HasMany(d => d.Details)
+            .WithOne(prd => prd.ProductReceipt)
+            .HasForeignKey(prd => prd.product_receipt_id);
+        modelBuilder.Entity<ProductReceipt>()
+            .HasQueryFilter(pr => !pr.deleted_at.HasValue);
+        
         // ProductReceiptDetail Configuration
         modelBuilder.Entity<ProductReceiptDetail>()
             .HasIndex(prd => prd.product_receipt_id);
