@@ -1,15 +1,37 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IhandCashier.Bepe.Components;
+using IhandCashier.Bepe.Constants;
+using IhandCashier.Bepe.Database;
+using IhandCashier.Bepe.Dtos;
+using IhandCashier.Bepe.Helpers;
+using IhandCashier.Bepe.Services;
+using IhandCashier.Bepe.Types;
+using IhandCashier.Core.Maui.Providers;
+using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
 
 public partial class GridStokBarang : ContentView
 {
+    
+    private const string ModuleName = "Data Stok Barang";
+    private Pagination<ProductStockDto> _pagination;
+    ProductStockService _service  = ServiceLocator.ServiceProvider.GetService<ProductStockService>();
     public GridStokBarang()
     {
         InitializeComponent();
+        FilterTwo.Initialize(ModuleName);
+        DatagridProvider.Reset();
+        
+        List<ColumnType> columns = [
+            new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
+            new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
+            new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
+            new() { Type = ColumnTypes.Numeric, MappingName = "jumlah", HeaderText = "JUMLAH", Format = "N0", TextAlignment = TextAlignment.End},
+            new() { Type = ColumnTypes.Text, MappingName = "basic_unit_name", HeaderText = "SATUAN"}
+        ];
+            
+        foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+        _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterTwo));
+        Content = DatagridProvider.LayoutDatagrid;
     }
 }

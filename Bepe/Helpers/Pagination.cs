@@ -96,6 +96,9 @@ namespace IhandCashier.Bepe.Helpers
             {
                 FilterOne.SearchHandler(OnSearchHandler);
                 FilterOne.AddFormClickHandler(OnAddFormClicked);
+            } else if (_typeHeader == typeof(FilterTwo))
+            {
+                FilterTwo.SearchHandler(OnSearchHandler);
             }
             
         }

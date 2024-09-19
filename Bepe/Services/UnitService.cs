@@ -29,7 +29,7 @@ public class UnitService : IDataService<UnitDto>
     {
         IQueryable<Unit> query = _context.Units
             .AsNoTracking()
-            .Include(b => b.BasicUnit);;
+            .Include(b => b.BasicUnit);
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
             query = query.Where(item => EF.Functions.Like(item.nama, $"%{searchQuery}%") || 

@@ -57,7 +57,7 @@ public class ProductService : IDataService<ProductDto>
                 resourceGambarThumbnail = ImageSource.FromFile(Path.Combine(AppSettingConfig.CreateAppPath("Images"),"Thumbnails",item.gambar)),
             })
             .ToListAsync();
-        DatagridProvider.DataGrid.ItemsSource = result;
+        // DatagridProvider.DataGrid.ItemsSource = result;
         return result;
     }
 
