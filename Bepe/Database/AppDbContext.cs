@@ -67,8 +67,8 @@ public class AppDbContext : DbContext
             .HasMany(d => d.Details)
             .WithOne(prd => prd.ProductReceipt)
             .HasForeignKey(prd => prd.product_receipt_id);
-        modelBuilder.Entity<ProductReceipt>()
-            .HasQueryFilter(pr => !pr.deleted_at.HasValue);
+        // modelBuilder.Entity<ProductReceipt>()
+        //     .HasQueryFilter(pr => !pr.deleted_at.HasValue);
         
         // ProductReceiptDetail Configuration
         modelBuilder.Entity<ProductReceiptDetail>()

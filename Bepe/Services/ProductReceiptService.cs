@@ -25,7 +25,7 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
 
     public async Task<List<ProductReceiptDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null)
     {
-        IQueryable<ProductReceipt> query = _context.ProductReceipts
+        IQueryable<ProductReceipt> query = _context.ProductReceipts.AsNoTracking()
             .Include(s => s.Supplier)
             .Where(x => x.deleted_at == null);
         if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -35,7 +35,7 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                                         EF.Functions.Like(item.Supplier.nama, $"%{searchQuery}%")
             );
         }
-        var result = await query.Skip(pageIndex * pageSize).Take(pageSize)
+        var result = await query.AsNoTracking().Skip(pageIndex * pageSize).Take(pageSize)
             .Include(d => d.Details).ThenInclude(x => x.Product)
             .Include(d => d.Details).ThenInclude(x => x.Unit)
             .Select(item => new ProductReceiptDto()
@@ -51,6 +51,9 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                 StatusName = Helper.SplitCamelCase(AppEnumeration.GetEnumName<ReceiptStatus>(item.status)),
                 Status = item.status,
                 Total = item.Details.Sum(x=> (double)(x.jumlah * x.harga_satuan)),
+                CreatedAt = item.created_at,
+                UpdatedAt = item.updated_at,
+                DeletedAt = item.deleted_at,
                 Details = item.Details.Select(d => new ProductReceiptDetailDto()
                 {
                     Id = d.id,
@@ -104,16 +107,52 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
     public async Task UpdateAsync(ProductReceipt item)
     {
         var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
-        _context.Entry(entity).CurrentValues.SetValues(item);
+        var editItem = new ProductReceipt()
+        {
+            id = item.id,
+            kode_transaksi = item.kode_transaksi,
+            supplier_id = item.supplier_id,
+            penerima = item.penerima,
+            tanggal = item.tanggal,
+            updated_at = DateTime.Now,
+            created_at = item.created_at,
+            status = item.status,
+            keterangan = item.keterangan,
+        };
+        _context.Entry(entity).CurrentValues.SetValues(editItem);
         _context.Update(entity);
+
+        foreach (var detail in item.Details)
+        {
+            var en = await _context.ProductReceiptDetails.AsNoTracking().FirstOrDefaultAsync(e => e.id == detail.id);
+            _context.Entry(en).CurrentValues.SetValues(detail);
+            _context.Update(en);
+        }
+        
         await _context.SaveChangesAsync();
         
         _context.Entry(entity).State = EntityState.Detached;
     }
 
-    public async Task DeleteAsync(ProductReceipt product)
+    public async Task SoftDeleteAsync(ProductReceipt item)
     {
-        _context.ProductReceipts.Remove(product);
+        var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
+        var editItem = new ProductReceipt()
+        {
+            id = item.id,
+            kode_transaksi = item.kode_transaksi,
+            supplier_id = item.supplier_id,
+            penerima = item.penerima,
+            tanggal = item.tanggal,
+            updated_at = item.updated_at,
+            created_at = item.created_at,
+            status = item.status,
+            keterangan = item.keterangan,
+            deleted_at = DateTime.Now
+        };
+        _context.Entry(entity).CurrentValues.SetValues(editItem);
+        _context.Update(entity);
         await _context.SaveChangesAsync();
+        _context.Entry(entity).State = EntityState.Detached;
     }
 }

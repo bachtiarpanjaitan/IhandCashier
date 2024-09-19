@@ -37,7 +37,7 @@ public partial class GridPenerimaanBarang : ContentView
             new() { Type = ColumnTypes.Currency, MappingName = "Total", HeaderText = "TOTAL HARGA"},
             new() { Type = ColumnTypes.Text, MappingName = "SupplierName", HeaderText = "PEMASOK"},
             new() { Type = ColumnTypes.Text, MappingName = "Penerima", HeaderText = "PENERIMA"},
-            new() { Type = ColumnTypes.Datetime, MappingName = "Tanggal", HeaderText = "TANGGAL",ColumnMode = ColumnWidthMode.FitByCell, TextAlignment = TextAlignment.Center},
+            new() { Type = ColumnTypes.Date, MappingName = "Tanggal", HeaderText = "TANGGAL",ColumnMode = ColumnWidthMode.FitByCell, TextAlignment = TextAlignment.Center},
             new() { Type = ColumnTypes.Text, MappingName = "StatusName", HeaderText = "STATUS"},
             new() { Type = ColumnTypes.Text, MappingName = "Keterangan", HeaderText = "KETERANGAN"}
         ];
@@ -68,14 +68,12 @@ public partial class GridPenerimaanBarang : ContentView
     private void CreateContextMenu()
     {
         MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
-        MenuFlyoutItem statusMenu = new() { Text = "Ubah Status"};
         MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
         MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
         editMenu.Clicked += OnEditClicked;
         deleteMenu.Clicked += OnDeleteClicked;
         refreshMenu.Clicked += OnRefreshClicked;
         ContextMenu.Add(refreshMenu);
-        ContextMenu.Add(statusMenu);
         ContextMenu.Add(editMenu);
         ContextMenu.Add(new MenuFlyoutSeparator());
         ContextMenu.Add(deleteMenu);
@@ -86,9 +84,24 @@ public partial class GridPenerimaanBarang : ContentView
         _pagination.RefreshData();
     }
 
-    private void OnDeleteClicked(object sender, EventArgs e)
+    private async void OnDeleteClicked(object sender, EventArgs e)
     {
-        
+        bool accept = await Application.Current.MainPage.DisplayAlert($"Hapus Data Penerimaan Barang", $"Anda yakin menghapus penerimaan {_selectedProduct.KodeTransaksi}?.", "Hapus", "Batal");
+        if (accept)
+        {
+            try
+            {
+                var item = _selectedProduct.ToEntity();
+                await _service.SoftDeleteAsync(item);
+                Application.Current.MainPage.DisplayAlert("Berhasil", "Penerimaan Barang berhasil dihapus", "OK");
+                _pagination.RefreshData();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Application.Current.MainPage.DisplayAlert("Gagal", ex.Message, "OK");
+            }
+        }
     }
 
     private void OnEditClicked(object sender, EventArgs e)

@@ -17,4 +17,9 @@ public class Helper
         
         return Regex.Replace(input, pattern, replacement);
     }
+    
+    public static string FormatToCurrency(decimal amount)
+    {
+        return string.Format(System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"), "{0:N0}", amount);
+    }
 }

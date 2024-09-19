@@ -20,6 +20,9 @@ public class ProductReceiptDto
     public double Total { get; set; }
     public int Status { get; set; }
     public string StatusName { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
     
     public Supplier Supplier { get; set; }
     public List<ProductReceiptDetailDto> Details { get; set; }
@@ -35,6 +38,10 @@ public class ProductReceiptDto
             penerima = Penerima,
             tanggal = this.Tanggal,
             keterangan = Keterangan,
+            status = this.Status,
+            created_at = CreatedAt,
+            updated_at = UpdatedAt,
+            deleted_at = DeletedAt,
         };
     }
 
@@ -48,6 +55,7 @@ public class ProductReceiptDto
             Penerima = Penerima,
             Tanggal = this.Tanggal,
             Keterangan = Keterangan,
+            Status = Status,
             Details = Details.Select(x => new ProductReceiptDetailViewModel()
             {
                 Id = x.Id,

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -215,6 +216,8 @@ public partial class FormPenerimaanBarang : IForm
            Keyboard = Keyboard.Numeric
        };
        jumlahEntry.SetBinding(Entry.TextProperty, new Binding("Jumlah", source: detail, mode: BindingMode.TwoWay));
+       jumlahEntry.Text = Helper.FormatToCurrency(detail.Jumlah);
+       jumlahEntry.TextChanged += OnAmountEntryTextChanged;
        _detailGrid.Add(jumlahEntry,2,idx);
 
        var hargaEntry = new Entry()
@@ -224,6 +227,8 @@ public partial class FormPenerimaanBarang : IForm
            Keyboard = Keyboard.Numeric,
        };
        hargaEntry.SetBinding(Entry.TextProperty, new Binding("HargaSatuan", source: detail, mode: BindingMode.TwoWay));
+       hargaEntry.Text = Helper.FormatToCurrency(detail.HargaSatuan);
+       hargaEntry.TextChanged += OnAmountEntryTextChanged;
        _detailGrid.Add(hargaEntry,3,idx);
 
        var totalHargaEntry = new Entry()
@@ -233,6 +238,8 @@ public partial class FormPenerimaanBarang : IForm
        };
        
        totalHargaEntry.SetBinding(Entry.TextProperty, new Binding("TotalHarga", source: detail));
+       totalHargaEntry.Text = Helper.FormatToCurrency(detail.TotalHarga);
+       totalHargaEntry.TextChanged += OnAmountEntryTextChanged;
        _detailGrid.Add(totalHargaEntry,4,idx);
        
        _detailGrid.Add(delBtn,5,idx);
@@ -302,6 +309,20 @@ public partial class FormPenerimaanBarang : IForm
     public void BtnBatal_OnClicked(object sender, EventArgs e)
     {
        Close();
+    }
+    
+    private void OnAmountEntryTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var entry = (Entry)sender;
+
+        // Menghapus format lama (misalnya ketika user mengedit nilai)
+        if (decimal.TryParse(entry.Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal amount))
+        {
+            // Mengupdate nilai entry dengan format mata uang (IDR)
+            entry.TextChanged -= OnAmountEntryTextChanged;  // Remove event handler to avoid infinite loop
+            entry.Text = Helper.FormatToCurrency(amount);
+            entry.TextChanged += OnAmountEntryTextChanged;  // Add the event handler back
+        }
     }
     
     
