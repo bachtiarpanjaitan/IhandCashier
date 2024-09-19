@@ -1,5 +1,6 @@
 using IhandCashier.Bepe.Controllers;
 using IhandCashier.Bepe.Types;
+using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Pages.Views;
 
 namespace IhandCashier.Pages;

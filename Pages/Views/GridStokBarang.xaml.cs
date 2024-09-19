@@ -10,7 +10,7 @@ using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
 
-public partial class GridStokBarang : ContentView
+public partial class GridStokBarang
 {
     
     private const string ModuleName = "Data Stok Barang";
@@ -19,7 +19,7 @@ public partial class GridStokBarang : ContentView
     public GridStokBarang()
     {
         InitializeComponent();
-        FilterTwo.Initialize(ModuleName);
+        FilterOne.Initialize(ModuleName, new FilterOneComponent(){ShowAddButton = false});
         DatagridProvider.Reset();
         
         List<ColumnType> columns = [
@@ -31,7 +31,7 @@ public partial class GridStokBarang : ContentView
         ];
             
         foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-        _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterTwo));
+        _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterOne));
         Content = DatagridProvider.LayoutDatagrid;
     }
 }

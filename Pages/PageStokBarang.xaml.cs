@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IhandCashier.Bepe.Types;
+using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Pages.Views;
 
 namespace IhandCashier.Pages;

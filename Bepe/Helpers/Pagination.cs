@@ -90,17 +90,13 @@ namespace IhandCashier.Bepe.Helpers
             DatagridProvider.Indicator.IsVisible = false;
         }
 
-        private async void GetComponentHandler()
+        private void GetComponentHandler()
         {
             if (_typeHeader == typeof(FilterOne))
             {
                 FilterOne.SearchHandler(OnSearchHandler);
                 FilterOne.AddFormClickHandler(OnAddFormClicked);
-            } else if (_typeHeader == typeof(FilterTwo))
-            {
-                FilterTwo.SearchHandler(OnSearchHandler);
             }
-            
         }
 
         private void OnAddFormClicked(object sender, EventArgs e)

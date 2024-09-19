@@ -16,7 +16,7 @@ using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
 
-public partial class GridPenerimaanBarang : ContentView
+public partial class GridPenerimaanBarang
 {
     private const string ModuleName = "Data Penerimaan Barang";
     private Pagination<ProductReceiptDto> _pagination;

@@ -1,7 +1,5 @@
 using IhandCashier.Bepe.Extensions;
-using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Core.Maui.Providers;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IhandCashier.Bepe.Components;
 
@@ -49,12 +47,26 @@ public static class FilterOne
         }
     };
     
-    public static void Initialize(string moduleName)
+    public static void Initialize(string moduleName, FilterOneComponent component = null)
     {
+        DatagridProvider.HeaderFrame.Content = null;
+        Grid.Clear();
+
+        if (component != null)
+        {
+            if(!component.ShowAddButton)AddBtn.IsVisible = false;
+            else AddBtn.IsVisible = true;
+        }
+        else
+        {
+            AddBtn.IsVisible = true;
+        }
+        
         ModuleLabel.Text = moduleName;
         Grid.Add(ModuleLabel,0);
         Grid.Add(Search,1);
         Grid.Add(AddBtn,2);
+
         DatagridProvider.HeaderFrame.Content = Grid;
         Search.Text = "";
     }
@@ -83,4 +95,9 @@ public static class FilterOne
     {
         _entrySearchChangedHandler?.Invoke(sender, e);
     }
+}
+
+public class FilterOneComponent
+{
+    public bool ShowAddButton { get; set; } = true;
 }
