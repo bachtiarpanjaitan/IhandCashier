@@ -93,6 +93,14 @@ public partial class GridPenerimaanBarang : ContentView
 
     private void OnEditClicked(object sender, EventArgs e)
     {
-        
+        if (Application.Current != null && Application.Current.MainPage != null)
+        {
+            if (_selectedProduct != null)
+            {
+                var manager = new PopupManager();
+                manager.ShowPopup(new FormPenerimaanBarang(_selectedProduct.ToViewModel()));
+            }
+                
+        }
     }
 }

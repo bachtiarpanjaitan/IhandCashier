@@ -1,6 +1,7 @@
 using System.Collections;
 using IhandCashier.Bepe.Dtos.Details;
 using IhandCashier.Bepe.Entities;
+using IhandCashier.Bepe.ViewModels;
 
 namespace IhandCashier.Bepe.Dtos;
 
@@ -37,12 +38,27 @@ public class ProductReceiptDto
         };
     }
 
-    // public ProductReceiptViewModel ToViewModel()
-    // {
-    //     return new ProductReceiptViewModel()
-    //     {
-    //         
-    //     };
-    // }
+    public ProductReceiptViewModel ToViewModel()
+    {
+        return new ProductReceiptViewModel()
+        {
+            Id = this.Id,
+            KodeTransaksi = this.KodeTransaksi,
+            SupplierId = SupplierId,
+            Penerima = Penerima,
+            Tanggal = this.Tanggal,
+            Keterangan = Keterangan,
+            Details = Details.Select(x => new ProductReceiptDetailViewModel()
+            {
+                Id = x.Id,
+                HargaSatuan = x.HargaSatuan,
+                Jumlah = x.Jumlah,
+                ProductId = x.ProductId,
+                ProductReceiptId = x.ProductReceiptId,
+                UnitId = x.UnitId,
+                TotalHarga = x.Total,
+            }).ToList()
+        };
+    }
     
 }

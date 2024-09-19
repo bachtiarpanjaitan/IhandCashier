@@ -58,6 +58,7 @@ public partial class FormPenerimaanBarang : IForm
     public FormPenerimaanBarang(ProductReceiptViewModel model = null)
     {
         _model = model;
+        if (model != null) Details = new ObservableCollection<ProductReceiptDetailViewModel>(model.Details);
         Initialize();
     }
 
@@ -244,9 +245,9 @@ public partial class FormPenerimaanBarang : IForm
         if (button != null && button.CommandParameter != null)
         {
             int rowIndexToRemove = (int)button.CommandParameter;
-            if (_model.Details.ToList().Count > 1)
+            if (Details.ToList().Count > 1)
             {
-                var myList = _model.Details.ToList();
+                var myList = Details.ToList();
                 // // Hapus elemen di baris yang ingin dihapus
                 foreach (var child in _detailGrid.Children.ToList())
                 {
@@ -257,7 +258,7 @@ public partial class FormPenerimaanBarang : IForm
                 }
 
                 myList.RemoveAll(item => item.Index == rowIndexToRemove);
-                _model.Details = myList;
+                Details = new ObservableCollection<ProductReceiptDetailViewModel>(myList);
                 
             }
         }
