@@ -12,9 +12,9 @@ public class ProductReceiptDetailViewModel : BaseViewModel
     private int _product_receipt_id { get; set; }
     private int _product_id { get; set; }
     private int _unit_id { get; set; }
-    private decimal _jumlah { get; set; }
-    private decimal _harga_satuan { get; set; }
-    private decimal _total_harga { get; set; }
+    private int _jumlah { get; set; }
+    private double _harga_satuan { get; set; }
+    private double _total_harga { get; set; }
     
     [Bindable(false)]
     [IdProperty]
@@ -87,7 +87,7 @@ public class ProductReceiptDetailViewModel : BaseViewModel
     }
     
     [Display(Name = "Jumlah")]
-    public decimal Jumlah
+    public int Jumlah
     {
         get => _jumlah;
         set
@@ -102,7 +102,7 @@ public class ProductReceiptDetailViewModel : BaseViewModel
     }
     
     [Display(Name = "Harga Satuan")]
-    public decimal HargaSatuan
+    public double HargaSatuan
     {
         get => _harga_satuan;
         set
@@ -117,7 +117,7 @@ public class ProductReceiptDetailViewModel : BaseViewModel
     }
     
     [Display(Name = "Total Harga")]
-    public decimal TotalHarga
+    public double TotalHarga
     {
         get => _total_harga;
         set
@@ -151,8 +151,8 @@ public class ProductReceiptDetailViewModel : BaseViewModel
             product_receipt_id = _product_receipt_id,
             product_id = _product_id,
             unit_id = _unit_id,
-            jumlah = _jumlah,
-            harga_satuan = _harga_satuan,
+            jumlah = (decimal) _jumlah,
+            harga_satuan = (decimal) _harga_satuan,
         };
     }
     

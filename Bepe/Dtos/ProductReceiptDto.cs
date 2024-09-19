@@ -59,12 +59,12 @@ public class ProductReceiptDto
             Details = Details.Select(x => new ProductReceiptDetailViewModel()
             {
                 Id = x.Id,
-                HargaSatuan = x.HargaSatuan,
-                Jumlah = x.Jumlah,
+                HargaSatuan = (double) x.HargaSatuan,
+                Jumlah = (int) x.Jumlah,
                 ProductId = x.ProductId,
                 ProductReceiptId = x.ProductReceiptId,
                 UnitId = x.UnitId,
-                TotalHarga = x.Total,
+                TotalHarga = (double) x.Total,
             }).ToList()
         };
     }

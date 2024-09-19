@@ -92,6 +92,7 @@ public partial class GridPenerimaanBarang : ContentView
             try
             {
                 var item = _selectedProduct.ToEntity();
+                item.Details = _selectedProduct.ToViewModel().Details.Select(d => d.ToEntity()).ToList();
                 await _service.SoftDeleteAsync(item);
                 Application.Current.MainPage.DisplayAlert("Berhasil", "Penerimaan Barang berhasil dihapus", "OK");
                 _pagination.RefreshData();

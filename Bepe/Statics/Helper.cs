@@ -18,8 +18,8 @@ public class Helper
         return Regex.Replace(input, pattern, replacement);
     }
     
-    public static string FormatToCurrency(decimal amount)
+    public static string FormatToCurrency(double amount)
     {
-        return string.Format(System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"), "{0:N0}", amount);
+        return string.Format(System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"), "{0:C2}", amount);
     }
 }

@@ -25,6 +25,13 @@ public enum ReceiptStatus
     Dibatalkan
 }
 
+public enum StockStatus
+{
+    Addition,
+    Adjustment,
+    Deletion
+}
+
 public enum Themes
 {
     Dark,

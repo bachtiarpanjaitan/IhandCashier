@@ -162,8 +162,8 @@ public class ProductReceiptViewModel : BaseViewModel
           ProductReceiptId = x.product_receipt_id,
           ProductId = x.product_id,
           UnitId = x.unit_id,
-          Jumlah = x.jumlah,
-          HargaSatuan = x.harga_satuan,
+          Jumlah = (int) x.jumlah,
+          HargaSatuan = (double) x.harga_satuan,
         }).ToList();
 
     }

@@ -82,77 +82,162 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
     
     public async Task AddAsync(ProductReceipt item)
     {
-        var newItem = new ProductReceipt()
+        using (var transaction = _context.Database.BeginTransaction())
         {
-            kode_transaksi = item.kode_transaksi,
-            supplier_id = item.supplier_id,
-            penerima = item.penerima,
-            tanggal = item.tanggal,
-            created_at = DateTime.Now,
-            status = item.status,
-            keterangan = item.keterangan,
-        };
-        _context.ProductReceipts.Add(newItem);
-        _context.SaveChanges();
-        var details = item.Details.Select(d =>
-        {
-            d.product_receipt_id = newItem.id;
-            return d;
-        }).ToList();
-        _context.ProductReceiptDetails.AddRange(details);
-        await _context.SaveChangesAsync();
-        _context.ProductReceipts.Entry(item).State = EntityState.Detached;
+            try
+            {
+                var newItem = new ProductReceipt()
+                {
+                    kode_transaksi = item.kode_transaksi,
+                    supplier_id = item.supplier_id,
+                    penerima = item.penerima,
+                    tanggal = item.tanggal,
+                    created_at = DateTime.Now,
+                    status = item.status,
+                    keterangan = item.keterangan,
+                };
+                _context.ProductReceipts.Add(newItem);
+                _context.SaveChanges();
+                var details = item.Details.Select(d =>
+                {
+                    d.product_receipt_id = newItem.id;
+                    return d;
+                }).ToList();
+                _context.ProductReceiptDetails.AddRange(details);
+
+                //Calculate Stock
+                foreach (var detail in details)
+                {
+                    if (newItem.status == (int)ReceiptStatus.Selesai) CalculateStock(detail);
+                }
+
+                await _context.SaveChangesAsync();
+                _context.ProductReceipts.Entry(item).State = EntityState.Detached;
+                transaction.Commit();
+            }catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine($" Error: {ex.Message}");
+            }
+        } 
     }
 
     public async Task UpdateAsync(ProductReceipt item)
     {
-        var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
-        var editItem = new ProductReceipt()
+        using (var transaction = _context.Database.BeginTransaction())
         {
-            id = item.id,
-            kode_transaksi = item.kode_transaksi,
-            supplier_id = item.supplier_id,
-            penerima = item.penerima,
-            tanggal = item.tanggal,
-            updated_at = DateTime.Now,
-            created_at = item.created_at,
-            status = item.status,
-            keterangan = item.keterangan,
-        };
-        _context.Entry(entity).CurrentValues.SetValues(editItem);
-        _context.Update(entity);
+            try
+            {
+                var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
+                _context.Entry(entity).State = EntityState.Detached;
+                var editItem = new ProductReceipt()
+                {
+                    id = item.id,
+                    kode_transaksi = item.kode_transaksi,
+                    supplier_id = item.supplier_id,
+                    penerima = item.penerima,
+                    tanggal = item.tanggal,
+                    updated_at = DateTime.Now,
+                    created_at = item.created_at,
+                    status = item.status,
+                    keterangan = item.keterangan,
+                };
+                _context.Entry(entity).CurrentValues.SetValues(editItem);
+                _context.Update(entity);
 
-        foreach (var detail in item.Details)
-        {
-            var en = await _context.ProductReceiptDetails.AsNoTracking().FirstOrDefaultAsync(e => e.id == detail.id);
-            _context.Entry(en).CurrentValues.SetValues(detail);
-            _context.Update(en);
+                foreach (var detail in item.Details)
+                {
+                    var en = await _context.ProductReceiptDetails.AsNoTracking()
+                        .FirstOrDefaultAsync(e => e.id == detail.id);
+                    if (editItem.status == (int)ReceiptStatus.Selesai) CalculateStock(detail, StockStatus.Adjustment,en);
+
+                    _context.Entry(en).CurrentValues.SetValues(detail);
+                    _context.Update(en);
+                }
+
+                await _context.SaveChangesAsync();
+
+                _context.Entry(entity).State = EntityState.Detached;
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine($" Error: {ex.Message}");
+            }
         }
-        
-        await _context.SaveChangesAsync();
-        
-        _context.Entry(entity).State = EntityState.Detached;
     }
 
     public async Task SoftDeleteAsync(ProductReceipt item)
     {
-        var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
-        var editItem = new ProductReceipt()
+        using (var transaction = _context.Database.BeginTransaction())
         {
-            id = item.id,
-            kode_transaksi = item.kode_transaksi,
-            supplier_id = item.supplier_id,
-            penerima = item.penerima,
-            tanggal = item.tanggal,
-            updated_at = item.updated_at,
-            created_at = item.created_at,
-            status = item.status,
-            keterangan = item.keterangan,
-            deleted_at = DateTime.Now
-        };
-        _context.Entry(entity).CurrentValues.SetValues(editItem);
-        _context.Update(entity);
-        await _context.SaveChangesAsync();
-        _context.Entry(entity).State = EntityState.Detached;
+            try
+            {
+                var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
+                var editItem = new ProductReceipt()
+                {
+                    id = item.id,
+                    kode_transaksi = item.kode_transaksi,
+                    supplier_id = item.supplier_id,
+                    penerima = item.penerima,
+                    tanggal = item.tanggal,
+                    updated_at = item.updated_at,
+                    created_at = item.created_at,
+                    status = item.status,
+                    keterangan = item.keterangan,
+                    deleted_at = DateTime.Now
+                };
+
+                if (item.Details.Count > 0)
+                {
+                    foreach (var detail in item.Details)
+                    {
+                        var en = await _context.ProductReceiptDetails.AsNoTracking()
+                            .FirstOrDefaultAsync(e => e.id == detail.id);
+                        if (editItem.status == (int)ReceiptStatus.Selesai) CalculateStock(detail, StockStatus.Deletion);
+                    }
+                }
+
+                _context.Entry(entity).CurrentValues.SetValues(editItem);
+                _context.Update(entity);
+                await _context.SaveChangesAsync();
+                _context.Entry(entity).State = EntityState.Detached;
+                
+                transaction.Commit();
+            }catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine($" Error: {ex.Message}");
+            }
+        }
+    }
+
+    private async void CalculateStock(ProductReceiptDetail newData, StockStatus status = StockStatus.Addition, ProductReceiptDetail oldData = null)
+    {
+        ProductStock oldStock = null;
+        oldStock = _context.ProductStocks
+            .AsNoTracking()
+            .Where(x => x.product_id == newData.product_id)
+            .Where(x => x.unit_id == newData.unit_id)
+            .FirstOrDefault();
+
+        if (oldStock != null)
+        {
+            if(status == StockStatus.Addition) oldStock.jumlah = oldStock.jumlah + newData.jumlah;
+            else if (status == StockStatus.Adjustment && oldData != null) oldStock.jumlah = oldStock.jumlah + (newData.jumlah - oldData.jumlah);
+            else if(status == StockStatus.Deletion) oldStock.jumlah = oldStock.jumlah - newData.jumlah;
+            _context.Update(oldStock);
+        }
+        else
+        {
+            var newStock = new ProductStock()
+            {
+                product_id = newData.product_id,
+                unit_id = newData.unit_id,
+                jumlah = newData.jumlah,
+            };
+            _context.ProductStocks.Add(newStock);
+        }
     }
 }

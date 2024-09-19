@@ -15,6 +15,7 @@ using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.ViewModels;
+using Syncfusion.Maui.Core;
 using Syncfusion.Maui.DataGrid;
 using Syncfusion.Maui.Inputs;
 using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
@@ -213,22 +214,18 @@ public partial class FormPenerimaanBarang : IForm
        {
            Placeholder = "Jumlah Barang",
            BindingContext = detail.Jumlah,
-           Keyboard = Keyboard.Numeric
        };
        jumlahEntry.SetBinding(Entry.TextProperty, new Binding("Jumlah", source: detail, mode: BindingMode.TwoWay));
-       jumlahEntry.Text = Helper.FormatToCurrency(detail.Jumlah);
-       jumlahEntry.TextChanged += OnAmountEntryTextChanged;
+       jumlahEntry.Text = detail.Jumlah.ToString();
        _detailGrid.Add(jumlahEntry,2,idx);
 
        var hargaEntry = new Entry()
        {
            Placeholder = "Harga Satuan",
            BindingContext = detail.HargaSatuan,
-           Keyboard = Keyboard.Numeric,
        };
        hargaEntry.SetBinding(Entry.TextProperty, new Binding("HargaSatuan", source: detail, mode: BindingMode.TwoWay));
-       hargaEntry.Text = Helper.FormatToCurrency(detail.HargaSatuan);
-       hargaEntry.TextChanged += OnAmountEntryTextChanged;
+       hargaEntry.Text = detail.HargaSatuan.ToString();
        _detailGrid.Add(hargaEntry,3,idx);
 
        var totalHargaEntry = new Entry()
@@ -239,7 +236,7 @@ public partial class FormPenerimaanBarang : IForm
        
        totalHargaEntry.SetBinding(Entry.TextProperty, new Binding("TotalHarga", source: detail));
        totalHargaEntry.Text = Helper.FormatToCurrency(detail.TotalHarga);
-       totalHargaEntry.TextChanged += OnAmountEntryTextChanged;
+       totalHargaEntry.TextChanged += OnTotalPriceEntryTextChanged;
        _detailGrid.Add(totalHargaEntry,4,idx);
        
        _detailGrid.Add(delBtn,5,idx);
@@ -311,19 +308,13 @@ public partial class FormPenerimaanBarang : IForm
        Close();
     }
     
-    private void OnAmountEntryTextChanged(object sender, TextChangedEventArgs e)
+    private void OnTotalPriceEntryTextChanged(object sender, TextChangedEventArgs e)
     {
         var entry = (Entry)sender;
-
-        // Menghapus format lama (misalnya ketika user mengedit nilai)
-        if (decimal.TryParse(entry.Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal amount))
+        
+        if (int.TryParse(entry.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out int amount))
         {
-            // Mengupdate nilai entry dengan format mata uang (IDR)
-            entry.TextChanged -= OnAmountEntryTextChanged;  // Remove event handler to avoid infinite loop
             entry.Text = Helper.FormatToCurrency(amount);
-            entry.TextChanged += OnAmountEntryTextChanged;  // Add the event handler back
         }
     }
-    
-    
 }
