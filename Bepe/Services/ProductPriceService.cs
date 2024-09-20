@@ -29,8 +29,7 @@ public class ProductPriceService : IDataService<ProductPriceDto>
             
         if (!string.IsNullOrWhiteSpace(sq))
         {
-            query = query.Where(item => EF.Functions.Like(item.tanggal_berlaku, $"%{sq}%") || 
-                                        EF.Functions.Like(item.Product.nama, $"%{sq}%") ||
+            query = query.Where(item => EF.Functions.Like(item.Product.nama, $"%{sq}%") ||
                                         EF.Functions.Like(item.Unit.nama, $"%{sq}%")
             );
         }
