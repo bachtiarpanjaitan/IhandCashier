@@ -52,15 +52,17 @@ public class AppDbContext : DbContext
         // ProductPrice Configuration
         modelBuilder.Entity<ProductPrice>()
             .HasIndex(pp => pp.product_id);
-
         modelBuilder.Entity<ProductPrice>()
             .HasIndex(pp => pp.unit_id);
+        modelBuilder.Entity<ProductPrice>()
+            .HasOne(d => d.Product);
+        modelBuilder.Entity<ProductPrice>()
+            .HasOne(d => d.Unit);
 
         // ProductReceipt Configuration
         modelBuilder.Entity<ProductReceipt>()
             .HasIndex(pr => pr.kode_transaksi)
             .IsUnique();
-
         modelBuilder.Entity<ProductReceipt>()
             .HasIndex(pr => pr.supplier_id);
         modelBuilder.Entity<ProductReceipt>()
