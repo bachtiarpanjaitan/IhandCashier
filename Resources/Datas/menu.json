@@ -45,5 +45,31 @@
                 "class": "PageReturnBarang"
             }
         ]
+    },
+    {
+        "label": "Keuangan",
+        "child": [
+            {
+                "label": "Uang Muka",
+                "class": "PageDownPayment"
+            },
+            {
+                "label": "Hutang Piutang",
+                "class": "PageDebtReceivable"
+            }
+        ]
+    },
+    {
+        "label": "Laporan",
+        "child": [
+            {
+                "label": "Laporan Keuangan",
+                "class": "PageFinancialReport"
+            },
+            {
+                "label": "Laporan Barang",
+                "class": "PageProductReport"
+            }
+        ]
     }
 ]
