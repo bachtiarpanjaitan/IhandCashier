@@ -15,6 +15,8 @@ public partial class GridDataKasir : ContentView
 {
 	private const string ModuleName = "Data Kasir";
 	UserService _service  = ServiceLocator.ServiceProvider.GetService<UserService>();
+	private Pagination<UserDto> _pagination;
+	UserDto _selectedProduct;
 	public GridDataKasir()
 	{
 		InitializeComponent();
@@ -31,7 +33,20 @@ public partial class GridDataKasir : ContentView
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "status", HeaderText = "STATUS"}
 		];
 		foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-		_ = new Pagination<UserDto>(_service, typeof(FilterOne));
 		Content = DatagridProvider.LayoutDatagrid;
+    
+		DatagridProvider.ShowLoader();
+		Device.BeginInvokeOnMainThread(() =>
+		{
+			_pagination = new Pagination<UserDto>(_service, typeof(FilterOne));
+			DatagridProvider.DataGrid.CellTapped += OnRightClick;
+			DatagridProvider.HideLoader();
+		});
     }
+
+	private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+	{
+		_selectedProduct = e.RowData as UserDto;
+		if (_selectedProduct != null) Console.WriteLine($"Barang : {_selectedProduct.username}");
+	}
 }

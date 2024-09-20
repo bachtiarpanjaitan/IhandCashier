@@ -40,9 +40,15 @@ public partial class GridDataHargaBarang
     ];
             
     foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-    _pagination = new Pagination<ProductPriceDto>(_service, typeof(FilterOne));
-    DatagridProvider.DataGrid.CellTapped += OnRightClick;
     Content = DatagridProvider.LayoutDatagrid;
+    
+    DatagridProvider.ShowLoader();
+    Device.BeginInvokeOnMainThread(() =>
+    {
+      _pagination = new Pagination<ProductPriceDto>(_service, typeof(FilterOne));
+      DatagridProvider.DataGrid.CellTapped += OnRightClick;
+      DatagridProvider.HideLoader();
+    });
   }
 
   private void CreateContextMenu()

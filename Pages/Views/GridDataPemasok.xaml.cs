@@ -15,6 +15,8 @@ public partial class GridDataPemasok : ContentView
 {
     private const string ModuleName = "Data Pemasok";
     SupplierService _service  = ServiceLocator.ServiceProvider.GetService<SupplierService>();
+    private Pagination<Supplier> _pagination;
+    Supplier _selectedProduct;
     public GridDataPemasok()
     {
         InitializeComponent();
@@ -29,7 +31,20 @@ public partial class GridDataPemasok : ContentView
             new ColumnType { Type = ColumnTypes.Text, MappingName = "alamat", HeaderText = "ALAMAT"}
         ];
         foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-        _ = new Pagination<Supplier>(_service, typeof(FilterOne));
         Content = DatagridProvider.LayoutDatagrid;
+    
+        DatagridProvider.ShowLoader();
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            _pagination = new Pagination<Supplier>(_service, typeof(FilterOne));
+            DatagridProvider.DataGrid.CellTapped += OnRightClick;
+            DatagridProvider.HideLoader();
+        });
+    }
+
+    private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+    {
+        _selectedProduct = e.RowData as Supplier;
+        if (_selectedProduct != null) Console.WriteLine($"Barang : {_selectedProduct.nama}");
     }
 }

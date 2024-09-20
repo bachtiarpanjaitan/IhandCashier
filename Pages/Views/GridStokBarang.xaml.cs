@@ -31,7 +31,19 @@ public partial class GridStokBarang
         ];
             
         foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-        _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterOne));
         Content = DatagridProvider.LayoutDatagrid;
+    
+        DatagridProvider.ShowLoader();
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterOne));
+            DatagridProvider.DataGrid.CellTapped += OnRightClick;
+            DatagridProvider.HideLoader();
+        });
+    }
+
+    private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+    {
+        
     }
 }

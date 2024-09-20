@@ -33,10 +33,15 @@ public partial class GridDataSatuanBarang
 		];
             
 		foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-		
-		_pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
-		DatagridProvider.DataGrid.CellTapped += OnRightClick;
 		Content = DatagridProvider.LayoutDatagrid;
+    
+		DatagridProvider.ShowLoader();
+		Device.BeginInvokeOnMainThread(() =>
+		{
+			_pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
+			DatagridProvider.DataGrid.CellTapped += OnRightClick;
+			DatagridProvider.HideLoader();
+		});
 	}
 	
 	private void OnRightClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)

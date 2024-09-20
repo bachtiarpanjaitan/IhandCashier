@@ -32,9 +32,10 @@ namespace IhandCashier.Bepe.Controllers
             Type type = Type.GetType(e.Page);
             if(type != null)
             {
-               try {
-                    _contentView = (ContentView)Activator.CreateInstance(type);
-                    _layout.SetContent(_contentView);
+               try
+               {
+                   _contentView = (ContentView)Activator.CreateInstance(type);
+                   _layout.SetContent(_contentView);
                }
                catch (TargetInvocationException ex)
                {

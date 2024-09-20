@@ -36,11 +36,16 @@ namespace IhandCashier.Pages.Views
                 new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
                 new() { Type = ColumnTypes.Image, MappingImage = "resourceGambar" ,MappingName = "resourceGambarThumbnail", Width = 110, HeaderText = "GAMBAR", ImageHeight = 50, ImageWidth = 50}
             ];
-            
             foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
-            _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
-            DatagridProvider.DataGrid.CellTapped += OnRightClick;
             Content = DatagridProvider.LayoutDatagrid;
+
+            DatagridProvider.ShowLoader();
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
+                DatagridProvider.DataGrid.CellTapped += OnRightClick;
+                DatagridProvider.HideLoader();
+            });
         }
         
         private void OnRightClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
