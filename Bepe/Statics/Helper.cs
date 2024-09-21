@@ -35,6 +35,9 @@ public class Helper
                 ? Color.FromArgb("#171717")
                 : Color.FromArgb("#E1E1E1"),
             SelectionBackground = Brush.Transparent,
+            SelectedRowTextColor =  Application.Current.UserAppTheme == AppTheme.Light
+                ? Color.FromArgb("#171717")
+                : Color.FromArgb("#E1E1E1"),
             CurrentCellBorderColor = Color.FromArgb("#fca544")
             
         };
