@@ -41,6 +41,7 @@ namespace IhandCashier.Pages.Views
             {
                 _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
                 DatagridProvider.DataGrid.CellTapped += OnRightClick;
+                DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
                 DatagridProvider.HideLoader();
             });
         }

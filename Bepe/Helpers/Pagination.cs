@@ -2,7 +2,9 @@ using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Interfaces;
+using IhandCashier.Bepe.Types;
 using IhandCashier.Core.Maui.Providers;
+
 
 namespace IhandCashier.Bepe.Helpers
 {
@@ -16,6 +18,7 @@ namespace IhandCashier.Bepe.Helpers
         private static IDataService<T> _dataService = null;
         private Type _typeHeader = null;
         private Type _form;
+        private static AppSetting _settings;
         
         /// <summary>
         /// Mengelola Pagination data di datagrid.
@@ -27,13 +30,14 @@ namespace IhandCashier.Bepe.Helpers
         /// <author>Bachtiar Panjaitan</author>
         public Pagination(IDataService<T> dataService, Type typeHeader, Type form = null){
             ResetDataPagination(); //keep on top
+            _settings = AppSettingConfig.LoadSettings();
             DatagridProvider.Indicator.IsRunning = true;
             DatagridProvider.Indicator.IsVisible = true;
             _typeHeader = typeHeader;
             _form = form;
             _dataService = dataService;
             _pageIndex = 0;
-            _pageSize = AppConfig.DATA_ROW_PER_PAGE;
+            _pageSize = _settings.Data.DataPerHalaman;
             _ = UpdatePagedData();
             GetComponentHandler();
             DatagridProvider.AddPaginationClickHandlers(OnPrevButtonClicked, OnNextButtonClicked);

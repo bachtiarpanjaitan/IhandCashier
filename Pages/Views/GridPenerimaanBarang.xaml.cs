@@ -50,6 +50,7 @@ public partial class GridPenerimaanBarang
         {
             _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne), typeof(FormPenerimaanBarang));
             DatagridProvider.DataGrid.CellTapped += OnRightClick;
+            DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
             DatagridProvider.HideLoader();
         });
     }

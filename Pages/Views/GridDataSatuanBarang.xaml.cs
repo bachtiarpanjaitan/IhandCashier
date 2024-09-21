@@ -40,6 +40,7 @@ public partial class GridDataSatuanBarang
 		{
 			_pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
 			DatagridProvider.DataGrid.CellTapped += OnRightClick;
+			DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
 			DatagridProvider.HideLoader();
 		});
 	}

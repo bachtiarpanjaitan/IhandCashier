@@ -38,6 +38,7 @@ namespace IhandCashier.Pages.Views
             {
                 _pagination = new Pagination<BasicUnitDto>(_service, typeof(FilterOne), typeof(FormSatuanDasarBarang));
                 DatagridProvider.DataGrid.CellTapped += OnRightClick;
+                DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
                 DatagridProvider.HideLoader();
             });
         }
