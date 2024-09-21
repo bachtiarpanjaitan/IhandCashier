@@ -4,7 +4,9 @@ using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.Types;
+using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Pages;
+using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Layouts;
 
@@ -20,7 +22,9 @@ public partial class MainLayout : ContentPage
         SetupClock();
         
         Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
-        
+        DatagridProvider.DataGrid.RowHeight = 35;
+        DatagridProvider.DataGrid.DefaultStyle = Helper.SetDataGridStyle();
+        DatagridProvider.DataGrid.SelectionMode = DataGridSelectionMode.SingleDeselect;
         Container.Content = new PageHome();
         
     }

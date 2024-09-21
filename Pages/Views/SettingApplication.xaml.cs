@@ -1,7 +1,9 @@
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Services;
+using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.Types;
+using IhandCashier.Core.Maui.Providers;
 using Syncfusion.Maui.DataForm;
 using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
 
@@ -61,5 +63,6 @@ public partial class SettingApplication
     {
         Application.Current.UserAppTheme = (_settings.Thema.Selected == "Dark") ? AppTheme.Dark : AppTheme.Light;
         AppSettingConfig.SaveToAppSettings(_settings);
+        DatagridProvider.DataGrid.DefaultStyle = Helper.SetDataGridStyle();
     }
 }

@@ -401,7 +401,7 @@
         </Setter>
     </Style>
     <Style TargetType="dataGrid:DataGridHeaderRow">
-        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource WhiteBrush}, Dark={StaticResource BlackBrush}}"/>
+        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource Yellow300Accent}, Dark={StaticResource Gray600}}"/>
     </Style>
     
     <Style TargetType="dataGrid:DataGridRow">

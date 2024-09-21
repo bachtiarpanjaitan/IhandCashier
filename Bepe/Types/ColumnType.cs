@@ -101,6 +101,21 @@ namespace IhandCashier.Bepe.Types
                 },
                 _ => throw new ArgumentException("Invalid column type")
             };
+            column.CellStyle = new Style(typeof(DataGridCell))
+            {
+                Setters = { 
+                    new Setter
+                    {
+                        Property = DataGridCell.PaddingProperty,
+                        Value = new Thickness(8,3)
+                    },
+                    new Setter
+                    {
+                        Property = DataGridCell.MarginProperty,
+                        Value = new Thickness(8,3)
+                    }
+                }
+            };
             return column;
         }
 

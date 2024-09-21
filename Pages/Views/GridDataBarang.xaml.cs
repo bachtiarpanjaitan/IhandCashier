@@ -4,14 +4,11 @@ using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Dtos;
-using IhandCashier.Bepe.Entities;
 using IhandCashier.Core.Maui.Providers;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.Helpers;
-using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Pages.Forms;
-using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views
