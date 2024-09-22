@@ -239,5 +239,32 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
             };
             _context.ProductStocks.Add(newStock);
         }
+        CreateUpdateProductPrice(newData);
+    }
+
+    private void CreateUpdateProductPrice(ProductReceiptDetail data)
+    {
+        var exist = _context.ProductPrices
+            .Where(x => x.product_id == data.product_id)
+            .Where(x => x.unit_id == data.unit_id)
+            .Where(x => x.tanggal_berlaku >= DateTime.Now)
+            .OrderByDescending(x => x.tanggal_berlaku)
+            .FirstOrDefault();
+        ProductPrice pp = new()
+        {
+            product_id = data.product_id,
+            unit_id = data.unit_id,
+            harga = data.harga_satuan
+        };
+        if (exist != null)
+        {
+            exist.harga = data.harga_satuan;
+            _context.Update(exist);
+        }
+        else
+        {
+            pp.tanggal_berlaku = DateTime.Now;
+            _context.ProductPrices.Add(pp);
+        }
     }
 }
