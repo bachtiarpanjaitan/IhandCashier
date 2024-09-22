@@ -71,7 +71,7 @@
                 </StackLayout>
             </VerticalStackLayout>
             <VerticalStackLayout Padding="20,5,20,5" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                <Label Text="Detail Penerimaan Barang" HorizontalOptions="Start" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Detail Barang" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold"/>
                 <Button Text="Tambah Item" x:Name="AddButton" HorizontalOptions="End" />
             </VerticalStackLayout>
             <VerticalStackLayout Padding="10,10,20,10" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0"

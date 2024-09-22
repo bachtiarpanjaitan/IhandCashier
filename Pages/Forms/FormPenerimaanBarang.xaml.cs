@@ -232,6 +232,7 @@ public partial class FormPenerimaanBarang : IForm
        {
            Placeholder = "Jumlah Barang",
            BindingContext = detail.Jumlah,
+           HorizontalTextAlignment = TextAlignment.Center
        };
        jumlahEntry.SetBinding(Entry.TextProperty, new Binding("Jumlah", source: detail, mode: BindingMode.TwoWay));
        jumlahEntry.Text = detail.Jumlah.ToString();
@@ -240,6 +241,7 @@ public partial class FormPenerimaanBarang : IForm
        {
            Placeholder = "Harga Satuan",
            BindingContext = detail.HargaSatuan,
+           HorizontalTextAlignment = TextAlignment.End
        };
        hargaEntry.SetBinding(Entry.TextProperty, new Binding("HargaSatuan", source: detail, mode: BindingMode.TwoWay));
        hargaEntry.Text = detail.HargaSatuan.ToString();
@@ -247,7 +249,8 @@ public partial class FormPenerimaanBarang : IForm
        var totalHargaEntry = new Entry()
        {
            Text = detail.TotalHarga.ToString(),
-           IsReadOnly = true
+           IsReadOnly = true,
+           HorizontalTextAlignment = TextAlignment.End
        };
        
        totalHargaEntry.SetBinding(Entry.TextProperty, new Binding("TotalHarga", source: detail));
