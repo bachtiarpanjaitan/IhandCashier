@@ -49,6 +49,7 @@
 	  	<WarningLevel>4</WarningLevel>
 	  	<PlatformTarget>ARM64</PlatformTarget>
 	  	<MtouchLink>SdkOnly</MtouchLink>
+		<OutputPath>bin/Debug/net8.0-maccatalyst/maccatalyst-arm64</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 	  <MtouchLink>SdkOnly</MtouchLink>
