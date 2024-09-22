@@ -31,11 +31,12 @@ public partial class GridDataHargaBarang
     
     List<ColumnType> columns = [
       new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
-      new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
+      new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE",ColumnMode = ColumnWidthMode.FitByCell },
       new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
+      new() { Type = ColumnTypes.Currency, MappingName = "harga", HeaderText = "HRG.SATUAN"},
       new() { Type = ColumnTypes.Text, MappingName = "unit_nama", HeaderText = "SATUAN"},
-      new() { Type = ColumnTypes.Currency, MappingName = "harga", HeaderText = "HARGA SATUAN"},
-      new() { Type = ColumnTypes.Text, MappingName = "basic_unit_nama", HeaderText = "SATUAN TERKECIL"},
+      new() { Type = ColumnTypes.Currency, MappingName = "harga_satuan_terkecil", HeaderText = "HRG.SATUAN DASAR"},
+      new() { Type = ColumnTypes.Text, MappingName = "basic_unit_nama", HeaderText = "SATUAN DASAR"},
       new() { Type = ColumnTypes.Date, MappingName = "tanggal_berlaku", HeaderText = "TANGGAL BERLAKU"},
     ];
             

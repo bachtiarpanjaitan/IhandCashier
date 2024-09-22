@@ -14,6 +14,7 @@ public class ProductPriceDto
   
   public string basic_unit_nama { get; set; }
   public double harga { get; set; }
+  public double harga_satuan_terkecil { get; set; }
   public DateTime tanggal_berlaku { get; set; }
   
   public ProductPrice ToEntity()
