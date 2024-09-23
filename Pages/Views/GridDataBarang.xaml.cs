@@ -26,7 +26,7 @@ namespace IhandCashier.Pages.Views
             FilterOne.Initialize(ModuleName);
             DatagridProvider.Reset();
             CreateContextMenu();
-            
+            DatagridProvider.DataGrid.Columns.Clear();
             List<ColumnType> columns = [
                 new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
                 new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
@@ -40,13 +40,12 @@ namespace IhandCashier.Pages.Views
             Device.BeginInvokeOnMainThread(() =>
             {
                 _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
-                DatagridProvider.DataGrid.CellTapped += OnRightClick;
-                DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
+                DatagridProvider.AddDatagridCellHandler(OnClick,OnEditClicked);
                 DatagridProvider.HideLoader();
             });
         }
         
-        private void OnRightClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
+        private void OnClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
         {
             _selectedProduct = dataGridCellTappedEventArgs.RowData as ProductDto;
             if (_selectedProduct != null) Console.WriteLine($"Barang : {_selectedProduct.kode}");

@@ -37,8 +37,7 @@ namespace IhandCashier.Pages.Views
             Device.BeginInvokeOnMainThread(() =>
             {
                 _pagination = new Pagination<BasicUnitDto>(_service, typeof(FilterOne), typeof(FormSatuanDasarBarang));
-                DatagridProvider.DataGrid.CellTapped += OnRightClick;
-                DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
+                DatagridProvider.AddDatagridCellHandler(OnClicked, OnEditClicked);
                 DatagridProvider.HideLoader();
             });
         }
@@ -95,7 +94,7 @@ namespace IhandCashier.Pages.Views
             }
         }
 
-        private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+        private void OnClicked(object sender, DataGridCellTappedEventArgs e)
         {
             _selected = e.RowData as BasicUnitDto;
             if (_selected != null) Console.WriteLine($"Satuan Dasar : {_selected.nama}");

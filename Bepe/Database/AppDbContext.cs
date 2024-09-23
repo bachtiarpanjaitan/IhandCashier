@@ -131,26 +131,25 @@ public class AppDbContext : DbContext
     }
     
     public AppDbContext(){}
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-        // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-    }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         AppSetting _setting = AppSettingConfig.LoadSettings();
         if (_setting.Database.DbType == AppEnumeration.GetDbTypes[DbTypes.SqLite])
         {
-            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite($"Data Source={DatabaseConfig.DatabasePath()}");
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite($"Data Source={DatabaseConfig.DatabasePath()}")
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);;
         } 
         else if (_setting.Database.DbType == AppEnumeration.GetDbTypes[DbTypes.MySql])
         {
             IcMySql db = _setting.Database.MySql;
             var connectionString = $"server={db.DbServer};database={db.Database};user={db.Username};password={db.Password};port={db.Port};";
-            if (!optionsBuilder.IsConfigured) optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);;
         }
 
-        optionsBuilder.EnableSensitiveDataLogging();
+        // optionsBuilder.EnableSensitiveDataLogging();
 
     }
 

@@ -95,6 +95,16 @@ public static class FilterOne
     {
         _entrySearchChangedHandler?.Invoke(sender, e);
     }
+    
+    public static void RemoveEventHandlers()
+    {
+        // Pastikan referensi tidak null, lalu hapus event handler
+        if (_addFormClickHandler != null)
+        {
+            AddBtn.Clicked -= _addFormClickHandler;
+            _addFormClickHandler = null;
+        }
+    }
 }
 
 public class FilterOneComponent

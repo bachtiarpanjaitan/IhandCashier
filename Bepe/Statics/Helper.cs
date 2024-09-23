@@ -21,7 +21,7 @@ public class Helper
     
     public static string FormatToCurrency(double amount)
     {
-        return string.Format(System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"), "{0:C2}", amount);
+        return string.Format(System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"), "{0:C0}", amount);
     }
 
     public static DataGridStyle SetDataGridStyle()
@@ -41,5 +41,10 @@ public class Helper
             CurrentCellBorderColor = Color.FromArgb("#fca544")
             
         };
+    }
+
+    public static string GenerateTransactionCode(string prefix)
+    {
+        return prefix + '-' +DateTime.Now.ToString("yyyyMMddHHmm");
     }
 }

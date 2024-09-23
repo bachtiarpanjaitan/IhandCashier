@@ -37,12 +37,12 @@ public partial class GridStokBarang
         Device.BeginInvokeOnMainThread(() =>
         {
             _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterOne));
-            DatagridProvider.DataGrid.CellTapped += OnRightClick;
+            DatagridProvider.AddDatagridCellHandler(OnClicked);
             DatagridProvider.HideLoader();
         });
     }
 
-    private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+    private void OnClicked(object sender, DataGridCellTappedEventArgs e)
     {
         
     }

@@ -49,13 +49,12 @@ public partial class GridPenerimaanBarang
         Device.BeginInvokeOnMainThread(() =>
         {
             _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne), typeof(FormPenerimaanBarang));
-            DatagridProvider.DataGrid.CellTapped += OnRightClick;
-            DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
+            DatagridProvider.AddDatagridCellHandler(OnClicked, OnEditClicked);
             DatagridProvider.HideLoader();
         });
     }
 
-    private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+    private void OnClicked(object sender, DataGridCellTappedEventArgs e)
     {
         _selectedProduct = e.RowData as ProductReceiptDto;
         if (_selectedProduct != null) Console.WriteLine($"Transaksi : {_selectedProduct.KodeTransaksi}");

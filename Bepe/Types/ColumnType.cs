@@ -24,6 +24,22 @@ namespace IhandCashier.Bepe.Types
 
         public string Format { get; set; } = "";
         
+        private readonly PopupManager _popupManager = new PopupManager();
+        
+        // private static readonly DataTemplate ImageTemplate = new DataTemplate(() =>
+        // {
+        //     Image image = new Image
+        //     {
+        //         HeightRequest = ImageHeight,
+        //         WidthRequest = ImageWidth
+        //     };
+        //     var tapGestureRecognizer = new TapGestureRecognizer();
+        //     tapGestureRecognizer.Tapped += Image_Tapped;
+        //     image.GestureRecognizers.Add(tapGestureRecognizer);
+        //     image.SetBinding(Image.SourceProperty, MappingImage);
+        //     return image;
+        // });
+        
         public DataGridColumn Create()
         {
             DataGridColumn column = Type switch
@@ -79,7 +95,8 @@ namespace IhandCashier.Bepe.Types
                             };
                             
                             var tapGestureRecognizer = new TapGestureRecognizer();
-                            tapGestureRecognizer.Tapped += Image_Tapped;
+                            // tapGestureRecognizer.Tapped += Image_Tapped;
+                            tapGestureRecognizer.Tapped += (s, args) => Image_Tapped(s, args);
                             image.GestureRecognizers.Add(tapGestureRecognizer);
                             image.SetBinding(Image.SourceProperty, MappingImage);
                             return image;
@@ -119,39 +136,37 @@ namespace IhandCashier.Bepe.Types
             return column;
         }
 
-        private async void ShowDetail(object sender, EventArgs e)
+        private void ShowDetail(object sender, EventArgs e)
         {
             
             if (sender is Button btn)
             {
                 dynamic context = btn?.CommandParameter;
                 
-                var manager = new PopupManager();
-                var imagePopup = new DetailPreviewPopup()
+                var popup = new DetailPreviewPopup()
                 {
                     CanBeDismissedByTappingOutsideOfPopup = false
                 };
 
                 if (context != null)
                 {
-                    imagePopup.SetData(context.Views);
-                    await manager.ShowPopupAsync(imagePopup);
+                    popup.SetData(context.Views);
+                    _popupManager.ShowPopupAsync(popup).ConfigureAwait(true);
                 }
                 
             }
         }
 
-        private async void Image_Tapped(object sender, EventArgs e)
+        private void Image_Tapped(object sender, EventArgs e)
         {
             if (sender is Image img)
             {
-                var manager = new PopupManager();
-                var imagePopup = new ImagePreviewPopup()
+                var popup = new ImagePreviewPopup()
                 {
                     CanBeDismissedByTappingOutsideOfPopup = false
                 };
-                imagePopup.SetImage(img.Source,500,500);
-                await manager.ShowPopupAsync(imagePopup);
+                popup.SetImage(img.Source,500,500);
+                _popupManager.ShowPopupAsync(popup).ConfigureAwait(true);
             }
         }
 

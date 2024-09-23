@@ -4,18 +4,26 @@ namespace IhandCashier.Bepe.Helpers;
 
 public class PopupManager
 {
+    private readonly Dictionary<Type, Popup> _popupInstances = new();
     public void ShowPopup(Type popupType)
     {
         // Pastikan tipe yang diberikan adalah turunan dari Popup
         if (typeof(Popup).IsAssignableFrom(popupType))
         {
-            // Buat instance baru dari popupType
-            var popupInstance = (Popup)Activator.CreateInstance(popupType);
-
-            // Tampilkan popup
-            if (popupInstance != null)
+            if (!_popupInstances.TryGetValue(popupType, out var popupInstance))
             {
-                Application.Current.MainPage.ShowPopup(popupInstance);
+                // Buat instance baru jika belum ada
+                popupInstance = (Popup)Activator.CreateInstance(popupType);
+                _popupInstances[popupType] = popupInstance;
+
+                // Tambahkan event handler untuk pembersihan
+                if (popupInstance != null)
+                    popupInstance.Closed += (s, e) =>
+                    {
+                        // Clean up resources and remove the instance
+                        popupInstance.BindingContext = null;
+                        _popupInstances.Remove(popupType);
+                    };
             }
         }
         else

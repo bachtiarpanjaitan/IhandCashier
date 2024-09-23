@@ -2,10 +2,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using IhandCashier.Bepe.Database.Attributes;
 using IhandCashier.Bepe.Entities;
+using IhandCashier.Bepe.Interfaces;
 
 namespace IhandCashier.Bepe.ViewModels;
 
-public class ProductReceiptDetailViewModel : BaseViewModel
+public class ProductReceiptDetailViewModel : BaseViewModel, IIndexable
 {
     private int _id { get; set; }
     private int _index { get; set; }

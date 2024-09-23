@@ -1,24 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Database;
-using IhandCashier.Bepe.Entities;
+using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Services;
 using IhandCashier.Bepe.Statics;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Bepe.ViewModels;
-using Syncfusion.Maui.Core;
-using Syncfusion.Maui.DataGrid;
 using Syncfusion.Maui.Inputs;
-using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
 
 namespace IhandCashier.Pages.Forms;
 
@@ -29,30 +19,9 @@ public partial class FormPenerimaanBarang : IForm
     ProductService _productService  = ServiceLocator.ServiceProvider.GetService<ProductService>();
     UnitService _unitService  = ServiceLocator.ServiceProvider.GetService<UnitService>();
     ProductReceiptViewModel _model = new();
-    
     List<PickerOptionInt> _productOptions = new ();
     List<PickerOptionInt> _unitOptions = new ();
-    Dictionary<int, RowDefinition> DefRows = new Dictionary<int, RowDefinition>();
-    private List<Button> ActionButtons = new List<Button>();
-    
-    private ObservableCollection<ProductReceiptDetailViewModel> Details = new();
-    
-    Grid _detailGrid = new ()
-    {
-        Margin = new Thickness(5),
-        ColumnDefinitions =
-        {
-            new ColumnDefinition { Width = GridLength.Star },
-            new ColumnDefinition { Width = GridLength.Star },
-            new ColumnDefinition { Width = 50 },
-            new ColumnDefinition { Width = GridLength.Star },
-            new ColumnDefinition { Width = GridLength.Star },
-            new ColumnDefinition { Width = 60 },
-
-        },
-        ColumnSpacing = 5,
-        RowSpacing = 5
-    };
+    private FormDetail<ProductReceiptDetailViewModel> FormDetail = new();
     
     public FormPenerimaanBarang()
     {
@@ -62,7 +31,7 @@ public partial class FormPenerimaanBarang : IForm
     public FormPenerimaanBarang(ProductReceiptViewModel model = null)
     {
         _model = model;
-        if (model != null) Details = new ObservableCollection<ProductReceiptDetailViewModel>(model.Details);
+        if (model != null) FormDetail.Details = new ObservableCollection<ProductReceiptDetailViewModel>(model.Details);
         Initialize();
     }
 
@@ -71,34 +40,41 @@ public partial class FormPenerimaanBarang : IForm
         InitializeComponent();
         _model.ErrorsChanged += OnErrorsChanged;
         _model.Tanggal = DateTime.Now;
-        if (_model.KodeTransaksi == null)
-        {
-            _model.KodeTransaksi = "PR-" + DateTime.Now.ToString("yyyyMMddHHmm");
-        }
-        
+        if (_model.KodeTransaksi == null)  _model.KodeTransaksi = Helper.GenerateTransactionCode("PR");
         BindingContext = _model;
+        
         SetTitle("Form Penerimaan Barang").SetSize(1000, 800).Create(Content);
         BtnClose.Clicked += BtnBatal_OnClicked;
         BtnSave.Clicked += BtnSimpan_OnClicked;
+
+        FormDetail.DetailGrid.ColumnDefinitions = new ColumnDefinitionCollection()
+        {
+            new() { Width = GridLength.Star },
+            new() { Width = GridLength.Star },
+            new() { Width = 50 },
+            new() { Width = GridLength.Star },
+            new() { Width = GridLength.Star },
+            new() { Width = 60 },
+        };
         
         DetailContainer.Add(new Frame()
         {
-            Content = _detailGrid,
+            Content = FormDetail.DetailGrid,
             BorderColor = Colors.Gray,
             BackgroundColor = Colors.Transparent,
             Padding = 0,
             Margin = new Thickness(10,0,0,0)
         });
         
-        DefRows.Clear();
-        DefRows.Add(0, new RowDefinition() { Height = 30 });
+        FormDetail.DefenitionRows.Clear();
+        FormDetail.DefenitionRows.Add(0, new RowDefinition() { Height = 30 });
         
-        _detailGrid.Add(new Label(){Text = "Barang", HorizontalTextAlignment = TextAlignment.Start},0,0);
-        _detailGrid.Add(new Label(){Text = "Satuan", HorizontalTextAlignment = TextAlignment.Start},1,0);
-        _detailGrid.Add(new Label(){Text = "Jumlah", HorizontalTextAlignment = TextAlignment.End},2,0);
-        _detailGrid.Add(new Label(){Text = "Harga Satuan", HorizontalTextAlignment = TextAlignment.End},3,0);
-        _detailGrid.Add(new Label(){Text = "Total Harga", HorizontalTextAlignment = TextAlignment.End},4,0);
-        _detailGrid.Add(new Label(){Text = "Aksi", HorizontalTextAlignment = TextAlignment.Center},5,0);
+        FormDetail.DetailGrid.Add(new Label(){Text = "Barang", HorizontalTextAlignment = TextAlignment.Start},0,0);
+        FormDetail.DetailGrid.Add(new Label(){Text = "Satuan", HorizontalTextAlignment = TextAlignment.Start},1,0);
+        FormDetail.DetailGrid.Add(new Label(){Text = "Jumlah", HorizontalTextAlignment = TextAlignment.End},2,0);
+        FormDetail.DetailGrid.Add(new Label(){Text = "Harga Satuan", HorizontalTextAlignment = TextAlignment.End},3,0);
+        FormDetail.DetailGrid.Add(new Label(){Text = "Total Harga", HorizontalTextAlignment = TextAlignment.End},4,0);
+        FormDetail.DetailGrid.Add(new Label(){Text = "", HorizontalTextAlignment = TextAlignment.Center},5,0);
         
         AddButton.Clicked += (sender, args) =>
         {
@@ -112,11 +88,11 @@ public partial class FormPenerimaanBarang : IForm
                 UnitId = 0,
             };
 
-            var detail = Details.OrderByDescending(i => i.Index).FirstOrDefault();
+            var detail = FormDetail.Details.OrderByDescending(i => i.Index).FirstOrDefault();
             
-            item.Index = detail != null ? detail.Index + 1 : Details.Count()+1;
-            Details.Add(item);
-            GenerateRow(item, DefRows.Count());
+            item.Index = detail != null ? detail.Index + 1 : FormDetail.Details.Count()+1;
+            FormDetail.Details.Add(item);
+            GenerateRow(item, FormDetail.DefenitionRows.Count());
         };
         
         try
@@ -154,10 +130,10 @@ public partial class FormPenerimaanBarang : IForm
                 _unitOptions.Add(new PickerOptionInt() { Label = b.nama, Value = b.id });
             }
             
-            foreach (var (item, index) in Details.Select((item, index) => (item, index)))
+            foreach (var (item, index) in FormDetail.Details.Select((item, index) => (item, index)))
             {
                 item.Index =  index+1;
-                GenerateRow(item, DefRows.Count(), true);
+                GenerateRow(item, FormDetail.DefenitionRows.Count(), true);
             }
             
         }
@@ -171,12 +147,12 @@ public partial class FormPenerimaanBarang : IForm
     {
         
         var row = new RowDefinition() { Height = 30 };
-        _detailGrid.RowDefinitions.Add(row);
-        DefRows.TryAdd(detail.Index, row);
+        FormDetail.DetailGrid.RowDefinitions.Add(row);
+        FormDetail.DefenitionRows.TryAdd(detail.Index, row);
 
-        foreach (var (item, i) in ActionButtons.Select((item, i) => (item, i)))
+        foreach (var (item, i) in FormDetail.ActionButtons.Select((item, i) => (item, i)))
         {
-            if (i < ActionButtons.Count()) item.IsVisible = false;
+            if (i < FormDetail.ActionButtons.Count()) item.IsVisible = false;
             else item.IsVisible = true;
         }
 
@@ -186,7 +162,7 @@ public partial class FormPenerimaanBarang : IForm
            CommandParameter = detail.Index
        };
        
-       ActionButtons.Add(delBtn);
+        FormDetail.ActionButtons.Add(delBtn);
        
        var productCb = new SfComboBox()
        {
@@ -198,7 +174,7 @@ public partial class FormPenerimaanBarang : IForm
             SelectedItem = detail.ProductId,
             IsEditable = true,
             IsFilteringEnabled = false,
-            ShowBorder = false,
+            ShowBorder = true,
             BackgroundColor = Colors.Transparent,
             IsEnabled = !edit
        };
@@ -255,59 +231,16 @@ public partial class FormPenerimaanBarang : IForm
        
        totalHargaEntry.SetBinding(Entry.TextProperty, new Binding("TotalHarga", source: detail));
        totalHargaEntry.Text = Helper.FormatToCurrency(detail.TotalHarga);
-       totalHargaEntry.TextChanged += OnTotalPriceEntryTextChanged;
+       totalHargaEntry.TextChanged += FormDetail.OnCurrencyEntryTextChanged;
        
-       _detailGrid.Add(productCb,0, index);
-       _detailGrid.Add(unitCb,1,index);
-       _detailGrid.Add(jumlahEntry,2,index);
-       _detailGrid.Add(hargaEntry,3,index);
-       _detailGrid.Add(totalHargaEntry,4,index);
-       _detailGrid.Add(delBtn,5,index);
+       FormDetail.DetailGrid.Add(productCb,0, index);
+       FormDetail.DetailGrid.Add(unitCb,1,index);
+       FormDetail.DetailGrid.Add(jumlahEntry,2,index);
+       FormDetail.DetailGrid.Add(hargaEntry,3,index);
+       FormDetail.DetailGrid.Add(totalHargaEntry,4,index);
+       FormDetail.DetailGrid.Add(delBtn,5,index);
        
-       delBtn.Clicked += RemoveItemRow;
-    }
-
-    private void RemoveItemRow(object sender, EventArgs e)
-    {
-        var button = sender as Button;
-        if (button != null && button.CommandParameter != null)
-        {
-            
-            int rowIndexToRemove = (int)button.CommandParameter;
-            if (Details.ToList().Count > 1)
-            {
-                if (ActionButtons.Count > 1)
-                {
-                    ActionButtons.Remove(ActionButtons.Last());
-                    ActionButtons.Last().IsVisible = true;
-                }
-                
-                if (DefRows.TryGetValue(rowIndexToRemove, out var rowToRemove))
-                {
-                    var childrenToRemove = _detailGrid.Children
-                        .Where(child => _detailGrid.GetRow(child) == rowIndexToRemove)
-                        .ToList();
-
-                    foreach (var child in childrenToRemove) _detailGrid.Children.Remove(child);
-                    
-                    _detailGrid.RowDefinitions.Remove(rowToRemove);
-                    DefRows.Remove(rowIndexToRemove);
-                    var myList = Details.ToList();
-                    var deleted = myList.FirstOrDefault(x => x.Index == rowIndexToRemove);
-                    if (deleted != null) myList.Remove(deleted);
-                    
-                    Details = new ObservableCollection<ProductReceiptDetailViewModel>(myList);
-                }
-            }
-        }
-    }
-
-    private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
-    {
-        if (e.PropertyName != null)
-        {
-            OnPropertyChanged(e.PropertyName);
-        }
+       delBtn.Clicked += FormDetail.RemoveItemRow;
     }
 
     public async void BtnSimpan_OnClicked(object sender, EventArgs e)
@@ -323,7 +256,7 @@ public partial class FormPenerimaanBarang : IForm
             try
             {
                 var data = _model.ToEntity();
-                data.Details = Details.Select(d => d.ToEntity()).ToList();
+                data.Details = FormDetail.Details.Select(d => d.ToEntity()).ToList();
                 if (data.id > 0) await _service.UpdateAsync(data).ConfigureAwait(true);
                 else await _service.AddAsync(data).ConfigureAwait(true);
                 
@@ -338,17 +271,16 @@ public partial class FormPenerimaanBarang : IForm
     }
 
     public void BtnBatal_OnClicked(object sender, EventArgs e)
-    {
-       Close();
+    { 
+        Close();
     }
     
-    private void OnTotalPriceEntryTextChanged(object sender, TextChangedEventArgs e)
+    private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
     {
-        var entry = (Entry)sender;
-        
-        if (int.TryParse(entry.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out int amount))
+        if (e.PropertyName != null)
         {
-            entry.Text = Helper.FormatToCurrency(amount);
+            OnPropertyChanged(e.PropertyName);
         }
     }
+    
 }

@@ -47,7 +47,7 @@ public partial class GridDataHargaBarang
     Device.BeginInvokeOnMainThread(() =>
     {
       _pagination = new Pagination<ProductPriceDto>(_service, typeof(FilterOne));
-      DatagridProvider.DataGrid.CellTapped += OnRightClick;
+      DatagridProvider.AddDatagridCellHandler(OnClick);
       DatagridProvider.HideLoader();
     });
   }
@@ -66,7 +66,7 @@ public partial class GridDataHargaBarang
     ContextMenu.Add(deleteMenu);
   }
 
-  private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+  private void OnClick(object sender, DataGridCellTappedEventArgs e)
   {
     _selectedProduct = e.RowData as ProductPriceDto;
     if (_selectedProduct != null) Console.WriteLine($"Barang : {_selectedProduct.kode}");

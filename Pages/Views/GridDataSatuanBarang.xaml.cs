@@ -39,13 +39,12 @@ public partial class GridDataSatuanBarang
 		Device.BeginInvokeOnMainThread(() =>
 		{
 			_pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
-			DatagridProvider.DataGrid.CellTapped += OnRightClick;
-			DatagridProvider.DataGrid.CellDoubleTapped += OnEditClicked;
+			DatagridProvider.AddDatagridCellHandler(OnClick,OnEditClicked);
 			DatagridProvider.HideLoader();
 		});
 	}
 	
-	private void OnRightClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
+	private void OnClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
 	{
 		_selected = dataGridCellTappedEventArgs.RowData as UnitDto;
 		if (_selected != null) Console.WriteLine($"Satuan : {_selected.kode_satuan}");

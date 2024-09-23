@@ -39,12 +39,12 @@ public partial class GridDataKasir : ContentView
 		Device.BeginInvokeOnMainThread(() =>
 		{
 			_pagination = new Pagination<UserDto>(_service, typeof(FilterOne));
-			DatagridProvider.DataGrid.CellTapped += OnRightClick;
+			DatagridProvider.AddDatagridCellHandler(OnClick);
 			DatagridProvider.HideLoader();
 		});
     }
 
-	private void OnRightClick(object sender, DataGridCellTappedEventArgs e)
+	private void OnClick(object sender, DataGridCellTappedEventArgs e)
 	{
 		_selectedProduct = e.RowData as UserDto;
 		if (_selectedProduct != null) Console.WriteLine($"Barang : {_selectedProduct.username}");
