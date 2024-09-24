@@ -46,6 +46,7 @@ public class ProductPriceService : IDataService<ProductPriceDto>
                 basic_unit_nama = item.Unit.BasicUnit.nama,
                 harga_satuan_terkecil = (double) (item.harga/item.Unit.konversi)
             })
+            .OrderByDescending(x => x.tanggal_berlaku)
             .ToListAsync();
     }
 }
