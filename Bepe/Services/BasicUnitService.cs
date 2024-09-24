@@ -8,35 +8,36 @@ namespace IhandCashier.Bepe.Services;
 
 public class BasicUnitService : IDataService<BasicUnitDto>
 {
-    private readonly AppDbContext _context;
 
-    public BasicUnitService(AppDbContext context)
-    {
-        _context = context;
-    }
+    public BasicUnitService(AppDbContext context){}
 
     public async Task<List<BasicUnit>> GetAsync()
     {
+        using var _context = new AppDbContext(); 
         return await _context.BasicUnits.AsNoTracking().ToListAsync();
     }
     
     public List<BasicUnit> Get()
     {
+        using var _context = new AppDbContext(); 
         return _context.BasicUnits.AsNoTracking().ToList();
     }
     
     public IQueryable<BasicUnit> Query()
     {
+        using var _context = new AppDbContext(); 
         return _context.BasicUnits.AsNoTracking().AsQueryable();
     }
     
     public int TotalData()
     {
+        using var _context = new AppDbContext(); 
         return _context.BasicUnits.AsNoTracking().Count();
     }
 
     public async Task<List<BasicUnitDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
+        using var _context = new AppDbContext(); 
         IQueryable<BasicUnit> query = _context.BasicUnits.AsNoTracking();
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -54,6 +55,7 @@ public class BasicUnitService : IDataService<BasicUnitDto>
 
     public async Task AddAsync(BasicUnit item)
     {
+        using var _context = new AppDbContext(); 
         _context.BasicUnits.Add(item);
         await _context.SaveChangesAsync();
         _context.BasicUnits.Entry(item).State = EntityState.Detached;
@@ -61,6 +63,7 @@ public class BasicUnitService : IDataService<BasicUnitDto>
     
     public async Task UpdateAsync(BasicUnit item)
     {
+        using var _context = new AppDbContext(); 
         var entity = await _context.BasicUnits.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
         _context.Entry(entity).CurrentValues.SetValues(item);
         _context.Update(entity);
@@ -71,6 +74,7 @@ public class BasicUnitService : IDataService<BasicUnitDto>
 
     public async Task DeleteAsync(BasicUnit unit)
     {
+        using var _context = new AppDbContext(); 
         _context.BasicUnits.Remove(unit);    
         await _context.SaveChangesAsync();
     }

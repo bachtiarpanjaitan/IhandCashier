@@ -8,19 +8,16 @@ namespace IhandCashier.Bepe.Services;
 
 public class ProductStockService : IDataService<ProductStockDto>
 {
-    private readonly AppDbContext _context;
-
-    public ProductStockService(AppDbContext context)
-    {
-        _context = context;
-    }
+    public ProductStockService(AppDbContext context){ }
     public int TotalData()
     {
+        using var _context = new AppDbContext(); 
         return _context.ProductStocks.Count();
     }
 
     public async Task<List<ProductStockDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null)
     {
+        using var _context = new AppDbContext(); 
         IQueryable<ProductStock> query = _context.ProductStocks
             .Include(x => x.Product)
             .Include(x => x.Unit)

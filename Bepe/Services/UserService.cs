@@ -12,30 +12,29 @@ namespace IhandCashier.Bepe.Services;
 
 public class UserService : IDataService<UserDto>
 {
-    private readonly AppDbContext _context;
-
-    public UserService(AppDbContext context)
-    {
-        _context = context;
-    }
+    public UserService(AppDbContext context){}
 
     public async Task<List<User>> GetAsync()
     {
+        using var _context = new AppDbContext(); 
         return await _context.Users.ToListAsync();
     }
     
     public IQueryable<User> Query()
     {
+        using var _context = new AppDbContext(); 
         return _context.Users.AsQueryable();
     }
     
     public int TotalData()
     {
+        using var _context = new AppDbContext(); 
         return _context.Users.Count();
     }
 
     public async Task<List<UserDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
+        using var _context = new AppDbContext(); 
         IQueryable<User> query = _context.Users;
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -64,11 +63,13 @@ public class UserService : IDataService<UserDto>
 
     public async Task<User> GetByUsername(string username)
     {
+        using var _context = new AppDbContext(); 
         return await _context.Users.FirstOrDefaultAsync(item => item.username == username);
     }
 
     public UserSession Login(DataLogin data)
     {
+        using var _context = new AppDbContext(); 
         User user = _context.Users.Where(u => u.username == data.Username.Trim()).FirstOrDefaultAsync().Result;
         if(user == null) throw new Exception($"Pengguna dengan {data.Username} tidak ditemukan");
         string ePassword = Crypto.Encrypt(data.Password, AppConfig.APP_KEY);
@@ -88,6 +89,7 @@ public class UserService : IDataService<UserDto>
     
     public async Task AddAsync(User user)
     {
+        using var _context = new AppDbContext(); 
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
     }

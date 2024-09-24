@@ -7,19 +7,16 @@ namespace IhandCashier.Bepe.Services;
 
 public class ProductReceiptDetailService : IDataService<ProductReceiptDetail>
 {
-    private readonly AppDbContext _context;
-
-    public ProductReceiptDetailService(AppDbContext context)
-    {
-        _context = context;
-    }
+    public ProductReceiptDetailService(AppDbContext context){}
     public int TotalData()
     {
+        using var _context = new AppDbContext(); 
         return _context.ProductReceiptDetails.Count();
     }
 
     public async Task<List<ProductReceiptDetail>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null)
     {
+        using var _context = new AppDbContext(); 
         IQueryable<ProductReceiptDetail> query = _context.ProductReceiptDetails;
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {

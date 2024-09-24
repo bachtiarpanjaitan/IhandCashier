@@ -7,19 +7,17 @@ namespace IhandCashier.Bepe.Services;
 
 public class CustomerService : IDataService<Customer>
 {
-    private readonly AppDbContext _context;
 
-    public CustomerService(AppDbContext context)
-    {
-        _context = context;
-    }
+    public CustomerService(AppDbContext context){}
     public int TotalData()
     {
+        using var _context = new AppDbContext(); 
         return _context.Customers.Count();
     }
 
     public async Task<List<Customer>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null)
     {
+        using var _context = new AppDbContext(); 
         IQueryable<Customer> query = _context.Customers;
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {

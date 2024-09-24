@@ -159,8 +159,11 @@ namespace IhandCashier.Bepe.Types
 
                 if (context != null)
                 {
-                    popup.SetData(context.Views);
-                    _popupManager.ShowPopupAsync(popup).ConfigureAwait(true);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        popup.SetData(context.Views);
+                        _popupManager.ShowPopup(popup);
+                    });
                 }
                 
             }

@@ -12,20 +12,16 @@ namespace IhandCashier.Bepe.Services;
 
 public class ProductReceiptService : IDataService<ProductReceiptDto>
 {
-    private readonly AppDbContext _context;
-
-    public ProductReceiptService(AppDbContext context)
-    {
-        _context = context;
-        _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-    }
+    public ProductReceiptService(){}
     public int TotalData()
     {
+        using var _context = new AppDbContext(); 
         return _context.ProductReceipts.AsNoTracking().Where(x => x.deleted_at == null).Count();
     }
 
     public async Task<List<ProductReceiptDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery = null)
     {
+        using var _context = new AppDbContext(); 
         IQueryable<ProductReceipt> query = _context.ProductReceipts.AsNoTracking()
             .Include(s => s.Supplier)
             .Where(x => x.deleted_at == null);
@@ -83,6 +79,7 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
     
     public async Task AddAsync(ProductReceipt item)
     {
+        using var _context = new AppDbContext(); 
         using (var transaction = _context.Database.BeginTransaction())
         {
             try
@@ -109,7 +106,7 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                 //Calculate Stock
                 foreach (var detail in details)
                 {
-                    if (newItem.status == (int)ReceiptStatus.Selesai) CalculateStock(detail);
+                    if (newItem.status == (int)ReceiptStatus.Selesai) CalculateStock(_context, detail);
                 }
 
                 await _context.SaveChangesAsync();
@@ -125,12 +122,12 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
 
     public async Task UpdateAsync(ProductReceipt item)
     {
+        using var _context = new AppDbContext(); 
         using (var transaction = _context.Database.BeginTransaction())
         {
             try
             {
                 var entity = await _context.ProductReceipts.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
-                _context.Entry(entity).State = EntityState.Detached;
                 var editItem = new ProductReceipt()
                 {
                     id = item.id,
@@ -153,16 +150,15 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                         .FirstOrDefaultAsync(e => e.id == detail.id);
                     if (en != null)
                     {
-                        if (editItem.status == (int) ReceiptStatus.Selesai) CalculateStock(detail, StockStatus.Adjustment,en);
+                        if (editItem.status == (int) ReceiptStatus.Selesai) CalculateStock(_context, detail, StockStatus.Adjustment,en);
 
                         _context.Entry(en).CurrentValues.SetValues(detail);
                         _context.Update(en);
-                        _context.Entry(en).State = EntityState.Detached;
                     }
                     else
                     {
                         detail.product_receipt_id = editItem.id;
-                        if (editItem.status == (int) ReceiptStatus.Selesai)  CalculateStock(detail, StockStatus.Addition,detail);
+                        if (editItem.status == (int) ReceiptStatus.Selesai)  CalculateStock(_context, detail, StockStatus.Addition,detail);
                         
                         _context.ProductReceiptDetails.Add(detail);
                     }
@@ -174,13 +170,11 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
 
                 foreach (var del in detailDeletions)
                 {
-                    if (editItem.status == (int) ReceiptStatus.Selesai) CalculateStock(del, StockStatus.Deletion,del);
+                    if (editItem.status == (int) ReceiptStatus.Selesai) CalculateStock(_context,del, StockStatus.Deletion,del);
                     await _context.ProductReceiptDetails.Where(x => x.id == del.id).ExecuteDeleteAsync();
                 }
 
                 await _context.SaveChangesAsync();
-
-                _context.Entry(entity).State = EntityState.Detached;
                 transaction.Commit();
             }
             catch (Exception ex)
@@ -193,6 +187,7 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
 
     public async Task SoftDeleteAsync(ProductReceipt item)
     {
+        using var _context = new AppDbContext(); 
         using (var transaction = _context.Database.BeginTransaction())
         {
             try
@@ -218,14 +213,13 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
                     {
                         var en = await _context.ProductReceiptDetails.AsNoTracking()
                             .FirstOrDefaultAsync(e => e.id == detail.id);
-                        if (editItem.status == (int)ReceiptStatus.Selesai) CalculateStock(detail, StockStatus.Deletion);
+                        if (editItem.status == (int)ReceiptStatus.Selesai) CalculateStock(_context, detail, StockStatus.Deletion);
                     }
                 }
 
                 _context.Entry(entity).CurrentValues.SetValues(editItem);
                 _context.Update(entity);
                 await _context.SaveChangesAsync();
-                _context.Entry(entity).State = EntityState.Detached;
                 
                 transaction.Commit();
             }catch (Exception ex)
@@ -236,7 +230,7 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
         }
     }
 
-    private async void CalculateStock(ProductReceiptDetail newData, StockStatus status = StockStatus.Addition, ProductReceiptDetail oldData = null)
+    private void CalculateStock(AppDbContext _context,ProductReceiptDetail newData, StockStatus status = StockStatus.Addition, ProductReceiptDetail oldData = null)
     {
         ProductStock oldStock = null;
         oldStock = _context.ProductStocks
@@ -251,7 +245,6 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
             else if (status == StockStatus.Adjustment && oldData != null) oldStock.jumlah = oldStock.jumlah + (newData.jumlah - oldData.jumlah);
             else if(status == StockStatus.Deletion) oldStock.jumlah = oldStock.jumlah - newData.jumlah;
             _context.Update(oldStock);
-            _context.Entry(oldStock).State = EntityState.Detached;
         }
         else
         {
@@ -263,10 +256,10 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
             };
             _context.ProductStocks.Add(newStock);
         }
-        CreateUpdateProductPrice(newData);
+        CreateUpdateProductPrice(_context,newData);
     }
 
-    private void CreateUpdateProductPrice(ProductReceiptDetail data)
+    private void CreateUpdateProductPrice(AppDbContext _context,ProductReceiptDetail data)
     {
         var exist = _context.ProductPrices
             .AsNoTracking()
@@ -285,7 +278,6 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
         {
             exist.harga = data.harga_satuan;
             _context.Update(exist);
-            _context.Entry(exist).State = EntityState.Detached;
         }
         else
         {

@@ -10,31 +10,25 @@ namespace IhandCashier.Bepe.Services;
 
 public class ProductService : IDataService<ProductDto>
 {
-    private readonly AppDbContext _context;
+    // private readonly AppDbContext _context;
 
-    public ProductService(AppDbContext context)
-    {
-        _context = context;
-    }
+    public ProductService(){}
 
     public async Task<List<Product>> GetAsync()
     {
+        using var _context = new AppDbContext(); 
         return await _context.Products.AsNoTracking().ToListAsync();
     }
-    
-    public IQueryable<Product> Query()
-    {
-        return _context.Products.AsQueryable();
-    }
-    
 
     public int TotalData()
     {
+        using var _context = new AppDbContext(); 
         return _context.Products.AsNoTracking().Count();
     }
 
     public async Task<List<ProductDto>> GetPagingData(int pageIndex, int pageSize, string searchQuery)
     {
+        using var _context = new AppDbContext(); 
         IQueryable<Product> query = _context.Products;
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -63,6 +57,7 @@ public class ProductService : IDataService<ProductDto>
 
     public async Task AddAsync(Product product)
     {
+        using var _context = new AppDbContext(); 
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
         _context.Products.Entry(product).State = EntityState.Detached;
@@ -70,6 +65,7 @@ public class ProductService : IDataService<ProductDto>
 
     public async Task UpdateAsync(Product item)
     {
+        using var _context = new AppDbContext(); 
         var entity = await _context.Products.AsNoTracking().FirstOrDefaultAsync(e => e.id == item.id);
         _context.Entry(entity).CurrentValues.SetValues(item);
         _context.Update(entity);
@@ -80,6 +76,7 @@ public class ProductService : IDataService<ProductDto>
 
     public async Task DeleteAsync(Product product)
     {
+        using var _context = new AppDbContext(); 
         _context.Products.Remove(product);
         await _context.SaveChangesAsync();
     }
