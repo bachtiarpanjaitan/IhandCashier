@@ -18,6 +18,7 @@ namespace IhandCashier.Bepe.Helpers
         private Type _typeHeader = null;
         private Type _form;
         private bool _disposed = false;
+        private PopupManager manager = new ();
         
         /// <summary>
         /// Mengelola Pagination data di datagrid.
@@ -110,7 +111,6 @@ namespace IhandCashier.Bepe.Helpers
             if (Application.Current != null && Application.Current.MainPage != null)
             {
                 if (_form == null) return;
-                var manager = new PopupManager();
                 manager.ShowPopup(_form);
             }
                 
@@ -151,7 +151,7 @@ namespace IhandCashier.Bepe.Helpers
                 {
                     // Hapus event handler
                     DatagridProvider.RemovePaginationClickHandlers();
-                    if (_typeHeader == typeof(FilterOne))FilterOne.RemoveEventHandlers();
+                    // if (_typeHeader == typeof(FilterOne))FilterOne.RemoveEventHandlers();
                     
                     _dataService = null;
                     _form = null;

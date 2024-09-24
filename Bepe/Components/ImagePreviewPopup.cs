@@ -24,7 +24,7 @@ public class ImagePreviewPopup : Popup
        Color = Colors.Transparent;
     }
     
-    public void SetImage(ImageSource imageSource, int width = 200, int height = 200)
+    public void SetImage(string path, int width = 200, int height = 200)
     {
         Grid grid = new()
         {
@@ -35,16 +35,19 @@ public class ImagePreviewPopup : Popup
             },
             Padding = 10
         };
-        grid.Add(new Image
+        
+        var image = new Image
         {
             HorizontalOptions = LayoutOptions.End,
             VerticalOptions = LayoutOptions.Center,
-            Source = imageSource,
             WidthRequest = width,
             HeightRequest = height,
             BackgroundColor = Colors.Transparent,
             Opacity = 0.9
-        },0,0);
+        };
+        image.Source = ImageSource.FromFile(path);
+        
+        grid.Add(image,0,0);
         grid.Add(_btnClose,0,1);
         Content = grid;
     }

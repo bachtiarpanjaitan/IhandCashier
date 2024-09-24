@@ -1,14 +1,12 @@
 using System.Globalization;
-using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Helpers;
-using IhandCashier.Core.Maui.Providers;
 using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Bepe.Types
 {
-    public class ColumnType
+    public class ColumnType : IDisposable
     {
         public ColumnTypes Type { get; set; } = ColumnTypes.Text;
         public string MappingName { get; set; } = "id";
@@ -21,24 +19,12 @@ namespace IhandCashier.Bepe.Types
 
         public int ImageHeight = 20;
         public int ImageWidth = 20;
-
         public string Format { get; set; } = "";
         
-        private readonly PopupManager _popupManager = new PopupManager();
-        
-        // private static readonly DataTemplate ImageTemplate = new DataTemplate(() =>
-        // {
-        //     Image image = new Image
-        //     {
-        //         HeightRequest = ImageHeight,
-        //         WidthRequest = ImageWidth
-        //     };
-        //     var tapGestureRecognizer = new TapGestureRecognizer();
-        //     tapGestureRecognizer.Tapped += Image_Tapped;
-        //     image.GestureRecognizers.Add(tapGestureRecognizer);
-        //     image.SetBinding(Image.SourceProperty, MappingImage);
-        //     return image;
-        // });
+        private readonly PopupManager _popupManager = new();
+        private TapGestureRecognizer _tapGestureRecognizer;
+        private EventHandler<TappedEventArgs> _imageTappedHandler;
+        private EventHandler _buttonClickedHandler;
         
         public DataGridColumn Create()
         {
@@ -83,39 +69,8 @@ namespace IhandCashier.Bepe.Types
                 {
                     MappingName = MappingName, HeaderText = HeaderText, CellTextAlignment = TextAlignment, ColumnWidthMode = ColumnMode, Format = Format
                 },
-                ColumnTypes.Image => new DataGridTemplateColumn()
-                {
-                    Width =  Width??100, MappingName = MappingName, HeaderText = HeaderText, CellTextAlignment = TextAlignment, ColumnWidthMode = ColumnMode, CellTemplate = new DataTemplate(
-                        () =>
-                        {
-                            Image image = new Image
-                            {
-                                HeightRequest = ImageHeight,
-                                WidthRequest = ImageWidth
-                            };
-                            
-                            var tapGestureRecognizer = new TapGestureRecognizer();
-                            // tapGestureRecognizer.Tapped += Image_Tapped;
-                            tapGestureRecognizer.Tapped += (s, args) => Image_Tapped(s, args);
-                            image.GestureRecognizers.Add(tapGestureRecognizer);
-                            image.SetBinding(Image.SourceProperty, MappingImage);
-                            return image;
-                        })
-                },
-                ColumnTypes.Detail => new DataGridTemplateColumn()
-                {
-                    Width =  Width??100,
-                    HeaderText = HeaderText, 
-                    CellTextAlignment = TextAlignment, 
-                    ColumnWidthMode = ColumnMode,
-                    CellTemplate  = new DataTemplate(() =>
-                    {
-                        var btn = new Button { Text = "Detail", TextColor = Colors.Coral ,BorderColor = Colors.Transparent, Margin = new Thickness(0,0,0,0) };
-                        btn.SetBinding(Button.CommandParameterProperty, ".");
-                        btn.Clicked += ShowDetail;
-                        return btn;
-                    })
-                },
+                ColumnTypes.Image => CreateImageColumn(),
+                ColumnTypes.Detail => CreateDetailColumn(),
                 _ => throw new ArgumentException("Invalid column type")
             };
             column.CellStyle = new Style(typeof(DataGridCell))
@@ -134,6 +89,60 @@ namespace IhandCashier.Bepe.Types
                 }
             };
             return column;
+        }
+        
+        private DataGridColumn CreateImageColumn()
+        {
+            _tapGestureRecognizer = new TapGestureRecognizer();
+            _imageTappedHandler = (s, args) => Image_Tapped(s, args);
+            _tapGestureRecognizer.Tapped += _imageTappedHandler;
+            
+            return new DataGridTemplateColumn
+            {
+                Width = Width ?? 100,
+                MappingName = MappingName,
+                HeaderText = HeaderText,
+                CellTextAlignment = TextAlignment,
+                ColumnWidthMode = ColumnMode,
+                CellTemplate = new DataTemplate(() =>
+                {
+                    var img = new Image
+                    {
+                        WidthRequest = ImageWidth,
+                        HeightRequest = ImageHeight
+                    };
+                    
+                    img.SetBinding(Image.SourceProperty, MappingName);
+                    img.GestureRecognizers.Add(_tapGestureRecognizer);
+                    return img;
+                })
+            };
+        }
+        
+        private DataGridColumn CreateDetailColumn()
+        {
+            _buttonClickedHandler = (s, args) => ShowDetail(s, args);
+
+            return new DataGridTemplateColumn
+            {
+                Width = Width ?? 100,
+                HeaderText = HeaderText,
+                CellTextAlignment = TextAlignment,
+                ColumnWidthMode = ColumnMode,
+                CellTemplate = new DataTemplate(() =>
+                {
+                    var btn = new Button
+                    {
+                        Text = "Detail",
+                        TextColor = Colors.Coral,
+                        BorderColor = Colors.Transparent,
+                        Margin = new Thickness(0)
+                    };
+                    btn.SetBinding(Button.CommandParameterProperty, ".");
+                    btn.Clicked += _buttonClickedHandler;
+                    return btn;
+                })
+            };
         }
 
         private void ShowDetail(object sender, EventArgs e)
@@ -165,10 +174,28 @@ namespace IhandCashier.Bepe.Types
                 {
                     CanBeDismissedByTappingOutsideOfPopup = false
                 };
-                popup.SetImage(img.Source,500,500);
-                _popupManager.ShowPopupAsync(popup).ConfigureAwait(true);
+                if (img.Source is FileImageSource source)
+                {
+                    string path = source.File.Replace("/Thumbnails","");
+                    popup.SetImage(path,500,500);
+                    _popupManager.ShowPopupAsync(popup).ConfigureAwait(true);
+                }
             }
         }
 
+        public void Dispose()
+        {
+            if (_tapGestureRecognizer != null)
+            {
+                _tapGestureRecognizer.Tapped -= _imageTappedHandler;
+                _tapGestureRecognizer = null;
+                _imageTappedHandler = null;
+            }
+
+            if (_buttonClickedHandler != null) _buttonClickedHandler = null;
+
+            // If PopupManager holds resources, dispose it too
+            _popupManager?.Dispose();
+        }
     }
 }

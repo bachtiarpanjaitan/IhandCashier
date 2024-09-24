@@ -9,8 +9,8 @@ public class ProductDto
     public string kode { get; set; }
     public string nama { get; set; }
     public string gambar { get; set; }
-    public ImageSource resourceGambar { get; set; }
-    public ImageSource resourceGambarThumbnail { get; set; }
+    public string resourceGambar { get; set; }
+    public string resourceGambarThumbnail { get; set; }
 
     public Product ToEntity()
     {

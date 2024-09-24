@@ -28,12 +28,15 @@ namespace IhandCashier.Pages.Views
             CreateContextMenu();
             DatagridProvider.DataGrid.Columns.Clear();
             List<ColumnType> columns = [
-                new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
+                new ()  { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
                 new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
                 new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
                 new() { Type = ColumnTypes.Image, MappingImage = "resourceGambar" ,MappingName = "resourceGambarThumbnail", Width = 110, HeaderText = "GAMBAR", ImageHeight = 50, ImageWidth = 50}
             ];
-            foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+            foreach (var c in columns.Select(col => col.Create()))
+            {
+                DatagridProvider.DataGrid.Columns.Add(c);
+            };
             Content = DatagridProvider.LayoutDatagrid;
 
             DatagridProvider.ShowLoader();
