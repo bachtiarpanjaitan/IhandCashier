@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IhandCashier.Pages.Views;
 
-public partial class GridPenjualanBarang : ContentView
+public partial class GridPenjualanBarang
 {
     public GridPenjualanBarang()
     {

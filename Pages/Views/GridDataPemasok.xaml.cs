@@ -11,7 +11,7 @@ using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
 
-public partial class GridDataPemasok : ContentView
+public partial class GridDataPemasok
 {
     private const string ModuleName = "Data Pemasok";
     SupplierService _service  = ServiceLocator.ServiceProvider.GetService<SupplierService>();
@@ -23,7 +23,7 @@ public partial class GridDataPemasok : ContentView
         
         FilterOne.Initialize(ModuleName);
             
-        DatagridProvider.Reset();
+        ResetView();
         List<ColumnType> columns = [
             new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
             new ColumnType { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA"},

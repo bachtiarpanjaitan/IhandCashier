@@ -23,7 +23,7 @@ namespace IhandCashier.Pages.Views
         {
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
-            DatagridProvider.Reset();
+            ResetView();
             CreateContextMenu();
             List<ColumnType> columns = [
                 new() { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center, MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },

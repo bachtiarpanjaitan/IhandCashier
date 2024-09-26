@@ -22,7 +22,7 @@ public partial class GridDataSatuanBarang
 	{
 		InitializeComponent();
 		FilterOne.Initialize(ModuleName);
-		DatagridProvider.Reset();
+		ResetView();
 		CreateContextMenu();
 		List<ColumnType> columns = [
 			new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center, MappingName = "id",ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },

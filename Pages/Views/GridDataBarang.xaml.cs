@@ -24,7 +24,7 @@ namespace IhandCashier.Pages.Views
         {
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
-            DatagridProvider.Reset();
+            ResetView();
             CreateContextMenu();
             DatagridProvider.DataGrid.Columns.Clear();
             List<ColumnType> columns = [

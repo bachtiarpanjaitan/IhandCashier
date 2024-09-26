@@ -26,9 +26,8 @@ public partial class GridDataHargaBarang
   {
     InitializeComponent();
     FilterOne.Initialize(ModuleName);
-    DatagridProvider.Reset();
     CreateContextMenu();
-    
+    ResetView();
     List<ColumnType> columns = [
       new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
       new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE",ColumnMode = ColumnWidthMode.FitByCell },

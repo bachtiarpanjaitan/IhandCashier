@@ -26,9 +26,8 @@ public partial class GridPenerimaanBarang
     {
         InitializeComponent();
         FilterOne.Initialize(ModuleName);
-        DatagridProvider.Reset();
         CreateContextMenu();
-        
+        ResetView();
         List<ColumnType> columns = [
             new() { Type = ColumnTypes.Numeric, MappingName = "Id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
             new() { Type = ColumnTypes.Detail, MappingName = "Expand", HeaderText = "DETAIL", ColumnMode = ColumnWidthMode.FitByCell},

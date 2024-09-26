@@ -11,6 +11,7 @@ namespace IhandCashier.Bepe.Controllers
         private ContentView _contentView = new();
         public Dictionary<string, MenuItemPage> SideMenus = new();
         private ContentLayoutTwoColumn _layout = new();
+        private SideMenu sm = new();
         public PageController()
 		{
 
@@ -18,11 +19,9 @@ namespace IhandCashier.Bepe.Controllers
 
         public void DefineLayoutTwoColumn()
         {
-            SideMenu sm = new();
             sm.SetMenuItems(SideMenus);
             sm.ItemTapped += OnClickSideMenuItemAsync;
             VerticalStackLayout sideMenu = sm.CreateSideMenu();
-            
             _layout.SetSideMenu(sideMenu);
             Content = _layout.GenerateFrame();
         }
@@ -43,6 +42,12 @@ namespace IhandCashier.Bepe.Controllers
                }
             }
            
+        }
+
+        public void ClearEvent()
+        {
+            sm.ItemTapped -= OnClickSideMenuItemAsync;
+            _contentView = null;
         }
     }
 }

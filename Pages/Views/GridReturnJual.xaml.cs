@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IhandCashier.Pages.Views;
 
-public partial class GridReturnJual : ContentView
+public partial class GridReturnJual
 {
     public GridReturnJual()
     {

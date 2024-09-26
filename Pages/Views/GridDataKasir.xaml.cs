@@ -11,7 +11,7 @@ using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages.Views;
 
-public partial class GridDataKasir : ContentView
+public partial class GridDataKasir
 {
 	private const string ModuleName = "Data Kasir";
 	UserService _service  = ServiceLocator.ServiceProvider.GetService<UserService>();
@@ -23,7 +23,7 @@ public partial class GridDataKasir : ContentView
 		
 		FilterOne.Initialize(ModuleName);
             
-		DatagridProvider.Reset();
+		ResetView();
 		List<ColumnType> columns = [
 			new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "username", HeaderText = "USERNAME" },

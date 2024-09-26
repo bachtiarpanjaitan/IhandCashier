@@ -20,7 +20,7 @@ public partial class GridStokBarang
     {
         InitializeComponent();
         FilterOne.Initialize(ModuleName, new FilterOneComponent(){ShowAddButton = false});
-        DatagridProvider.Reset();
+        ResetView();
         
         List<ColumnType> columns = [
             new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
