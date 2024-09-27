@@ -15,11 +15,14 @@ public partial class MainLayout : ContentPage
     private System.Timers.Timer _timer;
     private readonly CultureInfo _cultureInfo = new("id-ID");
     private UserSession userSession = new SessionManager().GetSession();
+    public Dictionary<string, MenuFlyoutItem> ListMenu = new ();
+    private  IList<MenuBarItem> menuBar;
     public MainLayout()
     {
         InitializeComponent();
-        LoadMenu();
         SetupClock();
+        MenuBarItems.Clear();
+        ListMenu = new MenuCreator().CreateMenu(MenuBarItems);
         
         Shell.SetNavBarIsVisible(this, DeviceInfo.Platform == DevicePlatform.WinUI);
         DatagridProvider.DataGrid.RowHeight = 35;
@@ -45,29 +48,31 @@ public partial class MainLayout : ContentPage
             new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Right, 10);
         Container.Content = new PageHome();
         
-    }
-
-    private void LoadMenu()
-    {
-        if (DeviceInfo.Platform == DevicePlatform.MacCatalyst ||DeviceInfo.Platform == DevicePlatform.WinUI)
+        if (Application.Current.MainPage is AppShell shell)
         {
-            if (Application.Current != null)
+            foreach (var value in ListMenu.Values)
             {
-                Device.BeginInvokeOnMainThread(() =>
+                value.Clicked += (sender, args) =>
                 {
-                    MenuBarItems.Clear();
-                    var menuCreator = new MenuCreator(AppConfig.PATH_FILE_MENU, Container).CreateMenuAsync().Result;
-                    foreach (var item in menuCreator)
+                    if (sender is MenuFlyoutItem menuBarItem)
                     {
-                        MenuBarItems.Add(item);
+                        try
+                        {
+                            var data = menuBarItem?.CommandParameter as String;
+                            var type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + data);
+                            if (type == null) return;
+                            var instance = Activator.CreateInstance(type);
+                            Container.ChangeContent((ContentView)instance);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error Click : {ex.Message}");
+                        }
                     }
-                });
+                };
             }
         }
         
-        LUser.Text = $" {userSession.Username} ";
-        Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
-        Console.SetOut(new LabelWriter(LogLabel));
     }
 
     [Obsolete]
@@ -77,6 +82,10 @@ public partial class MainLayout : ContentPage
         _timer.Elapsed += OnTimerElapsed;
         _timer.AutoReset = true;
         _timer.Enabled = true;
+        
+        LUser.Text = $" {userSession.Username} ";
+        Copyright.Text = $"\u00a9 {DateTime.Now.Year} HMP Basapadi";
+        Console.SetOut(new LabelWriter(LogLabel));
     }
 
     [Obsolete]
@@ -98,4 +107,8 @@ public partial class MainLayout : ContentPage
         _timer?.Dispose();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+    }
 }

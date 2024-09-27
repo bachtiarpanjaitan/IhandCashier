@@ -3,14 +3,16 @@ using System;
 using System.Reflection;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Types;
+using IhandCashier.Layouts;
 using Newtonsoft.Json;
 
 namespace IhandCashier.Bepe.Helpers
 {
 	public class MenuCreator
     {
-		List<MenuDataType> menuItems = new List<MenuDataType>();
-		List<MenuBarItem> menuBarItems = new List<MenuBarItem>();
+		List<MenuDataType> menuItems = new ();
+		List<MenuBarItem> menuBarItems = new ();
+        public Dictionary<string, MenuFlyoutItem> ListMenu = new();
 		private string path;
         private MainContent context;
 
@@ -19,11 +21,24 @@ namespace IhandCashier.Bepe.Helpers
 			this.path = path;
             this.context = context;
 		}
+        
+        public MenuCreator(MainContent context, IList<MenuBarItem> MenuBar)
+        {
+            this.context = context;
+            CreateMenu(MenuBar);
+        }
+        
+        public MenuCreator(IList<MenuBarItem> MenuBar)
+        {
+            CreateMenu(MenuBar);
+        }
+        
+        public MenuCreator(){}
 
-		public async Task<List<MenuBarItem>>  CreateMenuAsync()
+		public Dictionary<string, MenuFlyoutItem>  CreateMenu(IList<MenuBarItem> MenuBar)
 		{
-			menuItems = await LoadMenuItemsAsync(path);
-            
+			// menuItems = await LoadMenuItemsAsync(path).ConfigureAwait(false);
+            menuItems = MenuConfig.GetMenus();
             foreach (var item in menuItems)
             {
                 var menuBar = new MenuBarItem { Text = item.Label };
@@ -41,10 +56,10 @@ namespace IhandCashier.Bepe.Helpers
                     }
                 }
                 else menuBar.Add(CreateMenuFlyoutItem(item));
-                menuBarItems.Add(menuBar);
+                MenuBar.Add(menuBar);
             }
 
-            return menuBarItems;
+            return ListMenu;
 
         }
 
@@ -82,7 +97,7 @@ namespace IhandCashier.Bepe.Helpers
                 {
                     flyoutItem.Add(CreateMenuFlyoutItem(childItem));
                 }
-                flyoutItem.Clicked += OnMenuItemClicked;
+                // flyoutItem.Clicked += OnMenuItemClicked;
 
             }
             return flyoutItem;
@@ -96,8 +111,9 @@ namespace IhandCashier.Bepe.Helpers
                 Text = menuItem.Label,
                 CommandParameter = menuItem.Class
             };
-
-            flyoutItem.Clicked += OnMenuItemClicked;
+            ListMenu.Add(menuItem.Class, flyoutItem);
+            // flyoutItem.Clicked += OnMenuItemClicked;
+            
             return flyoutItem;
         }
 
@@ -113,7 +129,7 @@ namespace IhandCashier.Bepe.Helpers
                     var type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + data);
                     if (type == null) return;
                     var instance = Activator.CreateInstance(type);
-                    context.ChangeContent((ContentView)instance);
+                    // context.ChangeContent((ContentView)instance);
                 } catch (Exception ex)
                 {
                     Console.WriteLine($"Error Click : {ex.Message}");

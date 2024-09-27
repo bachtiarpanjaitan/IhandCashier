@@ -7,6 +7,8 @@ namespace IhandCashier.Bepe.Types
 		public string Class { get; set;}
         public List<MenuDataType> Child { get; set; }
 
+        public bool Show { get; set; } = true;
+
         public MenuDataType()
 		{
 		}
