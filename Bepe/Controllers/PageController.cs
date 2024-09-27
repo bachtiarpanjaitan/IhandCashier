@@ -43,12 +43,6 @@ namespace IhandCashier.Bepe.Controllers
             }
            
         }
-
-        public void ClearEvent()
-        {
-            sm.ItemTapped -= OnClickSideMenuItemAsync;
-            _contentView = null;
-        }
     }
 }
 

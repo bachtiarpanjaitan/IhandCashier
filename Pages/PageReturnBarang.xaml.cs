@@ -13,8 +13,8 @@ public partial class PageReturnBarang
     public PageReturnBarang()
     {
         InitializeComponent();
-        SideMenus.Add("return_beli", new MenuItemPage { Label = "RETURN BELI", Page =  typeof(GridReturnBeli).FullName });
-        SideMenus.Add("return_jual", new MenuItemPage { Label = "RETURN JUAL", Page =  typeof(GridReturnJual).FullName });
+        SideMenus.Add("return_beli", new MenuItemPage { Label = "RETURN BELI", Page =  typeof(GridReturnBeli).FullName, Icon = "\ue889"});
+        SideMenus.Add("return_jual", new MenuItemPage { Label = "RETURN JUAL", Page =  typeof(GridReturnJual).FullName, Icon = "\ue923"});
 
         DefineLayoutTwoColumn();
     }

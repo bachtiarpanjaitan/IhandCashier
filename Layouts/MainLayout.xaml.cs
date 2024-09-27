@@ -25,6 +25,24 @@ public partial class MainLayout : ContentPage
         DatagridProvider.DataGrid.RowHeight = 35;
         DatagridProvider.DataGrid.DefaultStyle = Helper.SetDataGridStyle();
         DatagridProvider.DataGrid.SelectionMode = DataGridSelectionMode.SingleDeselect;
+        DatagridProvider.PrevButton.ImageSource = new FontImageSource()
+        {
+            Glyph = "\ueaa7", 
+            FontFamily = "MaterialIcons",
+            Size = 20,
+            Color = Colors.DarkOrange
+        };
+        DatagridProvider.NextButton.ImageSource = new FontImageSource()
+        {
+            Glyph = "\ueaaa", //
+            FontFamily = "MaterialIcons",
+            Size = 20,
+            Color = Colors.DarkOrange,
+        };
+        DatagridProvider.PrevButton.ContentLayout =
+            new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Left, 10);
+        DatagridProvider.NextButton.ContentLayout =
+            new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Right, 10);
         Container.Content = new PageHome();
         
     }

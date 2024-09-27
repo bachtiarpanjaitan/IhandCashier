@@ -10,9 +10,9 @@ public partial class PageDataPengguna : PageController
 	{
 		InitializeComponent();
 
-        SideMenus.Add("kasir", new MenuItemPage { Label = "DATA KASIR", Page = typeof(GridDataKasir).FullName });
-        SideMenus.Add("pemasok", new MenuItemPage { Label = "DATA PEMASOK", Page = typeof(GridDataPemasok).FullName });
-        SideMenus.Add("pelanggan", new MenuItemPage { Label = "DATA PELANGGAN", Page = typeof(GridDataPelanggan).FullName });
+        SideMenus.Add("kasir", new MenuItemPage { Label = "DATA KASIR", Page = typeof(GridDataKasir).FullName, Icon = "\ueF3D"});
+        SideMenus.Add("pemasok", new MenuItemPage { Label = "DATA PEMASOK", Page = typeof(GridDataPemasok).FullName, Icon = "\uF8D9"});
+        SideMenus.Add("pelanggan", new MenuItemPage { Label = "DATA PELANGGAN", Page = typeof(GridDataPelanggan).FullName, Icon = "\uF8D7"});
 
         DefineLayoutTwoColumn();
 	}

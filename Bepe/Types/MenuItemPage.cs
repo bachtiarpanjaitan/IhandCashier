@@ -5,8 +5,8 @@ namespace IhandCashier.Bepe.Types
 	{
         public string Label { get; set; }
         public string Page { get; set; }
-		public string name { get; set; }
-		public string icon { get; set; }
+		public string Name { get; set; }
+		public string Icon { get; set; }
         public MenuItemPage()
 		{
 

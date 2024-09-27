@@ -14,8 +14,8 @@ public partial class PageStokBarang
     public PageStokBarang()
     {
         InitializeComponent();
-        SideMenus.Add("stok_barang", new MenuItemPage { Label = "STOK", Page =  typeof(GridStokBarang).FullName });
-        SideMenus.Add("stok_penyesuaian_barang", new MenuItemPage { Label = "PENYESUAIAN", Page =  typeof(GridPenyesuaianBarang).FullName });
+        SideMenus.Add("stok_barang", new MenuItemPage { Label = "STOK", Page =  typeof(GridStokBarang).FullName, Icon = "\uebb8"});
+        SideMenus.Add("stok_penyesuaian_barang", new MenuItemPage { Label = "PENYESUAIAN", Page =  typeof(GridPenyesuaianBarang).FullName, Icon = "\ue3ca"});
 
         DefineLayoutTwoColumn();
     }

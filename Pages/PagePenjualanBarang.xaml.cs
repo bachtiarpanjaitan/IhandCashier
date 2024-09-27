@@ -14,7 +14,7 @@ public partial class PagePenjualanBarang
     public PagePenjualanBarang()
     {
         InitializeComponent();
-        SideMenus.Add("penjualan_barang", new MenuItemPage { Label = "PENJUALAN", Page =  typeof(GridPenjualanBarang).FullName });
+        SideMenus.Add("penjualan_barang", new MenuItemPage { Label = "PENJUALAN", Page =  typeof(GridPenjualanBarang).FullName, Icon = "\uf17e"});
         DefineLayoutTwoColumn();
     }
 }

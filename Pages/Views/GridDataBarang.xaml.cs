@@ -25,18 +25,19 @@ namespace IhandCashier.Pages.Views
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
             ResetView();
-            CreateContextMenu();
-            DatagridProvider.DataGrid.Columns.Clear();
+            SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+            {
+                DeleteHandler = OnDeleteClicked,
+                EditHandler = OnEditClicked,
+                RefreshHandler = OnRefreshClicked
+            });
             List<ColumnType> columns = [
                 new ()  { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
                 new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
                 new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA BARANG"},
                 new() { Type = ColumnTypes.Image, MappingImage = "resourceGambar" ,MappingName = "resourceGambarThumbnail", Width = 110, HeaderText = "GAMBAR", ImageHeight = 50, ImageWidth = 50}
             ];
-            foreach (var c in columns.Select(col => col.Create()))
-            {
-                DatagridProvider.DataGrid.Columns.Add(c);
-            };
+            foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);;
             Content = DatagridProvider.LayoutDatagrid;
 
             DatagridProvider.ShowLoader();
@@ -84,21 +85,6 @@ namespace IhandCashier.Pages.Views
                 }
                 
             }
-        }
-
-        private void CreateContextMenu()
-        {
-            MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
-            MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
-            MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
-            editMenu.Clicked += OnEditClicked;
-            deleteMenu.Clicked += OnDeleteClicked;
-            refreshMenu.Clicked += OnRefreshClicked;
-            ContextMenu.Add(refreshMenu);
-            ContextMenu.Add(editMenu);
-            ContextMenu.Add(new MenuFlyoutSeparator());
-            ContextMenu.Add(deleteMenu);
-           
         }
 
         private void OnRefreshClicked(object sender, EventArgs e)

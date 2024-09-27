@@ -10,8 +10,8 @@ public partial class PageSetting : PageController
 	{
 		InitializeComponent();
 		
-		SideMenus.Add("setting_aplikasi", new MenuItemPage { Label = "APLIKASI", Page =  typeof(SettingApplication).FullName });
-		SideMenus.Add("setting_hak_akses", new MenuItemPage { Label = "HAK AKSES", Page =  typeof(SettingAcl).FullName });
+		SideMenus.Add("setting_aplikasi", new MenuItemPage { Label = "APLIKASI", Page =  typeof(SettingApplication).FullName, Icon = "\ue1b1"});
+		SideMenus.Add("setting_hak_akses", new MenuItemPage { Label = "HAK AKSES", Page =  typeof(SettingAcl).FullName, Icon = "\ue32a"});
 
 		DefineLayoutTwoColumn();
 	}

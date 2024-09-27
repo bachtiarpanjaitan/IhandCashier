@@ -10,7 +10,7 @@ public partial class PagePenerimaanBarang : PageController
     public PagePenerimaanBarang()
 	{
 		InitializeComponent();
-        SideMenus.Add("penerimaan_barang", new MenuItemPage { Label = "PENERIMAAN", Page =  typeof(GridPenerimaanBarang).FullName });
+        SideMenus.Add("penerimaan_barang", new MenuItemPage { Label = "PENERIMAAN", Page =  typeof(GridPenerimaanBarang).FullName, Icon = "\uE558"});
         DefineLayoutTwoColumn();
     }
 }

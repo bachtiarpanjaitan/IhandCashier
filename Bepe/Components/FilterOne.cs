@@ -24,6 +24,14 @@ public static class FilterOne
         VerticalOptions = LayoutOptions.Center,
         Text = "Tambah",
         WidthRequest = 100,
+        ImageSource = new FontImageSource()
+        {
+            Glyph = "\uE145", //
+            FontFamily = "MaterialIcons",
+            Size = 15,
+            Color = Colors.DarkOrange
+        },
+        ContentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Left, 10),
         Margin = new Thickness(5, 0)
     };
     private static readonly Label ModuleLabel = new()

@@ -132,9 +132,6 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-	  <ImageAsset Include="Resources\Images\document.png" />
-	</ItemGroup>
-	<ItemGroup>
 	  <MauiPlatformSpecificFolder Remove="Platforms\Android\" />
 	  <MauiPlatformSpecificFolder Remove="Platforms\iOS\" />
 	  <MauiPlatformSpecificFolder Remove="Platforms\Tizen\" />

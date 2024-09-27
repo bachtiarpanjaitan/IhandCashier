@@ -24,7 +24,12 @@ namespace IhandCashier.Pages.Views
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
             ResetView();
-            CreateContextMenu();
+            SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+            {
+                DeleteHandler = OnDeleteClicked,
+                EditHandler = OnEditClicked,
+                RefreshHandler = OnRefreshClicked
+            });
             List<ColumnType> columns = [
                 new() { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center, MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },
                 new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA SATUAN"},
@@ -40,20 +45,6 @@ namespace IhandCashier.Pages.Views
                 DatagridProvider.AddDatagridCellHandler(OnClicked, OnEditClicked);
                 DatagridProvider.HideLoader();
             });
-        }
-
-        private void CreateContextMenu()
-        {
-            MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
-            MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
-            MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
-            editMenu.Clicked += OnEditClicked;
-            deleteMenu.Clicked += OnDeleteClicked;
-            refreshMenu.Clicked += OnRefreshClicked;
-            ContextMenu.Add(refreshMenu);
-            ContextMenu.Add(editMenu);
-            ContextMenu.Add(new MenuFlyoutSeparator());
-            ContextMenu.Add(deleteMenu);
         }
 
         private async void OnDeleteClicked(object sender, EventArgs e)

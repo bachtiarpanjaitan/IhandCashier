@@ -22,7 +22,6 @@ public partial class GridDataKasir
 		InitializeComponent();
 		
 		FilterOne.Initialize(ModuleName);
-            
 		ResetView();
 		List<ColumnType> columns = [
 			new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center,MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },

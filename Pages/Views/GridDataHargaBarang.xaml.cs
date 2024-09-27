@@ -26,8 +26,13 @@ public partial class GridDataHargaBarang
   {
     InitializeComponent();
     FilterOne.Initialize(ModuleName);
-    CreateContextMenu();
     ResetView();
+    SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+    {
+      DeleteHandler = OnDeleteClicked,
+      EditHandler = OnEditClicked,
+      RefreshHandler = OnRefreshClicked
+    });
     List<ColumnType> columns = [
       new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
       new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE",ColumnMode = ColumnWidthMode.FitByCell },
@@ -49,20 +54,6 @@ public partial class GridDataHargaBarang
       DatagridProvider.AddDatagridCellHandler(OnClick);
       DatagridProvider.HideLoader();
     });
-  }
-
-  private void CreateContextMenu()
-  {
-    MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
-    MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
-    MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
-    editMenu.Clicked += OnEditClicked;
-    deleteMenu.Clicked += OnDeleteClicked;
-    refreshMenu.Clicked += OnRefreshClicked;
-    ContextMenu.Add(refreshMenu);
-    ContextMenu.Add(editMenu);
-    ContextMenu.Add(new MenuFlyoutSeparator());
-    ContextMenu.Add(deleteMenu);
   }
 
   private void OnClick(object sender, DataGridCellTappedEventArgs e)

@@ -25,24 +25,44 @@ namespace IhandCashier.Bepe.Components
             {
                 foreach (var mi in menuItems)
                 {
-                    menuLayout.Add(ItemMenu(mi.Value.Label, mi.Value.Page));
+                    menuLayout.Add(ItemMenu(mi.Value));
                 }
             }
             return menuLayout;
         }
 
-        private Button ItemMenu(string text, string page)
+        private HorizontalStackLayout ItemMenu(MenuItemPage item)
         {
+            var icon = new Image()
+            {
+                Source = new FontImageSource()
+                {
+                    Glyph = item.Icon, //
+                    FontFamily = "MaterialIcons",
+                    Size = 20,
+                    Color = Colors.DarkOrange
+                },
+                HorizontalOptions = LayoutOptions.Start
+            };
             var button = new Button
             {
-                Text = text,
-                CornerRadius = 5,
-                Margin = 5
+                Text = item.Label,
+                FontAttributes = FontAttributes.Bold,
+                Margin = 5,
+                BorderColor = Colors.Transparent,
             };
 
-            button.Clicked += (s, e) => OnCLickItem(s, e, page);
+            button.Clicked += (s, e) => OnCLickItem(s, e, item.Page);
 
-            return button;
+            return new HorizontalStackLayout()
+            {
+                Children =
+                {
+                    icon,
+                    button
+                },
+                Margin = new Thickness(10,0)
+            };
         }
 
         private async void OnCLickItem(object sender, EventArgs e, string page)

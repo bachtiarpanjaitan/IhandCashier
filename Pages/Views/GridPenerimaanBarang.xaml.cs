@@ -26,8 +26,13 @@ public partial class GridPenerimaanBarang
     {
         InitializeComponent();
         FilterOne.Initialize(ModuleName);
-        CreateContextMenu();
         ResetView();
+        SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+        {
+            DeleteHandler = OnDeleteClicked,
+            EditHandler = OnEditClicked,
+            RefreshHandler = OnRefreshClicked
+        });
         List<ColumnType> columns = [
             new() { Type = ColumnTypes.Numeric, MappingName = "Id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
             new() { Type = ColumnTypes.Detail, MappingName = "Expand", HeaderText = "DETAIL", ColumnMode = ColumnWidthMode.FitByCell},
@@ -58,30 +63,6 @@ public partial class GridPenerimaanBarang
         _selectedProduct = e.RowData as ProductReceiptDto;
         if (_selectedProduct != null) Console.WriteLine($"Transaksi : {_selectedProduct.KodeTransaksi}");
         DatagridProvider.DataGrid.SelectedIndex = e.RowColumnIndex.RowIndex;
-    }
-
-    private DataGridUnboundRow CreateRow()
-    {
-        var detail = new DataGridUnboundRow()
-        {
-            Position = DataGridUnboundRowPosition.Bottom,
-        };
-
-        return detail;
-    }
-
-    private void CreateContextMenu()
-    {
-        MenuFlyoutItem refreshMenu = new() { Text = "Refresh Data"};
-        MenuFlyoutItem editMenu = new() { Text = "Ubah Data"};
-        MenuFlyoutItem deleteMenu = new() { Text = "Hapus Data"};
-        editMenu.Clicked += OnEditClicked;
-        deleteMenu.Clicked += OnDeleteClicked;
-        refreshMenu.Clicked += OnRefreshClicked;
-        ContextMenu.Add(refreshMenu);
-        ContextMenu.Add(editMenu);
-        ContextMenu.Add(new MenuFlyoutSeparator());
-        ContextMenu.Add(deleteMenu);
     }
 
     private void OnRefreshClicked(object sender, EventArgs e)
