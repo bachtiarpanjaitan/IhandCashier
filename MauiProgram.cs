@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Database;
 using IhandCashier.Bepe.Interfaces;

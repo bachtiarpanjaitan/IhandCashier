@@ -1,4 +1,5 @@
 using System.Globalization;
+using CommunityToolkit.Maui.Views;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Constants;
 using IhandCashier.Bepe.Helpers;
@@ -21,7 +22,7 @@ namespace IhandCashier.Bepe.Types
         public int ImageWidth = 20;
         public string Format { get; set; } = "";
         
-        private readonly PopupManager _popupManager = new();
+        // private readonly PopupManager _popupManager = new();
         private TapGestureRecognizer _tapGestureRecognizer;
         private EventHandler<TappedEventArgs> _imageTappedHandler;
         private EventHandler _buttonClickedHandler;
@@ -162,7 +163,7 @@ namespace IhandCashier.Bepe.Types
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         popup.SetData(context.Views);
-                        _popupManager.ShowPopup(popup);
+                        Application.Current.MainPage.ShowPopup(popup);
                     });
                 }
                 
@@ -173,15 +174,12 @@ namespace IhandCashier.Bepe.Types
         {
             if (sender is Image img)
             {
-                var popup = new ImagePreviewPopup()
-                {
-                    CanBeDismissedByTappingOutsideOfPopup = false
-                };
                 if (img.Source is FileImageSource source)
                 {
                     string path = source.File.Replace("/Thumbnails","");
-                    popup.SetImage(path,500,500);
-                    _popupManager.ShowPopupAsync(popup).ConfigureAwait(true);
+                    var ImagePopupInstance = new ImagePreviewPopup();
+                    ImagePopupInstance.SetImage(path, 500, 500);
+                    Application.Current.MainPage.ShowPopup(ImagePopupInstance);
                 }
             }
         }
@@ -196,9 +194,6 @@ namespace IhandCashier.Bepe.Types
             }
 
             if (_buttonClickedHandler != null) _buttonClickedHandler = null;
-
-            // If PopupManager holds resources, dispose it too
-            _popupManager?.Dispose();
         }
     }
 }

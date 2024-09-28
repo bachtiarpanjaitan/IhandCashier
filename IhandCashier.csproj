@@ -39,6 +39,10 @@
 		<Title>Ihand Cashier</Title>
 		<Authors>Bachtiar Panjaitan</Authors>
 		<Copyright>HMP Basapadi</Copyright>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>basapadi.snk</AssemblyOriginatorKeyFile>
+		<Configurations>Debug;Release;Relaase Core</Configurations>
+		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
@@ -51,9 +55,15 @@
 	  	<WarningLevel>4</WarningLevel>
 	  	<PlatformTarget>ARM64</PlatformTarget>
 	  	<MtouchLink>SdkOnly</MtouchLink>
+	  	<CodesignKey>Apple Development: bachtiarpanjaitan0@gmail.com (53TNH3S72W)</CodesignKey>
+	  	<MtouchDebug>true</MtouchDebug>
+	  	<Optimize>true</Optimize>
+	  	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	  	<MtouchEnableSGenConc>true</MtouchEnableSGenConc>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 	  <MtouchLink>SdkOnly</MtouchLink>
+	  <CodesignKey>Apple Development: bachtiarpanjaitan0@gmail.com (53TNH3S72W)</CodesignKey>
 	</PropertyGroup>
 	<ItemGroup>
 	  <MauiImage Remove="Resources\Images\document.png" />

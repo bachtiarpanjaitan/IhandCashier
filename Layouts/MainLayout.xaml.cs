@@ -12,11 +12,13 @@ namespace IhandCashier.Layouts;
 
 public partial class MainLayout : ContentPage
 {
+    public Dictionary<string, MenuFlyoutItem> ListMenu = new ();
+        
     private System.Timers.Timer _timer;
     private readonly CultureInfo _cultureInfo = new("id-ID");
     private UserSession userSession = new SessionManager().GetSession();
-    public Dictionary<string, MenuFlyoutItem> ListMenu = new ();
     private  IList<MenuBarItem> menuBar;
+    
     public MainLayout()
     {
         InitializeComponent();
@@ -46,7 +48,7 @@ public partial class MainLayout : ContentPage
             new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Left, 10);
         DatagridProvider.NextButton.ContentLayout =
             new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Right, 10);
-        Container.Content = new PageHome();
+        Container.Content = new PageDataBarang();
         
         if (Application.Current.MainPage is AppShell shell)
         {
@@ -72,7 +74,7 @@ public partial class MainLayout : ContentPage
                 };
             }
         }
-        
+
     }
 
     [Obsolete]

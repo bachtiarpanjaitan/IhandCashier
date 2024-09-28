@@ -14,42 +14,52 @@ public class ImagePreviewPopup : Popup
         WidthRequest = 100,
         Margin = new Thickness(5, 0)
     };
+    
+    private Grid grid = new()
+    {
+        RowDefinitions =
+        {
+            new RowDefinition { Height = GridLength.Auto},
+            new RowDefinition { Height = 50}
+        },
+        Padding = 10
+    };
+    
+    private Image image = new()
+    {
+        HorizontalOptions = LayoutOptions.End,
+        VerticalOptions = LayoutOptions.Center,
+        BackgroundColor = Colors.Transparent,
+        Opacity = 0.9
+    };
+    
     public ImagePreviewPopup()
     {
+        CanBeDismissedByTappingOutsideOfPopup = false;
        _btnClose.Clicked += (sender, args) =>
        {
+           image.Source = null;
            Close(true);
        };
        
        Color = Colors.Transparent;
+       grid.Add(image,0,0);
+       grid.Add(_btnClose,0,1);
+       Content = grid;
     }
     
     public void SetImage(string path, int width = 200, int height = 200)
     {
-        Grid grid = new()
-        {
-            RowDefinitions =
-            {
-                new RowDefinition { Height = GridLength.Auto},
-                new RowDefinition { Height = 50}
-            },
-            Padding = 10
-        };
-        
-        var image = new Image
-        {
-            HorizontalOptions = LayoutOptions.End,
-            VerticalOptions = LayoutOptions.Center,
-            WidthRequest = width,
-            HeightRequest = height,
-            BackgroundColor = Colors.Transparent,
-            Opacity = 0.9
-        };
+        image.Source = null;
+        image.WidthRequest = width;
+        image.HeightRequest = height;
         image.Source = ImageSource.FromFile(path);
-        
-        grid.Add(image,0,0);
-        grid.Add(_btnClose,0,1);
-        Content = grid;
+       
+    }
+    
+    public void ResetImage()
+    {
+        image.Source = null;
     }
     
 }

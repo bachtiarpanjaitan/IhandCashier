@@ -22,6 +22,7 @@ public class DetailPreviewPopup : Popup
     {
         _btnClose.Clicked += (sender, args) =>
         {
+            _datagrid.ItemsSource = null;
             Close(true);
         };
        
