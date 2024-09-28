@@ -18,7 +18,6 @@ namespace IhandCashier.Pages.Views;
 public partial class GridDataHargaBarang
 {
   private const string ModuleName = "Data Harga Barang";
-  private Pagination<ProductPriceDto> _pagination;
   ProductPriceService _service  = ServiceLocator.ServiceProvider.GetService<ProductPriceService>();
   ProductPriceDto _selectedProduct;
   
@@ -27,12 +26,7 @@ public partial class GridDataHargaBarang
     InitializeComponent();
     FilterOne.Initialize(ModuleName);
     ResetView();
-    SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
-    {
-      DeleteHandler = OnDeleteClicked,
-      EditHandler = OnEditClicked,
-      RefreshHandler = OnRefreshClicked
-    });
+    
     List<ColumnType> columns = [
       new() { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
       new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE",ColumnMode = ColumnWidthMode.FitByCell },
@@ -50,7 +44,13 @@ public partial class GridDataHargaBarang
     DatagridProvider.ShowLoader();
     Device.BeginInvokeOnMainThread(() =>
     {
-      _pagination = new Pagination<ProductPriceDto>(_service, typeof(FilterOne));
+      using var _pagination = new Pagination<ProductPriceDto>(_service, typeof(FilterOne));
+      SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+      {
+        DeleteHandler = OnDeleteClicked,
+        EditHandler = OnEditClicked,
+        RefreshHandler = (sender, args) => _pagination.RefreshData() 
+      });
       DatagridProvider.AddDatagridCellHandler(OnClick);
       DatagridProvider.HideLoader();
     });
@@ -60,10 +60,6 @@ public partial class GridDataHargaBarang
   {
     _selectedProduct = e.RowData as ProductPriceDto;
     if (_selectedProduct != null) Console.WriteLine($"Barang : {_selectedProduct.kode}");
-  }
-  private void OnRefreshClicked(object sender, EventArgs e)
-  {
-    
   }
 
   private void OnDeleteClicked(object sender, EventArgs e)

@@ -19,7 +19,6 @@ namespace IhandCashier.Pages.Views;
 public partial class GridPenerimaanBarang
 {
     private const string ModuleName = "Data Penerimaan Barang";
-    private Pagination<ProductReceiptDto> _pagination;
     ProductReceiptService _service  = ServiceLocator.ServiceProvider.GetService<ProductReceiptService>();
     ProductReceiptDto _selectedProduct;
     public GridPenerimaanBarang()
@@ -27,12 +26,7 @@ public partial class GridPenerimaanBarang
         InitializeComponent();
         FilterOne.Initialize(ModuleName);
         ResetView();
-        SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
-        {
-            DeleteHandler = OnDeleteClicked,
-            EditHandler = OnEditClicked,
-            RefreshHandler = OnRefreshClicked
-        });
+        
         List<ColumnType> columns = [
             new() { Type = ColumnTypes.Numeric, MappingName = "Id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
             new() { Type = ColumnTypes.Detail, MappingName = "Expand", HeaderText = "DETAIL", ColumnMode = ColumnWidthMode.FitByCell},
@@ -52,7 +46,13 @@ public partial class GridPenerimaanBarang
         DatagridProvider.ShowLoader();
         Device.BeginInvokeOnMainThread(() =>
         {
-            _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne), typeof(FormPenerimaanBarang));
+            using var _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne), typeof(FormPenerimaanBarang));
+            SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+            {
+                DeleteHandler = OnDeleteClicked,
+                EditHandler = OnEditClicked,
+                RefreshHandler = (sender, args) => _pagination.RefreshData()
+            });
             DatagridProvider.AddDatagridCellHandler(OnClicked, OnEditClicked);
             DatagridProvider.HideLoader();
         });
@@ -63,11 +63,6 @@ public partial class GridPenerimaanBarang
         _selectedProduct = e.RowData as ProductReceiptDto;
         if (_selectedProduct != null) Console.WriteLine($"Transaksi : {_selectedProduct.KodeTransaksi}");
         DatagridProvider.DataGrid.SelectedIndex = e.RowColumnIndex.RowIndex;
-    }
-
-    private void OnRefreshClicked(object sender, EventArgs e)
-    {
-        _pagination.RefreshData();
     }
 
     private async void OnDeleteClicked(object sender, EventArgs e)
@@ -81,7 +76,6 @@ public partial class GridPenerimaanBarang
                 item.Details = _selectedProduct.ToViewModel().Details.Select(d => d.ToEntity()).ToList();
                 await _service.SoftDeleteAsync(item);
                 Application.Current.MainPage.DisplayAlert("Berhasil", "Penerimaan Barang berhasil dihapus", "OK");
-                _pagination.RefreshData();
             }
             catch (Exception ex)
             {

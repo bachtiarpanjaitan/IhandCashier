@@ -41,7 +41,7 @@
 		<Copyright>HMP Basapadi</Copyright>
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>basapadi.snk</AssemblyOriginatorKeyFile>
-		<Configurations>Debug;Release;Relaase Core</Configurations>
+		<Configurations>Debug;Release;Release Core</Configurations>
 		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 	
@@ -154,7 +154,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="IhandCashier.Core">
-	    <HintPath>..\IhandCashier.Core\bin\Release\net8.0-maccatalyst\IhandCashier.Core.dll</HintPath>
+	    <HintPath>..\IhandCashier.Core\bin\Release Core\net8.0-maccatalyst\IhandCashier.Core.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 </Project>

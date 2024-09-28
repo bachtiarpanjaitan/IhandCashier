@@ -15,7 +15,6 @@ public partial class GridDataPemasok
 {
     private const string ModuleName = "Data Pemasok";
     SupplierService _service  = ServiceLocator.ServiceProvider.GetService<SupplierService>();
-    private Pagination<Supplier> _pagination;
     Supplier _selectedProduct;
     public GridDataPemasok()
     {
@@ -36,7 +35,7 @@ public partial class GridDataPemasok
         DatagridProvider.ShowLoader();
         Device.BeginInvokeOnMainThread(() =>
         {
-            _pagination = new Pagination<Supplier>(_service, typeof(FilterOne));
+            using var _pagination = new Pagination<Supplier>(_service, typeof(FilterOne));
             DatagridProvider.AddDatagridCellHandler(OnClick);
             DatagridProvider.HideLoader();
         });

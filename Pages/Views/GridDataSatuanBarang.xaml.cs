@@ -23,12 +23,6 @@ public partial class GridDataSatuanBarang
 		InitializeComponent();
 		FilterOne.Initialize(ModuleName);
 		ResetView();
-		SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
-		{
-			DeleteHandler = OnDeleteClicked,
-			EditHandler = OnEditClicked,
-			RefreshHandler = OnRefreshClicked
-		});
 		List<ColumnType> columns = [
 			new ColumnType { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center, MappingName = "id",ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "kode_satuan", HeaderText = "KODE SATUAN"},
@@ -43,7 +37,13 @@ public partial class GridDataSatuanBarang
 		DatagridProvider.ShowLoader();
 		Device.BeginInvokeOnMainThread(() =>
 		{
-			_pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
+			using var _pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
+			SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+			{
+				DeleteHandler = OnDeleteClicked,
+				EditHandler = OnEditClicked,
+				RefreshHandler = (sender, args) => _pagination.RefreshData()
+			});
 			DatagridProvider.AddDatagridCellHandler(OnClick,OnEditClicked);
 			DatagridProvider.HideLoader();
 		});

@@ -16,7 +16,6 @@ namespace IhandCashier.Pages.Views
     public partial class GridDataBarang
     {
         private const string ModuleName = "Data Barang";
-        private Pagination<ProductDto> _pagination;
         ProductService _service  = ServiceLocator.ServiceProvider.GetService<ProductService>();
         ProductDto _selectedProduct;
         
@@ -25,12 +24,6 @@ namespace IhandCashier.Pages.Views
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
             ResetView();
-            SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
-            {
-                DeleteHandler = OnDeleteClicked,
-                EditHandler = OnEditClicked,
-                RefreshHandler = OnRefreshClicked
-            });
             List<ColumnType> columns = [
                 new ()  { Type = ColumnTypes.Numeric,MappingName = "id", TextAlignment = TextAlignment.Center,ColumnMode = ColumnWidthMode.FitByCell ,HeaderText = "ID", Format = "N0" },
                 new() { Type = ColumnTypes.Text, MappingName = "kode", HeaderText = "KODE" },
@@ -43,7 +36,14 @@ namespace IhandCashier.Pages.Views
             DatagridProvider.ShowLoader();
             Device.BeginInvokeOnMainThread(() =>
             {
-                _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
+                using var _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
+                SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+                {
+                    DeleteHandler = OnDeleteClicked,
+                    EditHandler = OnEditClicked,
+                    RefreshHandler = (sender, args) => _pagination.RefreshData()
+                });
+                
                 DatagridProvider.AddDatagridCellHandler(OnClick,OnEditClicked);
                 DatagridProvider.HideLoader();
             });
@@ -64,7 +64,6 @@ namespace IhandCashier.Pages.Views
                 {
                     await _service.DeleteAsync(_selectedProduct.ToEntity());
                     Application.Current.MainPage.DisplayAlert("Berhasil", "Barang berhasil dihapus", "OK");
-                    _pagination.RefreshData();
                 }
                 catch (Exception ex)
                 {
@@ -85,11 +84,6 @@ namespace IhandCashier.Pages.Views
                 }
                 
             }
-        }
-
-        private void OnRefreshClicked(object sender, EventArgs e)
-        {
-            _pagination.RefreshData();
         }
     }
 }

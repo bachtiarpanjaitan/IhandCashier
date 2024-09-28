@@ -17,19 +17,13 @@ namespace IhandCashier.Pages.Views
         
         private const string ModuleName = "Data Satuan Dasar Barang";
         BasicUnitService _service  = ServiceLocator.ServiceProvider.GetService<BasicUnitService>();
-        private Pagination<BasicUnitDto> _pagination;
         BasicUnitDto _selected;
         public GridDataSatuanDasarBarang()
         {
             InitializeComponent();
             FilterOne.Initialize(ModuleName);
             ResetView();
-            SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
-            {
-                DeleteHandler = OnDeleteClicked,
-                EditHandler = OnEditClicked,
-                RefreshHandler = OnRefreshClicked
-            });
+            
             List<ColumnType> columns = [
                 new() { Type = ColumnTypes.Numeric,TextAlignment = TextAlignment.Center, MappingName = "id", ColumnMode = ColumnWidthMode.FitByCell , HeaderText = "ID", Format = "N0" },
                 new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA SATUAN"},
@@ -41,7 +35,13 @@ namespace IhandCashier.Pages.Views
             DatagridProvider.ShowLoader();
             Device.BeginInvokeOnMainThread(() =>
             {
-                _pagination = new Pagination<BasicUnitDto>(_service, typeof(FilterOne), typeof(FormSatuanDasarBarang));
+                using var _pagination = new Pagination<BasicUnitDto>(_service, typeof(FilterOne), typeof(FormSatuanDasarBarang));
+                SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
+                {
+                    DeleteHandler = OnDeleteClicked,
+                    EditHandler = OnEditClicked,
+                    RefreshHandler = (sender, args) => _pagination.RefreshData()
+                });
                 DatagridProvider.AddDatagridCellHandler(OnClicked, OnEditClicked);
                 DatagridProvider.HideLoader();
             });
@@ -56,7 +56,6 @@ namespace IhandCashier.Pages.Views
                 {
                     await _service.DeleteAsync(_selected.ToEntity());
                     Application.Current.MainPage.DisplayAlert("Berhasil", "Satuan dasar berhasil dihapus", "OK");
-                    _pagination.RefreshData();
                 }
                 catch (Exception ex)
                 {
@@ -64,11 +63,6 @@ namespace IhandCashier.Pages.Views
                     Application.Current.MainPage.DisplayAlert("Gagal", ex.Message, "OK");
                 }
             }
-        }
-
-        private void OnRefreshClicked(object sender, EventArgs e)
-        {
-            _pagination.RefreshData();
         }
 
         private void OnEditClicked(object sender, EventArgs e)

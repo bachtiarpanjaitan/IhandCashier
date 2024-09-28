@@ -31,8 +31,7 @@ namespace IhandCashier.Bepe.Helpers
         public Pagination(IDataService<T> dataService, Type typeHeader, Type form = null){
             ResetDataPagination(); //keep on top
             var settings = AppSettingConfig.LoadSettings();
-            DatagridProvider.Indicator.IsRunning = true;
-            DatagridProvider.Indicator.IsVisible = true;
+            DatagridProvider.ShowLoader();
             _typeHeader = typeHeader;
             _form = form;
             _dataService = dataService;
@@ -45,16 +44,13 @@ namespace IhandCashier.Bepe.Helpers
 
         public void RefreshData()
         {
-            DatagridProvider.Indicator.IsRunning = true;
-            DatagridProvider.Indicator.IsVisible = true;
-            UpdatePagedData().ConfigureAwait(true);
+            UpdatePagedData().ConfigureAwait(false);
         }
 
         private void OnPrevButtonClicked(object sender, EventArgs e)
         {
             if (_pageIndex <= 0) return;
-            DatagridProvider.Indicator.IsRunning = true;
-            DatagridProvider.Indicator.IsVisible = true;
+            DatagridProvider.ShowLoader();
             _pageIndex--;
             UpdatePagedData().ConfigureAwait(true);
 
@@ -63,8 +59,7 @@ namespace IhandCashier.Bepe.Helpers
         private void OnNextButtonClicked(object sender, EventArgs e)
         {
             if ((_pageIndex + 1) >= _pageCount) return;
-            DatagridProvider.Indicator.IsRunning = true;
-            DatagridProvider.Indicator.IsVisible = true;
+            DatagridProvider.ShowLoader();
             _pageIndex++;
             UpdatePagedData().ConfigureAwait(true);
 
@@ -91,10 +86,9 @@ namespace IhandCashier.Bepe.Helpers
                 }
                 finally
                 {
-                    DatagridProvider.Indicator.IsRunning = false;
-                    DatagridProvider.Indicator.IsVisible = false;
+                    DatagridProvider.HideLoader();
                 }
-            }
+            } else DatagridProvider.HideLoader();
         }
 
         private void GetComponentHandler()
@@ -118,8 +112,7 @@ namespace IhandCashier.Bepe.Helpers
 
         private void OnSearchHandler(object sender, TextChangedEventArgs e)
         {
-            DatagridProvider.Indicator.IsRunning = true;
-            DatagridProvider.Indicator.IsVisible = true;
+            DatagridProvider.ShowLoader();
             _search = e.NewTextValue;
             UpdatePagedData().ConfigureAwait(true);
         }
@@ -151,7 +144,7 @@ namespace IhandCashier.Bepe.Helpers
                 {
                     // Hapus event handler
                     DatagridProvider.RemovePaginationClickHandlers();
-                    // if (_typeHeader == typeof(FilterOne))FilterOne.RemoveEventHandlers();
+                    FilterOne.RemoveEventHandlers();
                     
                     _dataService = null;
                     _form = null;

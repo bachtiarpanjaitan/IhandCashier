@@ -15,7 +15,6 @@ public partial class GridDataPelanggan
 {
     private const string ModuleName = "Data Pelanggan";
     CustomerService _service  = ServiceLocator.ServiceProvider.GetService<CustomerService>();
-    private Pagination<Customer> _pagination;
     Customer _selectedProduct;
     public GridDataPelanggan()
     {
@@ -36,7 +35,7 @@ public partial class GridDataPelanggan
         DatagridProvider.ShowLoader();
         Device.BeginInvokeOnMainThread(() =>
         {
-            _pagination = new Pagination<Customer>(_service, typeof(FilterOne));
+            using var _pagination = new Pagination<Customer>(_service, typeof(FilterOne));
             DatagridProvider.AddDatagridCellHandler(OnClick);
             DatagridProvider.HideLoader();
         });

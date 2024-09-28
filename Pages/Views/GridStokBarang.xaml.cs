@@ -14,7 +14,6 @@ public partial class GridStokBarang
 {
     
     private const string ModuleName = "Data Stok Barang";
-    private Pagination<ProductStockDto> _pagination;
     ProductStockService _service  = ServiceLocator.ServiceProvider.GetService<ProductStockService>();
     public GridStokBarang()
     {
@@ -36,7 +35,7 @@ public partial class GridStokBarang
         DatagridProvider.ShowLoader();
         Device.BeginInvokeOnMainThread(() =>
         {
-            _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterOne));
+            using var _pagination = new Pagination<ProductStockDto>(_service, typeof(FilterOne));
             DatagridProvider.AddDatagridCellHandler(OnClicked);
             DatagridProvider.HideLoader();
         });

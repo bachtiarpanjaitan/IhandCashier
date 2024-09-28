@@ -15,7 +15,6 @@ public partial class GridDataKasir
 {
 	private const string ModuleName = "Data Kasir";
 	UserService _service  = ServiceLocator.ServiceProvider.GetService<UserService>();
-	private Pagination<UserDto> _pagination;
 	UserDto _selectedProduct;
 	public GridDataKasir()
 	{
@@ -37,7 +36,7 @@ public partial class GridDataKasir
 		DatagridProvider.ShowLoader();
 		Device.BeginInvokeOnMainThread(() =>
 		{
-			_pagination = new Pagination<UserDto>(_service, typeof(FilterOne));
+			using var _pagination = new Pagination<UserDto>(_service, typeof(FilterOne));
 			DatagridProvider.AddDatagridCellHandler(OnClick);
 			DatagridProvider.HideLoader();
 		});

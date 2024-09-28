@@ -11,7 +11,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-		Relaase Core|Any CPU = Relaase Core|Any CPU
+		Release Core|Any CPU = Release Core|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -19,12 +19,12 @@ Global
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Relaase Core|Any CPU.ActiveCfg = Relaase Core|Any CPU
+		{4F2570B0-6B36-4040-8272-C9E0FBC401C5}.Release Core|Any CPU.ActiveCfg = Debug|Any CPU
 		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Relaase Core|Any CPU.ActiveCfg = Relaase Core|Any CPU
-		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Relaase Core|Any CPU.Build.0 = Relaase Core|Any CPU
+		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Debug|Any CPU.ActiveCfg = Release Core|Any CPU
+		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Release Core|Any CPU.ActiveCfg = Release Core|Any CPU
+		{D930DFC6-C684-4182-BF52-8D4614304F6D}.Release Core|Any CPU.Build.0 = Release Core|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
