@@ -110,7 +110,7 @@ public partial class MainLayout : ContentPage
             var memoryCp = Math.Round(privateMemorySize / 1024.0 / 1024.0, 2);
             
             LMemory.Text = $"GC: {memoryGc} MB, CP: {memoryCp} MB";
-        });
+        } );
     }
 
     protected override void OnDisappearing()

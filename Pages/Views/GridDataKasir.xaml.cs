@@ -40,7 +40,6 @@ public partial class GridDataKasir
 			_pagination = new Pagination<UserDto>(_service, typeof(FilterOne));
 			DatagridProvider.AddDatagridCellHandler(OnClick);
 			DatagridProvider.HideLoader();
-			PaginationCatcher<UserDto>.CurrentPagination = _pagination;
 		});
     }
 

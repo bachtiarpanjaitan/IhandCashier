@@ -90,6 +90,10 @@ public sealed partial class FormBarang : IForm
 
     public void BtnBatal_OnClicked(object sender, EventArgs e)
     {
+        _model = null;
+        _imageStream = null;
+        _fileName = null;
+        Reset();
         Close();
     }
 

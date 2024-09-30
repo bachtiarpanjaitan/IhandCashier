@@ -1,3 +1,4 @@
+using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Core.Maui.Providers;
@@ -43,6 +44,7 @@ public class BaseView : ContentView
         EditMenu.Clicked += _EditClickedHandlerRef;
         DeleteMenu.Clicked += _DeleteClickedHandlerRef;
     }
+    
 }
 
 public class ContextMenuHandlers
@@ -50,9 +52,4 @@ public class ContextMenuHandlers
     public EventHandler? RefreshHandler { get; set; }
     public EventHandler? EditHandler { get; set; }
     public EventHandler? DeleteHandler { get; set; }
-}
-
-public static class PaginationCatcher<T> where T : class
-{
-    public static Pagination<T> CurrentPagination { get; set; }
 }

@@ -147,10 +147,11 @@ namespace IhandCashier.Bepe.Helpers
                     // Hapus event handler
                     DatagridProvider.RemovePaginationClickHandlers();
                     FilterOne.RemoveEventHandlers();
-                    
+
                     _dataService = null;
                     _form = null;
                 }
+
                 _disposed = true;
             }
         }

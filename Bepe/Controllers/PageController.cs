@@ -25,11 +25,8 @@ namespace IhandCashier.Bepe.Controllers
                 {
                     try
                     {
-                        if (_contentView != null) _contentView = null;
-                        _layout.SetContent(null);
                         _contentView = (ContentView)Activator.CreateInstance(type);
                         _layout.SetContent(_contentView);
-                        
                     }
                     catch (TargetInvocationException ex)
                     {

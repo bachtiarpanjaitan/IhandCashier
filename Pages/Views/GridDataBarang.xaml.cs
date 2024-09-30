@@ -44,10 +44,8 @@ namespace IhandCashier.Pages.Views
                     EditHandler = OnEditClicked,
                     RefreshHandler = (sender, args) => _pagination.RefreshData()
                 });
-                
                 DatagridProvider.AddDatagridCellHandler(OnClick,OnEditClicked);
                 DatagridProvider.HideLoader();
-                PaginationCatcher<ProductDto>.CurrentPagination = _pagination;
             });
         }
         

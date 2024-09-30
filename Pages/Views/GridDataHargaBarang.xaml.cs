@@ -53,7 +53,6 @@ public partial class GridDataHargaBarang
       });
       DatagridProvider.AddDatagridCellHandler(OnClick);
       DatagridProvider.HideLoader();
-      PaginationCatcher<ProductPriceDto>.CurrentPagination = _pagination;
     });
   }
 
