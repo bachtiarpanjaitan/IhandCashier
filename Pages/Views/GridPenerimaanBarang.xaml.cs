@@ -21,6 +21,7 @@ public partial class GridPenerimaanBarang
     private const string ModuleName = "Data Penerimaan Barang";
     ProductReceiptService _service  = ServiceLocator.ServiceProvider.GetService<ProductReceiptService>();
     ProductReceiptDto _selectedProduct;
+    Pagination<ProductReceiptDto> _pagination;
     public GridPenerimaanBarang()
     {
         InitializeComponent();
@@ -46,7 +47,7 @@ public partial class GridPenerimaanBarang
         DatagridProvider.ShowLoader();
         Device.BeginInvokeOnMainThread(() =>
         {
-            using var _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne), typeof(FormPenerimaanBarang));
+            _pagination = new Pagination<ProductReceiptDto>(_service, typeof(FilterOne), typeof(FormPenerimaanBarang));
             SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
             {
                 DeleteHandler = OnDeleteClicked,
@@ -76,6 +77,7 @@ public partial class GridPenerimaanBarang
                 item.Details = _selectedProduct.ToViewModel().Details.Select(d => d.ToEntity()).ToList();
                 await _service.SoftDeleteAsync(item);
                 Application.Current.MainPage.DisplayAlert("Berhasil", "Penerimaan Barang berhasil dihapus", "OK");
+                _pagination.RefreshData();
             }
             catch (Exception ex)
             {

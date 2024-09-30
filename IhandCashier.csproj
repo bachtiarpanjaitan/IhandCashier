@@ -42,7 +42,7 @@
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>basapadi.snk</AssemblyOriginatorKeyFile>
 		<Configurations>Debug;Release;Release Core</Configurations>
-		<Platforms>AnyCPU</Platforms>
+		<Platforms>AnyCPU;maccatalyst-x64</Platforms>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
@@ -61,9 +61,22 @@
 	  	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	  	<MtouchEnableSGenConc>true</MtouchEnableSGenConc>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-	  <MtouchLink>SdkOnly</MtouchLink>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|maccatalyst-x64' ">
+	  <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
 	  <CodesignKey>Apple Development: bachtiarpanjaitan0@gmail.com (53TNH3S72W)</CodesignKey>
+	  <MtouchDebug>true</MtouchDebug>
+	  <Optimize>true</Optimize>
+	  <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	  <PlatformTarget>maccatalyst-x64</PlatformTarget>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|maccatalyst-x64' ">
+	  <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+	  <CodesignKey>Apple Development: bachtiarpanjaitan0@gmail.com (53TNH3S72W)</CodesignKey>
+	  <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+	  <PlatformTarget>x64</PlatformTarget>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+	  <PlatformTarget>AnyCPU</PlatformTarget>
 	</PropertyGroup>
 	<ItemGroup>
 	  <MauiImage Remove="Resources\Images\document.png" />

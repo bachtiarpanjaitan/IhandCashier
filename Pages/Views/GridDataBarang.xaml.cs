@@ -18,6 +18,7 @@ namespace IhandCashier.Pages.Views
         private const string ModuleName = "Data Barang";
         ProductService _service  = ServiceLocator.ServiceProvider.GetService<ProductService>();
         ProductDto _selectedProduct;
+        Pagination<ProductDto> _pagination;
         
         public GridDataBarang()
         {
@@ -36,7 +37,7 @@ namespace IhandCashier.Pages.Views
             DatagridProvider.ShowLoader();
             Device.BeginInvokeOnMainThread(() =>
             {
-                using var _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
+                _pagination = new Pagination<ProductDto>(_service, typeof(FilterOne), typeof(FormBarang));
                 SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
                 {
                     DeleteHandler = OnDeleteClicked,
@@ -46,8 +47,10 @@ namespace IhandCashier.Pages.Views
                 
                 DatagridProvider.AddDatagridCellHandler(OnClick,OnEditClicked);
                 DatagridProvider.HideLoader();
+                PaginationCatcher<ProductDto>.CurrentPagination = _pagination;
             });
         }
+        
         
         private void OnClick(object sender, DataGridCellTappedEventArgs dataGridCellTappedEventArgs)
         {
@@ -64,6 +67,7 @@ namespace IhandCashier.Pages.Views
                 {
                     await _service.DeleteAsync(_selectedProduct.ToEntity());
                     Application.Current.MainPage.DisplayAlert("Berhasil", "Barang berhasil dihapus", "OK");
+                    _pagination.RefreshData();
                 }
                 catch (Exception ex)
                 {

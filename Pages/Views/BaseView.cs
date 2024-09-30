@@ -1,3 +1,4 @@
+using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Types;
 using IhandCashier.Core.Maui.Providers;
 
@@ -8,6 +9,7 @@ public class BaseView : ContentView
     private static EventHandler _RefreshlickedHandlerRef;
     private static EventHandler _EditClickedHandlerRef;
     private static EventHandler _DeleteClickedHandlerRef;
+    public event EventHandler ViewDisappeared;
     
     public static MenuFlyoutItem RefreshMenu = new() { Text = "Refresh Data"};
     public static MenuFlyoutItem EditMenu = new() { Text = "Ubah Data"};
@@ -48,4 +50,9 @@ public class ContextMenuHandlers
     public EventHandler? RefreshHandler { get; set; }
     public EventHandler? EditHandler { get; set; }
     public EventHandler? DeleteHandler { get; set; }
+}
+
+public static class PaginationCatcher<T> where T : class
+{
+    public static Pagination<T> CurrentPagination { get; set; }
 }

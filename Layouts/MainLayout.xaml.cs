@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
+using System.Runtime;
 using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Configs;
 using IhandCashier.Bepe.Helpers;
@@ -22,6 +24,7 @@ public partial class MainLayout : ContentPage
     public MainLayout()
     {
         InitializeComponent();
+        
         SetupClock();
         MenuBarItems.Clear();
         ListMenu = new MenuCreator().CreateMenu(MenuBarItems);
@@ -99,6 +102,14 @@ public partial class MainLayout : ContentPage
             var date = DateTime.Now.ToString("dd MMMM yyyy", _cultureInfo);
             var time = DateTime.Now.ToString("HH:mm:ss", _cultureInfo);
             LJamAplikasi.Text = $"{dayOfWeek}, {date}, {time}";
+            long memoryUsage = GC.GetTotalMemory(false);
+            var memoryGc = Math.Round(memoryUsage / 1024.0 / 1024.0,2);
+            
+            Process currentProcess = Process.GetCurrentProcess();
+            long privateMemorySize = currentProcess.PrivateMemorySize64;
+            var memoryCp = Math.Round(privateMemorySize / 1024.0 / 1024.0, 2);
+            
+            LMemory.Text = $"GC: {memoryGc} MB, CP: {memoryCp} MB";
         });
     }
 

@@ -3,47 +3,43 @@ using IhandCashier.Bepe.Components;
 using IhandCashier.Bepe.Helpers;
 using IhandCashier.Bepe.Interfaces;
 using IhandCashier.Bepe.Types;
+using IhandCashier.Pages.Views;
 
 namespace IhandCashier.Bepe.Controllers
 {
-	public class PageController : ContentView,IPageInterface
+	public class PageController : ContentView
 	{
         private ContentView _contentView = new();
         public Dictionary<string, MenuItemPage> SideMenus = new();
         private ContentLayoutTwoColumn _layout = new();
-        private SideMenu sm = new();
-        public PageController()
-		{
-
-		}
+        public PageController() { }
 
         public void DefineLayoutTwoColumn()
         {
+            var sm = new SideMenu();
             sm.SetMenuItems(SideMenus);
-            sm.ItemTapped += OnClickSideMenuItemAsync;
+            sm.ItemTapped += (sender, args) =>
+            {
+                Type type = Type.GetType(args.Page);
+                if(type != null)
+                {
+                    try
+                    {
+                        if (_contentView != null) _contentView = null;
+                        _layout.SetContent(null);
+                        _contentView = (ContentView)Activator.CreateInstance(type);
+                        _layout.SetContent(_contentView);
+                        
+                    }
+                    catch (TargetInvocationException ex)
+                    {
+                        Console.WriteLine("Cannot create layout " + ex.InnerException?.Message);
+                    }
+                }
+            } ;
             VerticalStackLayout sideMenu = sm.CreateSideMenu();
             _layout.SetSideMenu(sideMenu);
             Content = _layout.GenerateFrame();
-        }
-
-        public void OnClickSideMenuItemAsync(object obj, EventHandlerPageArgs e)
-        {
-            Type type = Type.GetType(e.Page);
-            if(type != null)
-            {
-               try
-               {
-                   if (_contentView != null) _contentView = null;
-                   _layout.SetContent(null);
-                   _contentView = (ContentView)Activator.CreateInstance(type);
-                   _layout.SetContent(_contentView);
-               }
-               catch (TargetInvocationException ex)
-               {
-                   Console.WriteLine("Cannot create instance " + ex.InnerException?.Message);
-               }
-            }
-           
         }
     }
 }

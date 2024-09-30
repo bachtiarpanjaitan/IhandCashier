@@ -18,6 +18,7 @@ namespace IhandCashier.Pages.Views
         private const string ModuleName = "Data Satuan Dasar Barang";
         BasicUnitService _service  = ServiceLocator.ServiceProvider.GetService<BasicUnitService>();
         BasicUnitDto _selected;
+        Pagination<BasicUnitDto> _pagination;
         public GridDataSatuanDasarBarang()
         {
             InitializeComponent();
@@ -35,7 +36,7 @@ namespace IhandCashier.Pages.Views
             DatagridProvider.ShowLoader();
             Device.BeginInvokeOnMainThread(() =>
             {
-                using var _pagination = new Pagination<BasicUnitDto>(_service, typeof(FilterOne), typeof(FormSatuanDasarBarang));
+                _pagination = new Pagination<BasicUnitDto>(_service, typeof(FilterOne), typeof(FormSatuanDasarBarang));
                 SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
                 {
                     DeleteHandler = OnDeleteClicked,
@@ -56,6 +57,7 @@ namespace IhandCashier.Pages.Views
                 {
                     await _service.DeleteAsync(_selected.ToEntity());
                     Application.Current.MainPage.DisplayAlert("Berhasil", "Satuan dasar berhasil dihapus", "OK");
+                    _pagination.RefreshData();
                 }
                 catch (Exception ex)
                 {

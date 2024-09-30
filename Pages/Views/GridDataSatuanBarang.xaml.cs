@@ -37,7 +37,7 @@ public partial class GridDataSatuanBarang
 		DatagridProvider.ShowLoader();
 		Device.BeginInvokeOnMainThread(() =>
 		{
-			using var _pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
+			_pagination = new Pagination<UnitDto>(_service, typeof(FilterOne), typeof(FormSatuanBarang));
 			SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
 			{
 				DeleteHandler = OnDeleteClicked,

@@ -20,6 +20,8 @@ namespace IhandCashier.Bepe.Helpers
         private bool _disposed = false;
         private PopupManager manager = new ();
         
+        public Pagination(){}
+        
         /// <summary>
         /// Mengelola Pagination data di datagrid.
         /// </summary>

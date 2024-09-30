@@ -20,7 +20,7 @@ public partial class GridDataHargaBarang
   private const string ModuleName = "Data Harga Barang";
   ProductPriceService _service  = ServiceLocator.ServiceProvider.GetService<ProductPriceService>();
   ProductPriceDto _selectedProduct;
-  
+  Pagination<ProductPriceDto> _pagination;
   public GridDataHargaBarang()
   {
     InitializeComponent();
@@ -44,7 +44,7 @@ public partial class GridDataHargaBarang
     DatagridProvider.ShowLoader();
     Device.BeginInvokeOnMainThread(() =>
     {
-      using var _pagination = new Pagination<ProductPriceDto>(_service, typeof(FilterOne));
+      _pagination = new Pagination<ProductPriceDto>(_service, typeof(FilterOne));
       SetContextMenuHandler(ContextMenu,new ContextMenuHandlers
       {
         DeleteHandler = OnDeleteClicked,
@@ -53,6 +53,7 @@ public partial class GridDataHargaBarang
       });
       DatagridProvider.AddDatagridCellHandler(OnClick);
       DatagridProvider.HideLoader();
+      PaginationCatcher<ProductPriceDto>.CurrentPagination = _pagination;
     });
   }
 
