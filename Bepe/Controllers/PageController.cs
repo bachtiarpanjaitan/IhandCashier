@@ -20,7 +20,10 @@ namespace IhandCashier.Bepe.Controllers
             sm.SetMenuItems(SideMenus);
             sm.ItemTapped += (sender, args) =>
             {
-                Type type = Type.GetType(args.Page);
+                var btn = args.Sender as Button;
+                btn.TextColor = Colors.OrangeRed;
+                btn.FontSize = 16;
+                var type = Type.GetType(args.Page);
                 if(type != null)
                 {
                     try
@@ -33,7 +36,18 @@ namespace IhandCashier.Bepe.Controllers
                         Console.WriteLine("Cannot create layout " + ex.InnerException?.Message);
                     }
                 }
-            } ;
+
+                var menuitems = sender as SideMenu;
+
+                foreach (var m in menuitems.MenuButtons)
+                {
+                    if (m.Key != args.Page)
+                    {
+                        m.Value.TextColor = Colors.DarkOrange;
+                        m.Value.FontSize = 14;
+                    }
+                }
+            };
             VerticalStackLayout sideMenu = sm.CreateSideMenu();
             _layout.SetSideMenu(sideMenu);
             Content = _layout.GenerateFrame();

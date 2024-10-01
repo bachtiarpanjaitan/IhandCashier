@@ -55,7 +55,7 @@
 	  	<WarningLevel>4</WarningLevel>
 	  	<PlatformTarget>ARM64</PlatformTarget>
 	  	<MtouchLink>SdkOnly</MtouchLink>
-	  	<CodesignKey>Apple Development: bachtiarpanjaitan0@gmail.com (53TNH3S72W)</CodesignKey>
+	  	<CodesignKey>iPhone Developer</CodesignKey>
 	  	<MtouchDebug>true</MtouchDebug>
 	  	<Optimize>true</Optimize>
 	  	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>

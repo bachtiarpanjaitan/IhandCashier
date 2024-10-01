@@ -44,7 +44,6 @@ namespace IhandCashier.Bepe.Helpers
 
                 // Unsubscribe from the event
                 popup.Closed -= Popup_Closed;
-                Console.WriteLine($"POPUP COUNT : {_popupInstances.Count}");
             }
         }
 

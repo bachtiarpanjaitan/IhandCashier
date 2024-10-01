@@ -7,7 +7,8 @@ namespace IhandCashier.Bepe.Components
 	public class SideMenu
 	{
         public event EventHandler<EventHandlerPageArgs> ItemTapped;
-        private Dictionary<String, MenuItemPage> menuItems;
+        public Dictionary<string, MenuItemPage> MenuItems;
+        public Dictionary<string, Button> MenuButtons = new();
         public SideMenu()
 		{
             
@@ -21,9 +22,9 @@ namespace IhandCashier.Bepe.Components
                 Padding = new Thickness(5,5,5,10)
             };
 
-            if(menuItems != null)
+            if(MenuItems != null)
             {
-                foreach (var mi in menuItems)
+                foreach (var mi in MenuItems)
                 {
                     menuLayout.Add(ItemMenu(mi.Value));
                 }
@@ -49,10 +50,13 @@ namespace IhandCashier.Bepe.Components
                 Text = item.Label,
                 FontAttributes = FontAttributes.Bold,
                 Margin = 5,
+                TextColor = item.TextColor,
+                IsEnabled = item.Enable,
                 BorderColor = Colors.Transparent,
             };
-
+            
             button.Clicked += (s, e) => OnCLickItem(s, e, item.Page);
+            MenuButtons.Add(item.Page, button);
 
             return new HorizontalStackLayout()
             {
@@ -75,9 +79,9 @@ namespace IhandCashier.Bepe.Components
             ItemTapped?.Invoke(this, new EventHandlerPageArgs(sender, e, page));
         }
 
-        public void SetMenuItems(Dictionary<String, MenuItemPage> items)
+        public void SetMenuItems(Dictionary<string, MenuItemPage> items)
         {
-            this.menuItems = items;
+            MenuItems = items;
         }
 
     }
