@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IhandCashier.Pages.Views;
 
-public partial class SettingAcl : ContentView
+public partial class SettingAcl
 {
     public SettingAcl()
     {

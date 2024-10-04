@@ -55,7 +55,7 @@ public class Form : Popup
         footer.Add(BtnClose);
         footer.Add(BtnSave);
         
-        grid.Add(header,0,0);
+        grid.Add(header,0);
         grid.Add(content,0,1);
         grid.Add(footer,0,2);
         Content = grid;

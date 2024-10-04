@@ -86,7 +86,7 @@ public static class FilterOne
             Search.TextChanged -= _entrySearchChangedHandler;
         }
         _entrySearchChangedHandler = searchHandler;
-        Search.DebounceTextChanged(OnSearchTextChanged, 1000);
+        Search.DebounceTextChanged(OnSearchTextChanged);
     }
 
     public static void AddFormClickHandler(EventHandler handler)

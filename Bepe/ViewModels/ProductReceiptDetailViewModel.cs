@@ -152,7 +152,7 @@ public class ProductReceiptDetailViewModel : BaseViewModel, IIndexable
             product_receipt_id = _product_receipt_id,
             product_id = _product_id,
             unit_id = _unit_id,
-            jumlah = (decimal) _jumlah,
+            jumlah = _jumlah,
             harga_satuan = (decimal) _harga_satuan,
         };
     }

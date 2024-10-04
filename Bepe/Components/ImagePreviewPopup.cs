@@ -1,4 +1,3 @@
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using Grid = Microsoft.Maui.Controls.Grid;
 
@@ -43,7 +42,7 @@ public class ImagePreviewPopup : Popup
        };
        
        Color = Colors.Transparent;
-       grid.Add(image,0,0);
+       grid.Add(image,0);
        grid.Add(_btnClose,0,1);
        Content = grid;
     }

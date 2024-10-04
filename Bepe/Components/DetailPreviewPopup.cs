@@ -1,10 +1,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using CommunityToolkit.Maui.Views;
-using IhandCashier.Bepe.Types;
-using Syncfusion.Maui.Data;
 using Syncfusion.Maui.DataGrid;
-using Syncfusion.Maui.DataSource;
 
 namespace IhandCashier.Bepe.Components;
 
@@ -61,7 +58,7 @@ public class DetailPreviewPopup : Popup
         };
         
         _datagrid.ItemsSource = data;
-        grid.Add(_datagrid,0,0);
+        grid.Add(_datagrid,0);
         grid.Add(_btnClose,0,1);
         _datagrid.AutoGeneratingColumn += (sender, args) =>
         {

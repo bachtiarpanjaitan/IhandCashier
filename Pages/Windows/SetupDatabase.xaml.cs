@@ -15,7 +15,7 @@ using SQLite;
 
 namespace IhandCashier.Pages.Windows;
 
-public partial class SetupDatabase : ContentPage
+public partial class SetupDatabase
 {
     private AppSetting _setting = new();
     private IcSqLite _sqlite = new();

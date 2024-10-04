@@ -4,7 +4,7 @@ using IhandCashier.Pages.Views;
 
 namespace IhandCashier.Pages;
 
-public partial class PageDataPengguna : PageController
+public partial class PageDataPengguna
 {
 	public PageDataPengguna()
 	{

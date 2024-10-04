@@ -4,7 +4,7 @@ using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Pages;
 
-public partial class PageHome : PageController
+public partial class PageHome
 {
 	public PageHome()
 	{

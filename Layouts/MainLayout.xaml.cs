@@ -12,7 +12,7 @@ using Syncfusion.Maui.DataGrid;
 
 namespace IhandCashier.Layouts;
 
-public partial class MainLayout : ContentPage
+public partial class MainLayout
 {
     public Dictionary<string, MenuFlyoutItem> ListMenu = new ();
         
@@ -63,7 +63,7 @@ public partial class MainLayout : ContentPage
                     {
                         try
                         {
-                            var data = menuBarItem?.CommandParameter as String;
+                            var data = menuBarItem?.CommandParameter as string;
                             var type = Type.GetType(AppConfig.PAGES_NAMESPACE + "." + data);
                             if (type == null) return;
                             var instance = Activator.CreateInstance(type);

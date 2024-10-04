@@ -49,12 +49,12 @@ namespace IhandCashier.Bepe.Helpers
                     }
                 }
             };
-            grid.Add(ContentPlaceholder, 2, 0);
+            grid.Add(ContentPlaceholder, 2);
         }
 
         public void SetSideMenu(VerticalStackLayout sm)
         {
-            grid.Add(sm, 0, 0);
+            grid.Add(sm, 0);
         }
 
         public void SetContent(ContentView c)
@@ -66,7 +66,7 @@ namespace IhandCashier.Bepe.Helpers
         public Frame GenerateFrame()
         {
             var splitter = new BoxView { Color = Color.FromArgb("#592f02"), WidthRequest = 1 };
-            grid.Add(splitter,1,0);
+            grid.Add(splitter,1);
             var frame = new Frame
             {
                 Content = grid,

@@ -6,7 +6,7 @@ using Syncfusion.Maui.DataForm;
 
 namespace IhandCashier.Pages.Windows;
 
-public partial class LoginForm : ContentPage
+public partial class LoginForm
 {
     private SfDataForm _form = new();
     private DataLogin _dataLogin = new();

@@ -87,9 +87,4 @@ public partial class GridDataSatuanBarang
                 
 		}
 	}
-
-	private void OnRefreshClicked(object sender, EventArgs e)
-	{
-		_pagination.RefreshData();
-	}
 }

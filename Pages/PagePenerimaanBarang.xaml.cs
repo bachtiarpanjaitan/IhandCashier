@@ -5,7 +5,7 @@ using IhandCashier.Pages.Views;
 
 namespace IhandCashier.Pages;
 
-public partial class PagePenerimaanBarang : PageController
+public partial class PagePenerimaanBarang
 {
     public PagePenerimaanBarang()
 	{

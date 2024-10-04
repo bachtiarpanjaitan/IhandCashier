@@ -232,7 +232,7 @@ public class ProductReceiptService : IDataService<ProductReceiptDto>
 
     private void CalculateStock(AppDbContext _context,ProductReceiptDetail newData, StockStatus status = StockStatus.Addition, ProductReceiptDetail oldData = null)
     {
-        ProductStock oldStock = null;
+        ProductStock oldStock;
         oldStock = _context.ProductStocks
             .AsNoTracking()
             .Where(x => x.product_id == newData.product_id)
