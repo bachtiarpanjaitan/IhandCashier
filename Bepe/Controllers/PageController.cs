@@ -24,7 +24,7 @@ namespace IhandCashier.Bepe.Controllers
             {
                 menu.Value.BackgroundColor = Colors.Transparent;
                 menu.Value.FontSize = 14;
-                menu.Value.TextColor = Colors.Black;
+                menu.Value.TextColor = Colors.DimGray;
                 menu.Value.HorizontalOptions = LayoutOptions.Fill;
                 menu.Value.Clicked += (sender, args) =>
                 {
@@ -34,7 +34,7 @@ namespace IhandCashier.Bepe.Controllers
                         if (item.Key != btn.CommandParameter.ToString())
                         {
                             item.Value.IsEnabled = true;
-                            item.Value.TextColor = Colors.Black;
+                            item.Value.TextColor = Colors.DimGray;
                             item.Value.BorderWidth = 0;
                         }
                         else
