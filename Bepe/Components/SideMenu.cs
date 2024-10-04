@@ -6,7 +6,7 @@ namespace IhandCashier.Bepe.Components
 {
 	public class SideMenu
 	{
-        public event EventHandler<EventHandlerPageArgs> ItemTapped;
+        // public event EventHandler<EventHandlerPageArgs> ItemTapped;
         public Dictionary<string, MenuItemPage> MenuItems;
         public Dictionary<string, Button> MenuButtons = new();
 
@@ -49,9 +49,10 @@ namespace IhandCashier.Bepe.Components
                 TextColor = item.TextColor,
                 IsEnabled = item.Enable,
                 BorderColor = Colors.Transparent,
+                CommandParameter = item.Page
             };
             
-            button.Clicked += (s, e) => OnCLickItem(s, e, item.Page);
+            // button.Clicked += (s, e) => OnCLickItem(s, e, item.Page);
             MenuButtons.Add(item.Page, button);
 
             return new HorizontalStackLayout()
@@ -65,15 +66,15 @@ namespace IhandCashier.Bepe.Components
             };
         }
 
-        private async void OnCLickItem(object sender, EventArgs e, string page)
-        {
-            var btn = sender as Button;
-            if (btn == null) return;
-            // Animasi: skala frame saat diklik
-            await btn.ScaleTo(1, 5, Easing.CubicIn);
-            await btn.ScaleTo(1, 5, Easing.CubicOut);
-            ItemTapped?.Invoke(this, new EventHandlerPageArgs(sender, e, page));
-        }
+        // private static async void OnCLickItem(object sender, EventArgs e, string page)
+        // {
+        //     var btn = sender as Button;
+        //     if (btn == null) return;
+        //     // Animasi: skala frame saat diklik
+        //     await btn.ScaleTo(1, 5, Easing.CubicIn);
+        //     await btn.ScaleTo(1, 5, Easing.CubicOut);
+        //     ItemTapped?.Invoke(this, new EventHandlerPageArgs(sender, e, page));
+        // }
 
         public void SetMenuItems(Dictionary<string, MenuItemPage> items)
         {

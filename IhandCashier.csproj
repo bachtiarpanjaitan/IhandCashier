@@ -55,11 +55,12 @@
 	  	<WarningLevel>4</WarningLevel>
 	  	<PlatformTarget>ARM64</PlatformTarget>
 	  	<MtouchLink>SdkOnly</MtouchLink>
-	  	<CodesignKey>iPhone Developer</CodesignKey>
+	  	<CodesignKey>Apple Development: bachtiarpanjaitan0@gmail.com (53TNH3S72W)</CodesignKey>
 	  	<MtouchDebug>true</MtouchDebug>
 	  	<Optimize>true</Optimize>
 	  	<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	  	<MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+	  	<IOSDebugOverWiFi>true</IOSDebugOverWiFi>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|maccatalyst-x64' ">
 	  <MtouchEnableSGenConc>true</MtouchEnableSGenConc>

@@ -18,44 +18,52 @@ namespace IhandCashier.Bepe.Controllers
         {
             var sm = new SideMenu();
             sm.SetMenuItems(SideMenus);
-            sm.ItemTapped += (sender, args) =>
-            {
-                var btn = args.Sender as Button;
-                btn.TextColor = Colors.OrangeRed;
-                btn.FontSize = 16;
-                var type = Type.GetType(args.Page);
-                if(type != null)
-                {
-                    try
-                    {
-                        _contentView = (ContentView)Activator.CreateInstance(type);
-                        _layout.SetContent(_contentView);
-                    }
-                    catch (TargetInvocationException ex)
-                    {
-                        Console.WriteLine("Cannot create layout " + ex.InnerException?.Message);
-                    }
-                }
-
-                var menuitems = sender as SideMenu;
-
-                foreach (var m in menuitems.MenuButtons)
-                {
-                    if (m.Key != args.Page)
-                    {
-                        m.Value.TextColor = Colors.DarkOrange;
-                        m.Value.FontSize = 14;
-                        m.Value.IsEnabled = true;
-                    }
-                    else
-                    {
-                        m.Value.IsEnabled = false;
-                        m.Value.BackgroundColor = Colors.Transparent;
-                    }
-                }
-            };
             VerticalStackLayout sideMenu = sm.CreateSideMenu();
             _layout.SetSideMenu(sideMenu);
+            foreach (var menu in sm.MenuButtons)
+            {
+                menu.Value.BackgroundColor = Colors.Transparent;
+                menu.Value.FontSize = 14;
+                menu.Value.TextColor = Colors.Black;
+                menu.Value.HorizontalOptions = LayoutOptions.Fill;
+                menu.Value.Clicked += (sender, args) =>
+                {
+                    var btn = sender as Button;
+                    foreach (var item in sm.MenuButtons)
+                    {
+                        if (item.Key != btn.CommandParameter.ToString())
+                        {
+                            item.Value.IsEnabled = true;
+                            item.Value.TextColor = Colors.Black;
+                            item.Value.BorderWidth = 0;
+                        }
+                        else
+                        {
+                            item.Value.IsEnabled = false;
+                            item.Value.BackgroundColor = Colors.Transparent;
+                            item.Value.TextColor = Colors.DarkOrange;
+                            item.Value.BorderWidth = 1;
+                            item.Value.BorderColor = Colors.DarkOrange;
+
+                        }
+                    }
+                    
+                    var type = Type.GetType(menu.Key);
+                    if(type != null)
+                    {
+                        try
+                        {
+                            _contentView = (ContentView)Activator.CreateInstance(type);
+                            _layout.SetContent(_contentView);
+                        }
+                        catch (TargetInvocationException ex)
+                        {
+                            Console.WriteLine("Cannot create layout " + ex.InnerException?.Message);
+                        }
+                    }
+                };
+            }
+            
             Content = _layout.GenerateFrame();
         }
     }
