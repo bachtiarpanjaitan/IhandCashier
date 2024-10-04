@@ -41,7 +41,7 @@ public partial class GridPenerimaanBarang
             new() { Type = ColumnTypes.Text, MappingName = "Keterangan", HeaderText = "KETERANGAN"}
         ];
             
-        foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+        SetDatagridColumns(columns);
         Content = DatagridProvider.LayoutDatagrid;
     
         DatagridProvider.ShowLoader();

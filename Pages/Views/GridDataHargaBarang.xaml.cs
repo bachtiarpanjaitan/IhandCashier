@@ -37,8 +37,7 @@ public partial class GridDataHargaBarang
       new() { Type = ColumnTypes.Text, MappingName = "basic_unit_nama", HeaderText = "SATUAN DASAR"},
       new() { Type = ColumnTypes.Date, MappingName = "tanggal_berlaku", HeaderText = "TANGGAL BERLAKU"},
     ];
-            
-    foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+    SetDatagridColumns(columns);   
     Content = DatagridProvider.LayoutDatagrid;
     
     DatagridProvider.ShowLoader();

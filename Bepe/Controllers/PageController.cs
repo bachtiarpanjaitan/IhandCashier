@@ -45,6 +45,12 @@ namespace IhandCashier.Bepe.Controllers
                     {
                         m.Value.TextColor = Colors.DarkOrange;
                         m.Value.FontSize = 14;
+                        m.Value.IsEnabled = true;
+                    }
+                    else
+                    {
+                        m.Value.IsEnabled = false;
+                        m.Value.BackgroundColor = Colors.Transparent;
                     }
                 }
             };

@@ -31,7 +31,7 @@ public partial class GridDataSatuanBarang
 			new ColumnType { Type = ColumnTypes.Numeric, TextAlignment = TextAlignment.End ,MappingName = "konversi", HeaderText = "NILAI KONVERSI", Format = "N0"}
 		];
             
-		foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+		SetDatagridColumns(columns);
 		Content = DatagridProvider.LayoutDatagrid;
     
 		DatagridProvider.ShowLoader();

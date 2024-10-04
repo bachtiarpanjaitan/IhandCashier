@@ -31,7 +31,7 @@ public partial class GridDataKasir
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "avatar", HeaderText = "TELEPON"},
 			new ColumnType { Type = ColumnTypes.Text, MappingName = "status", HeaderText = "STATUS"}
 		];
-		foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+		SetDatagridColumns(columns);
 		Content = DatagridProvider.LayoutDatagrid;
     
 		DatagridProvider.ShowLoader();

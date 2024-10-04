@@ -30,7 +30,7 @@ public partial class GridDataPelanggan
             new ColumnType { Type = ColumnTypes.Text, MappingName = "telepon", HeaderText = "TELEPON"},
             new ColumnType { Type = ColumnTypes.Text, MappingName = "alamat", HeaderText = "ALAMAT"}
         ];
-        foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+        SetDatagridColumns(columns);
         Content = DatagridProvider.LayoutDatagrid;
     
         DatagridProvider.ShowLoader();

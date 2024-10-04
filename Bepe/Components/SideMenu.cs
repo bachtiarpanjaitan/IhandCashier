@@ -9,10 +9,6 @@ namespace IhandCashier.Bepe.Components
         public event EventHandler<EventHandlerPageArgs> ItemTapped;
         public Dictionary<string, MenuItemPage> MenuItems;
         public Dictionary<string, Button> MenuButtons = new();
-        public SideMenu()
-		{
-            
-		}
 
         public VerticalStackLayout CreateSideMenu()
         {

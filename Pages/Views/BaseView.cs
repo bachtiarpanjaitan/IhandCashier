@@ -18,7 +18,14 @@ public class BaseView : ContentView
     public void ResetView()
     {
         DatagridProvider.Reset();
-        DatagridProvider.DataGrid.BindingContext = null;
+    }
+
+    public void SetDatagridColumns(List<ColumnType> columns)
+    {
+        foreach (var c in columns.Select(col => col.Create()))
+        {
+            DatagridProvider.DataGrid.Columns.Add(c);
+        }
     }
 
     public void SetContextMenuHandler(MenuFlyout ContextMenu, ContextMenuHandlers handler)

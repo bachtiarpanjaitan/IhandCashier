@@ -30,7 +30,7 @@ namespace IhandCashier.Pages.Views
                 new() { Type = ColumnTypes.Text, MappingName = "nama", HeaderText = "NAMA SATUAN"},
             ];
             
-            foreach (var c in columns.Select(col => col.Create())) DatagridProvider.DataGrid.Columns.Add(c);
+            SetDatagridColumns(columns);
             Content = DatagridProvider.LayoutDatagrid;
     
             DatagridProvider.ShowLoader();
